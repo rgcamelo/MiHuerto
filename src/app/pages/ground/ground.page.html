@@ -1,0 +1,75 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-title>{{nameHuerto}}</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+    <ion-segment value="" (ionChange)="segmentChanged($event)">
+        <ion-segment-button value="">
+            <ion-label>Todos</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="seedbed">
+            <ion-label>Semilleros</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="module">
+            <ion-label>Modulos</ion-label>
+        </ion-segment-button>
+    </ion-segment>
+
+    <ion-list>
+        <!-- <ion-item ">
+            <ion-label></ion-label>
+        </ion-item>  -->
+
+        <!-- 
+           
+       -->
+
+        <ion-item *ngFor="let ground of grounds  | filtro:type:'type'" routerLink="/beds/{{ground.id}}">
+            <ion-card class="ioncardground">
+
+                <ion-item>
+                    <ion-avatar slot="start">
+                        <ion-img src="/assets/imgwireframe/image.png"></ion-img>
+                    </ion-avatar>
+                    <ion-label>{{ground.name}}</ion-label>
+                    <ion-icon name="ellipsis-vertical-outline" slot="end"></ion-icon>
+                </ion-item>
+
+                <ion-card-content class="ioncardcontent">
+                    <ion-item>
+                        <ion-card *ngIf="ground.number_bed != 0">
+                            <ion-item>
+                                <ion-avatar slot="start">
+                                    <ion-img src="/assets/imgwireframe/image.png"></ion-img>
+                                </ion-avatar>
+                                <ion-label>{{ground.number_bed}}</ion-label>
+                            </ion-item>
+                        </ion-card>
+                        <ion-card *ngIf="ground.number_furrow != 0">
+                            <ion-item>
+                                <ion-avatar slot="start">
+                                    <ion-img src="/assets/imgwireframe/image.png"></ion-img>
+                                </ion-avatar>
+                                <ion-label>{{ground.number_furrow}}</ion-label>
+                            </ion-item>
+                        </ion-card>
+                        <ion-card *ngIf="ground.number_terrace != 0">
+                            <ion-item>
+                                <ion-avatar slot="start">
+                                    <ion-img src="/assets/imgwireframe/image.png"></ion-img>
+                                </ion-avatar>
+                                <ion-label>{{ground.number_terrace}}</ion-label>
+                            </ion-item>
+                        </ion-card>
+                    </ion-item>
+                </ion-card-content>
+            </ion-card>
+        </ion-item>
+    </ion-list>
+
+
+
+</ion-content>

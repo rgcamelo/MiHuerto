@@ -1,0 +1,25 @@
+<ion-item>
+    <ion-card class="ioncardground">
+
+        <ion-item>
+            <ion-avatar class="ionavatarsquare" slot="start">
+                <ion-img src="/assets/imgwireframe/image.png"></ion-img>
+            </ion-avatar>
+            <ion-label>{{name}}</ion-label>
+            <ion-icon name="ellipsis-vertical-outline" slot="end"></ion-icon>
+        </ion-item>
+
+        <ion-card-content class="ioncardcontent">
+            <ion-item>
+                <ion-card *ngIf="plants.length > 0">
+                    <ion-item class="ioncardcontent">
+                        <ion-avatar *ngFor="let plant of plants" slot="start">
+                            <ion-img src="/assets/imgwireframe/image.png"></ion-img>
+                        </ion-avatar>
+                    </ion-item>
+                </ion-card>
+
+            </ion-item>
+        </ion-card-content>
+    </ion-card>
+</ion-item>
