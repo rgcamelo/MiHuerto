@@ -1,0 +1,70 @@
+<ion-item>
+    <ion-card class="ioncardground">
+        <ion-card-content>
+            <ion-row class="margindata">
+                <ion-col>Nombre</ion-col>
+                <ion-col>Esta</ion-col>
+            </ion-row>
+            <ion-row class="margindata">
+                <ion-col>Nombre</ion-col>
+                <ion-col>Esta</ion-col>
+            </ion-row>
+            <ion-row class="margindata">
+                <ion-col>Nombre</ion-col>
+                <ion-col>Esta</ion-col>
+            </ion-row>
+            <ion-row class="margindata">
+                <ion-col>Nombre</ion-col>
+                <ion-col>Esta</ion-col>
+            </ion-row>
+            <ion-row class="margindata">
+                <ion-col>Nombre</ion-col>
+                <ion-col>Esta</ion-col>
+            </ion-row>
+            <ion-row class="margindata">
+                <ion-col>Nombre</ion-col>
+                <ion-col>Esta</ion-col>
+            </ion-row>
+            <ion-button color="danger" expand="block" fill="outline" shape="round">
+                Cosechar
+            </ion-button>
+        </ion-card-content>
+
+        <ion-card>
+            <ion-segment scrollable="true" value="">
+
+                <ion-segment-button value="">
+                    <ion-icon name="grid-outline"></ion-icon>
+                </ion-segment-button>
+                <ion-segment-button value="Riego">
+                    <ion-icon name="water-outline"></ion-icon>
+                </ion-segment-button>
+                <ion-segment-button value="Abono">
+                    <ion-icon name="leaf-outline"></ion-icon>
+                </ion-segment-button>
+                <ion-segment-button value="Plagas">
+                    <ion-icon name="bug-outline"></ion-icon>
+                </ion-segment-button>
+                <ion-segment-button value="Revision">
+                    <ion-icon name="eye-outline"></ion-icon>
+                </ion-segment-button>
+
+
+            </ion-segment>
+
+            <div class="timeline">
+                <div *ngFor="let care of cares" class="container right">
+                    <div class="content">
+                        <h2>{{care.type}}</h2>
+                    </div>
+                </div>
+            </div>
+
+            <ion-list>
+                <ion-item>
+                    <ion-label>Awesome Label</ion-label>
+                </ion-item>
+            </ion-list>
+        </ion-card>
+    </ion-card>
+</ion-item>

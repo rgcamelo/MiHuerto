@@ -5,9 +5,27 @@
 </ion-header>
 
 <ion-content>
+
+    <ion-card *ngIf="plants.length > 1" class="selectorplant">
+        <ion-segment class="selectorplant" scrollable="true" value="" (ionChange)="segmentChanged($event)">
+            <ion-segment-button value="">
+                <ion-icon name="grid-outline"></ion-icon>
+            </ion-segment-button>
+            <ion-segment-button *ngFor="let plant of plants " [value]="plant.name">
+                <ion-icon name="grid-outline"></ion-icon>
+            </ion-segment-button>
+        </ion-segment>
+    </ion-card>
+
     <ion-list>
-        <ion-item *ngFor="let plant of plants">
+        <app-plant-item [id]="plant.id" *ngFor="let plant of plants | filtro:name:'name'"></app-plant-item>
+    </ion-list>
+
+
+    <!--
+       <ion-item>
             <ion-label>{{plant.name}}</ion-label>
         </ion-item>
-    </ion-list>
+   -->
+
 </ion-content>
