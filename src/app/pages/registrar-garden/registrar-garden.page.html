@@ -1,0 +1,32 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-title>
+            Registrar Huerto
+        </ion-title>
+        <ion-buttons slot="start">
+            <ion-back-button defaultHref="" (click)="cancelar()"></ion-back-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+<ion-content>
+    <ion-card>
+        <form #formulario="ngForm" (ngSubmit)="onSubmit(formulario)">
+
+            <ion-item>
+                <ion-label position="floating">Nombre</ion-label>
+                <ion-input type="text" required name="name" [(ngModel)]="garden.name"></ion-input>
+            </ion-item>
+
+            <hr>
+
+            <ion-button [disabled]="formulario.invalid" type="submit">
+                Registrar
+            </ion-button>
+            <ion-button (click)="cancelar()" color="danger">
+                Cancelar
+            </ion-button>
+
+
+        </form>
+    </ion-card>
+</ion-content>

@@ -6,20 +6,50 @@
 
 <ion-content>
 
-    <ion-card *ngIf="plants.length > 1" class="selectorplant">
+    <!--
+        <ion-card *ngIf="plants.length > 1" class="selectorplant">
         <ion-segment class="selectorplant" scrollable="true" value="" (ionChange)="segmentChanged($event)">
-            <ion-segment-button value="">
-                <ion-icon name="grid-outline"></ion-icon>
-            </ion-segment-button>
-            <ion-segment-button *ngFor="let plant of plants " [value]="plant.name">
-                <ion-icon name="grid-outline"></ion-icon>
-            </ion-segment-button>
+            <div *ngFor="let plant of plants; let i = index">
+                <ion-segment-button [ngClass]="{'segment-button-checked' : i == 0}" [value]="plant.name">
+                    <ion-icon name="grid-outline"></ion-icon>
+                </ion-segment-button>
+            </div>
+
         </ion-segment>
     </ion-card>
+    -->
 
-    <ion-list>
-        <app-plant-item [id]="plant.id" *ngFor="let plant of plants | filtro:name:'name'"></app-plant-item>
-    </ion-list>
+
+
+    <!--
+        <app-plant-item [id]="plant.id " *ngFor="let plant of plants | filtro:name: 'name' "></app-plant-item>
+    -->
+
+    <ion-grid fixed>
+        <ion-row>
+            <ion-col size="12" size-lg="3" size-md="4" size-sm="6" size-xs="6" *ngFor="let plant of plants; let i = index">
+                <ion-card routerLink="./plant/{{plant.id}}">
+                    <ion-item>
+                        <ion-button fill="clear" slot="end">
+                            <ion-icon slot="icon-only" name="ellipsis-vertical-outline"></ion-icon>
+                        </ion-button>
+                    </ion-item>
+
+                    <ion-img class="animated fadeIn fast imgcomplete" src="/assets/imgwireframe/image1.png"></ion-img>
+
+                    <ion-card-content>
+                        <ion-card-title>{{plant.name}}</ion-card-title>
+                    </ion-card-content>
+                </ion-card>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+
+
+
+
+
+
 
 
     <!--

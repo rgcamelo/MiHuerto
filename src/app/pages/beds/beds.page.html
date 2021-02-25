@@ -1,26 +1,29 @@
 <ion-header>
     <ion-toolbar>
-        <ion-title>beds</ion-title>
+        <ion-title>Camas</ion-title>
     </ion-toolbar>
 </ion-header>
 
 <ion-content>
 
-    <ion-segment>
-        <ion-segment-button value="friends ">
+    <ion-segment *ngIf="typeg != 'seedbed' " value="" (ionChange)="segmentChanged($event)">
+        <ion-segment-button value="">
+            <ion-icon name="grid-outline"></ion-icon>
+        </ion-segment-button>
+        <ion-segment-button value="terrace">
             <ion-label>Bancales</ion-label>
         </ion-segment-button>
-        <ion-segment-button value="enemies ">
+        <ion-segment-button value="furrow">
             <ion-label>Surco</ion-label>
         </ion-segment-button>
     </ion-segment>
 
     <!-- 
-        <ion-item *ngFor="let bed of beds" routerLink="/plants/{{bed.id}}">
+        <ion-item *ngFor="let bed of beds " routerLink="/plants/{{bed.id}} ">
             <ion-label></ion-label>
         </ion-item>
     -->
     <ion-list>
-        <app-bed-item [id]="bed.id" [name]="bed.name" *ngFor="let bed of beds" routerLink="/plants/{{bed.id}}"></app-bed-item>
+        <app-bed-item [id]="bed.id " [name]="bed.name " *ngFor="let bed of beds | filtro:type:'type'" routerLink="./plants/{{bed.id}}"></app-bed-item>
     </ion-list>
 </ion-content>

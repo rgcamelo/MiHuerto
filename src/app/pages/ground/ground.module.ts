@@ -5,7 +5,6 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 
 import { GroundPageRoutingModule } from './ground-routing.module';
-
 import { GroundPage } from './ground.page';
 import { PipesModule } from '../../pipes/pipes.module';
 
@@ -15,7 +14,7 @@ import { PipesModule } from '../../pipes/pipes.module';
     FormsModule,
     IonicModule,
     GroundPageRoutingModule,
-    PipesModule
+    PipesModule,
   ],
   declarations: [GroundPage]
 })

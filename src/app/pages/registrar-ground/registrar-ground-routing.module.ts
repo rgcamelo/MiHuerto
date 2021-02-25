@@ -1,15 +1,12 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { GroundPage } from './ground.page';
+import { RegistrarGroundPage } from './registrar-ground.page';
 
 const routes: Routes = [
   {
     path: '',
-    component: GroundPage,
-    children:[
-      
-    ]
+    component: RegistrarGroundPage
   }
 ];
 
@@ -17,4 +14,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class GroundPageRoutingModule {}
+export class RegistrarGroundPageRoutingModule {}

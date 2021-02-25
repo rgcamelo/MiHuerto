@@ -16,6 +16,10 @@ export class GroundService {
     return this.http.get<T>(query);
   }
 
+  getGround(id:string){
+    return this.ejecutarQuery<Ground>(`grounds/${id}`);
+  }
+
   getBeds(id:string){
     return this.ejecutarQuery<BedObject>(`grounds/${id}/beds`);
   }

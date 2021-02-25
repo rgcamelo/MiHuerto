@@ -4,21 +4,19 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { BedsPageRoutingModule } from './beds-routing.module';
+import { GardensPageRoutingModule } from './gardens-routing.module';
 
-import { BedsPage } from './beds.page';
+import { GardensPage } from './gardens.page';
 import { ComponentsModule } from '../../components/components.module';
-import { PipesModule } from '../../pipes/pipes.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    ComponentsModule,
-    BedsPageRoutingModule,
-    PipesModule
+    GardensPageRoutingModule,
+    ComponentsModule
   ],
-  declarations: [BedsPage]
+  declarations: [GardensPage]
 })
-export class BedsPageModule {}
+export class GardensPageModule {}

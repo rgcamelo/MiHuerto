@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { GardenService } from '../../services/garden.service';
 import { ActivatedRoute } from '@angular/router';
+import { ModalController } from '@ionic/angular';
+import { RegistrarGroundPage } from '../registrar-ground/registrar-ground.page';
 
 @Component({
   selector: 'app-ground',
@@ -15,10 +17,11 @@ export class GroundPage implements OnInit {
   grounds: Ground[] =[];
 
   constructor(private gardenService:GardenService,
-    private route: ActivatedRoute ) { }
+    private route: ActivatedRoute,
+    private modalCtrl: ModalController, ) { }
 
   ngOnInit(){
-    this.cargarName();
+    //this.cargarName();
     this.cargarGrounds();
   }
 
@@ -27,17 +30,25 @@ export class GroundPage implements OnInit {
     //console.log(this.reference);
     this.gardenService.getGrounds(this.reference).subscribe(resp =>{
       this.grounds.push(...resp.data);
-      console.log(this.grounds);
-    });
-  }
 
-  cargarName(){
-    this.nameHuerto = this.route.snapshot.paramMap.get('name').toString();
+    });
   }
 
   segmentChanged(event){
     //console.log(event.detail.value);
     this.type = event.detail.value;
+  }
+
+  async registrarGround(){
+    const modal = await this.modalCtrl.create({
+      component: RegistrarGroundPage,
+    });
+    await modal.present();
+
+    const { data } = await modal.onDidDismiss();
+    
+    this.cargarGrounds();
+    
   }
 
 }

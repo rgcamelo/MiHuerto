@@ -1,0 +1,39 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-title>
+            Huertos
+        </ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+    <ion-list>
+        <!--</ion-item> *ngFor="let garden of gardens" routerLink="/grounds/{{garden.id}}" -->
+        <ion-item *ngFor="let garden of gardens">
+            <!--<ion-label></ion-label>-->
+            <ion-card>
+                <ion-card-header>
+                    <ion-img routerLink="./grounds/{{garden.id}}" class="ionimghuerto" src="/assets/imgwireframe/image.png"></ion-img>
+                    <ion-card-subtitle>Huerto</ion-card-subtitle>
+                    <ion-item>
+                        <ion-card-title routerLink="./grounds/{{garden.id}}">{{garden.name}}</ion-card-title>
+                        <ion-button (click)="presentActionSheet(garden.id)" slot="end" fill="clear">
+                            <ion-icon name="ellipsis-vertical-outline" slot="icon-only"></ion-icon>
+                        </ion-button>
+                    </ion-item>
+                </ion-card-header>
+            </ion-card>
+
+        </ion-item>
+
+    </ion-list>
+
+    <ion-fab (click)="registrarGarden()" vertical="bottom" horizontal="end" slot="fixed">
+        <ion-fab-button>
+            <ion-icon name="add"></ion-icon>
+        </ion-fab-button>
+    </ion-fab>
+
+
+</ion-content>

@@ -14,7 +14,8 @@ import { ComponentsModule } from '../../components/components.module';
     CommonModule,
     FormsModule,
     TabsPageRoutingModule,
-    ComponentsModule
+    ComponentsModule,
+
   ],
   declarations: [TabsPage]
 })

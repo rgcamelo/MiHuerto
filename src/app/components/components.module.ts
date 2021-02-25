@@ -4,14 +4,15 @@ import { IonicModule } from '@ionic/angular';
 import { BedItemComponent } from './bed-item/bed-item.component';
 import { PlantItemComponent } from './plant-item/plant-item.component';
 
+
 @NgModule({
   declarations: [
       BedItemComponent,
-      PlantItemComponent
+      PlantItemComponent,
   ],
   exports:[
       BedItemComponent,
-      PlantItemComponent
+      PlantItemComponent,
   ],
   imports: [
     CommonModule,

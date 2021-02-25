@@ -1,3 +1,4 @@
+
 interface GardenObject {
   data: Garden[];
   meta: Meta;
@@ -33,3 +34,4 @@ interface Link {
   rel: string;
   href: string;
 }
+

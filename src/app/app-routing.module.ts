@@ -6,17 +6,22 @@ const routes: Routes = [
     path: '',
     loadChildren: () => import('./pages/tabs/tabs.module').then(m => m.TabsPageModule)
   },
+
   {
-    path: 'grounds/:name/:id',
-    loadChildren: () => import('./pages/ground/ground.module').then( m => m.GroundPageModule)
+    path: 'gardens',
+    loadChildren: () => import('./pages/gardens/gardens.module').then( m => m.GardensPageModule)
   },
   {
-    path: 'beds/:id',
-    loadChildren: () => import('./pages/beds/beds.module').then( m => m.BedsPageModule)
+    path: 'plant',
+    loadChildren: () => import('./pages/plant/plant.module').then( m => m.PlantPageModule)
   },
   {
-    path: 'plants/:id',
-    loadChildren: () => import('./pages/plants/plants.module').then( m => m.PlantsPageModule)
+    path: 'registrar-garden',
+    loadChildren: () => import('./pages/registrar-garden/registrar-garden.module').then( m => m.RegistrarGardenPageModule)
+  },
+  {
+    path: 'registrar-ground',
+    loadChildren: () => import('./pages/registrar-ground/registrar-ground.module').then( m => m.RegistrarGroundPageModule)
   }
 ];
 @NgModule({

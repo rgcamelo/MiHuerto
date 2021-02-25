@@ -8,16 +8,9 @@ import { GardenService } from '../../services/garden.service';
 })
 export class Tab1Page implements OnInit {
 
-  constructor(private gardenService:GardenService) {}
+  constructor() {}
 
   ngOnInit(){
-    this.cargarGardens();
-  }
-
-  cargarGardens(){
-    this.gardenService.getGardens().subscribe(resp =>{
-      console.log(resp);
-    });
   }
 
 }

@@ -8,19 +8,9 @@ import { GardenService } from '../../services/garden.service';
 })
 export class Tab2Page implements OnInit {
 
-  gardens : Garden[] = []
-
-  constructor(private gardenService:GardenService) {}
-
+  constructor() {}
   ngOnInit(){
-    this.cargarGardens();
-  }
-
-  cargarGardens(){
-    this.gardenService.getGardens().subscribe(resp =>{
-      this.gardens.push(...resp.data);
-      console.log(this.gardens);
-    });
+    
   }
 
 }
