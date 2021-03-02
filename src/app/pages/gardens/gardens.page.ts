@@ -32,6 +32,7 @@ export class GardensPage implements OnInit {
       console.log("Huerto Eliminado");
     });
   }
+  
 
   async registrarGarden(){
     const modal = await this.modalCtrl.create({
@@ -78,6 +79,12 @@ export class GardensPage implements OnInit {
 
   imprimir(){
     console.log("HOla");
+  }
+
+  doRefresh( event){
+    console.log(event);
+    this.cargarGardens();
+    event.target.complete();
   }
   
 

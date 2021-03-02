@@ -22,6 +22,10 @@ const routes: Routes = [
   {
     path: 'registrar-ground',
     loadChildren: () => import('./pages/registrar-ground/registrar-ground.module').then( m => m.RegistrarGroundPageModule)
+  },
+  {
+    path: 'seed',
+    loadChildren: () => import('./pages/seed/seed.module').then( m => m.SeedPageModule)
   }
 ];
 @NgModule({

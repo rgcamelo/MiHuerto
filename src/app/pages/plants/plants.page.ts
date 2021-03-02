@@ -12,14 +12,13 @@ export class PlantsPage implements OnInit {
   reference:string = '';
   name:string ='';
   plants: Plant[] =[];
-  firstname:string ='';
 
   constructor(private bedService:BedService,
     private route: ActivatedRoute ) { }
 
   ngOnInit(){
     this.cargarPlants();
-    console.log(this.firstname);
+    this.cargarBed();
   }
 
   cargarPlants(){
@@ -28,18 +27,13 @@ export class PlantsPage implements OnInit {
     this.bedService.getPlants(this.reference).subscribe(resp =>{
       this.plants.push(...resp.data);
       console.log(this.plants);
-      this.firstname=this.plants[0].name;
-      console.log(this.firstname);
     });
   }
 
-  getFirstName(){
-    
-    for (let index = 0; index < this.plants.length; index++) {
-      console.log("Hola");
-      console.log(this.plants[index]);
-      
-    }
+  cargarBed(){
+    this.bedService.getBed(this.reference).subscribe(res =>{
+      this.name = res.data.name;
+    });
   }
 
   segmentChanged(event){

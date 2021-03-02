@@ -10,7 +10,7 @@ import { ActivatedRoute } from '@angular/router';
 export class PlantPage implements OnInit {
 
   reference:string = '';
-
+  plant:Plant;
   cares: Care[] = [];
 
   constructor(private plantService:PlantService,
@@ -18,6 +18,7 @@ export class PlantPage implements OnInit {
 
   ngOnInit() {
     this.cargarCares();
+    this.cargarPlant();
   }
 
   cargarCares(){
@@ -28,6 +29,13 @@ export class PlantPage implements OnInit {
       this.cares.reverse();
       console.log(this.cares);
     })
+  }
+
+  cargarPlant(){
+    this.plantService.getPlant(this.reference).subscribe(res =>{
+      console.log(res.data);
+      this.plant.name = res.data.name;
+    });
   }
 
 }

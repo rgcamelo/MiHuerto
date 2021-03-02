@@ -23,7 +23,6 @@ export class BedsPage implements OnInit {
   ngOnInit(){
     this.cargarBeds();
     this.getGround();
-    
   }
 
   cargarBeds(){
@@ -37,9 +36,8 @@ export class BedsPage implements OnInit {
 
   getGround(){
     this.groundService.getGround(this.reference).subscribe( data =>{
-      this.nameg = data.name;
+      this.nameg = data.data.name;
     });
-    console.log(this.nameg);
   }
 
   segmentChanged(event){

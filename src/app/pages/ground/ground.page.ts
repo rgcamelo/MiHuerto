@@ -12,6 +12,7 @@ import { RegistrarGroundPage } from '../registrar-ground/registrar-ground.page';
 export class GroundPage implements OnInit {
 
   reference:string = '';
+
   nameHuerto:string = '';
   type:string='';
   grounds: Ground[] =[];
@@ -21,18 +22,27 @@ export class GroundPage implements OnInit {
     private modalCtrl: ModalController, ) { }
 
   ngOnInit(){
-    //this.cargarName();
     this.cargarGrounds();
+    this.cargarNameGarden();
   }
 
   cargarGrounds(){
     this.reference = this.route.snapshot.paramMap.get('id').toString();
-    //console.log(this.reference);
+    console.log(this.reference);
     this.gardenService.getGrounds(this.reference).subscribe(resp =>{
       this.grounds.push(...resp.data);
-
     });
   }
+
+  cargarNameGarden(){
+    this.gardenService.getGarden(this.reference).subscribe( res =>{
+      console.log(res);
+      this.nameHuerto = res.data.name;
+    });
+    
+  }
+
+
 
   segmentChanged(event){
     //console.log(event.detail.value);
@@ -42,6 +52,9 @@ export class GroundPage implements OnInit {
   async registrarGround(){
     const modal = await this.modalCtrl.create({
       component: RegistrarGroundPage,
+      componentProps:{
+        'idGarden' : this.reference,
+      }
     });
     await modal.present();
 

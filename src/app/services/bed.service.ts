@@ -16,6 +16,10 @@ export class BedService {
     return this.http.get<T>(query);
   }
 
+  getBed(id:string){
+    return this.ejecutarQuery<BedOneObject>(`beds/${id}`);
+  }
+
   getPlants(id:string){
     return this.ejecutarQuery<PlantObject>(`beds/${id}/plants`);
   }

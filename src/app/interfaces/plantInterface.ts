@@ -3,6 +3,11 @@ interface PlantObject {
   meta: Meta;
 }
 
+interface PlantOneObject {
+  data: Plant;
+  meta: Meta;
+}
+
 interface Meta {
   pagination: Pagination;
 }

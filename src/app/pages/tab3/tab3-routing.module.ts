@@ -6,6 +6,12 @@ const routes: Routes = [
   {
     path: '',
     component: Tab3Page,
+    children:[
+      {
+        path: '',
+        loadChildren: () => import('../seed/seed.module').then( m => m.SeedPageModule)
+      }
+    ]
   }
 ];
 

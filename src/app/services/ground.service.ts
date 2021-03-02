@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
+import { Bed } from '../models/bed.model';
 
 const apiUrl = environment.apiUrl;
 
@@ -16,11 +17,20 @@ export class GroundService {
     return this.http.get<T>(query);
   }
 
+  private postejecutarQuery<T>(query:string,object:any){
+    query = apiUrl+query;
+    return this.http.post<T>(query,object);
+  }
+
   getGround(id:string){
-    return this.ejecutarQuery<Ground>(`grounds/${id}`);
+    return this.ejecutarQuery<GroundOneObject>(`grounds/${id}`);
   }
 
   getBeds(id:string){
     return this.ejecutarQuery<BedObject>(`grounds/${id}/beds`);
+  }
+
+  createBed(id:string,bed:Bed){
+    return this.postejecutarQuery<BedObject>(`grounds/${id}/beds`,bed);
   }
 }

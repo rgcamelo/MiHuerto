@@ -2,12 +2,12 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 
-const apiUrl = environment.apiUrl;
 
+const apiUrl = environment.apiUrl;
 @Injectable({
   providedIn: 'root'
 })
-export class PlantService {
+export class SeedService {
 
   constructor(private http:HttpClient) { }
 
@@ -16,11 +16,7 @@ export class PlantService {
     return this.http.get<T>(query);
   }
 
-  getPlant(id:string){
-     return this.ejecutarQuery<PlantOneObject>(`plants/${id}`);
-  }
-
-  getCares(id:string){
-    return this.ejecutarQuery<CareObject>(`plants/${id}/cares`);
+  getSeeds(){
+    return this.ejecutarQuery<SeedObject>(`seeds`);
   }
 }

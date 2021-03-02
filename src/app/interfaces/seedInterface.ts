@@ -1,10 +1,5 @@
-interface BedObject {
-  data: Bed[];
-  meta: Meta;
-}
-
-interface BedOneObject {
-  data: Bed;
+interface SeedObject {
+  data: Seed[];
   meta: Meta;
 }
 
@@ -22,14 +17,13 @@ interface Pagination {
 }
 
 interface Links {
+  next: string;
 }
 
-interface Bed {
+interface Seed {
   id: number;
   name: string;
   status: string;
-  type: string;
-  zona: string;
   created_at: string;
   updated_at: string;
   deleted_at?: any;

@@ -4,6 +4,11 @@ interface GardenObject {
   meta: Meta;
 }
 
+interface GardenOneObject {
+  data: Garden;
+  meta: Meta;
+}
+
 interface Meta {
   pagination: Pagination;
 }

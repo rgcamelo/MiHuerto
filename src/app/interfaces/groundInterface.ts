@@ -3,6 +3,11 @@ interface GroundObject {
   meta: Meta;
 }
 
+interface GroundOneObject{
+  data: Ground;
+  meta: Meta;
+}
+
 interface Meta {
   pagination: Pagination;
 }
@@ -24,6 +29,9 @@ interface Ground {
   name: string;
   status: string;
   type: string;
+  number_bed: number;
+  number_furrow: number;
+  number_terrace: number;
   huerto: number;
   created_at: string;
   updated_at: string;

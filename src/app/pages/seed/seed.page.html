@@ -1,0 +1,13 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-title>Semillas</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <ion-list>
+        <ion-item *ngFor="let seed of seeds">
+            <ion-label>{{seed.name}}</ion-label>
+        </ion-item>
+    </ion-list>
+</ion-content>
