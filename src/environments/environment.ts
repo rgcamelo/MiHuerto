@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'http://huerto.test/'
+  apiUrl: 'http://huerto.test/',
+  apiMoon: 'https://www.icalendar37.net/lunar/api/',
 };
 
 /*

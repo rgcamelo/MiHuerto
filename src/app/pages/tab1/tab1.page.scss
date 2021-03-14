@@ -1,0 +1,76 @@
+.divmoon {
+    display: table;
+    margin: 20px auto;
+    text-align: center;
+    color: black;
+    border: 1px solid black;
+    padding: 5px 30px;
+}
+
+.divmoon [shadow] {
+    filter: drop-shadow(0 0 25px rgb(0, 50, 50));
+    padding: 15px 0;
+}
+
+#ex1 {
+    display: table;
+    margin: 20px auto;
+    text-align: center;
+    color: black;
+    border: 1px solid black;
+    padding: 5px 30px;
+}
+
+#ex1 [shadow] {
+    filter: drop-shadow(0 0 25px rgb(0, 50, 50));
+    padding: 15px 0;
+}
+
+#ex2 {
+    width: 100%;
+    margin: 20px auto;
+    color: white;
+    background-color: black;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+}
+
+#ex2>b {
+    display: block;
+    font-size: 24px;
+}
+
+#ex2>div {
+    display: inline-block;
+    vertical-align: top;
+}
+
+#ex2>div>div {
+    border: 1px solid rgba(255, 255, 255, .5);
+    margin: 1%;
+    padding: 1%;
+}
+
+#ex2>div>div>span {
+    position: absolute;
+    font-size: 32px;
+    color: rgba(255, 255, 255, .5);
+    text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+}
+
+#ex2>div>div>div {
+    font-size: 16px;
+    text-align: center;
+    overflow-x: hidden;
+}
+
+#ex2>div>div>svg {
+    width: 95%;
+    display: block;
+    margin: 10px auto 0 auto;
+}
+
+.contentpadding {
+    padding: 15px;
+}

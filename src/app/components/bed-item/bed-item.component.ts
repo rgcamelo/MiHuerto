@@ -19,6 +19,8 @@ export class BedItemComponent implements OnInit {
     this.cargarPlants();
   }
 
+  
+
   cargarPlants(){
     this.bedService.getPlants(this.id).subscribe(resp =>{
       this.plants.push(...resp.data);

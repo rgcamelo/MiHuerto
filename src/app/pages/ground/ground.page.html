@@ -1,8 +1,12 @@
 <ion-header>
     <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-back-button defaultHref="/"></ion-back-button>
+        </ion-buttons>
         <ion-title>{{nameHuerto}}</ion-title>
     </ion-toolbar>
 </ion-header>
+
 
 <ion-content>
 
@@ -31,9 +35,16 @@
             <ion-card class="ioncardground">
 
                 <ion-item>
-                    <ion-avatar slot="start">
-                        <ion-img src="/assets/imgwireframe/image.png"></ion-img>
-                    </ion-avatar>
+                    <div *ngIf="ground.type == 'module'">
+                        <ion-avatar slot="start">
+                            <ion-img src="/assets/img/modulo.jpg"></ion-img>
+                        </ion-avatar>
+                    </div>
+                    <div *ngIf="ground.type == 'seedbed'">
+                        <ion-avatar slot="start">
+                            <ion-img src="/assets/img/semillero.jpg"></ion-img>
+                        </ion-avatar>
+                    </div>
                     <ion-label>{{ground.name}}</ion-label>
                     <ion-icon name="ellipsis-vertical-outline" slot="end"></ion-icon>
                 </ion-item>
@@ -43,7 +54,7 @@
                         <ion-card *ngIf="ground.number_bed != 0">
                             <ion-item>
                                 <ion-avatar slot="start">
-                                    <ion-img src="/assets/imgwireframe/image.png"></ion-img>
+                                    <ion-img src="/assets/img/bandeja.jpg"></ion-img>
                                 </ion-avatar>
                                 <ion-label>{{ground.number_bed}}</ion-label>
                             </ion-item>
@@ -51,7 +62,7 @@
                         <ion-card *ngIf="ground.number_furrow != 0">
                             <ion-item>
                                 <ion-avatar slot="start">
-                                    <ion-img src="/assets/imgwireframe/image.png"></ion-img>
+                                    <ion-img src="/assets/img/surco.jpg"></ion-img>
                                 </ion-avatar>
                                 <ion-label>{{ground.number_furrow}}</ion-label>
                             </ion-item>
@@ -59,7 +70,7 @@
                         <ion-card *ngIf="ground.number_terrace != 0">
                             <ion-item>
                                 <ion-avatar slot="start">
-                                    <ion-img src="/assets/imgwireframe/image.png"></ion-img>
+                                    <ion-img src="/assets/img/bancal.jpg"></ion-img>
                                 </ion-avatar>
                                 <ion-label>{{ground.number_terrace}}</ion-label>
                             </ion-item>

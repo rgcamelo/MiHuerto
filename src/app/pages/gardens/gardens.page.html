@@ -17,10 +17,9 @@
         <ion-item *ngFor="let garden of gardens" class="animate__animated animate__fadeIn animate__faster">
             <!--<ion-label></ion-label>-->
             <ion-card>
-                <ion-img routerLink="./grounds/{{garden.id}}" class="ionimghuerto" src="/assets/imgwireframe/image.png"></ion-img>
+                <ion-img routerLink="./grounds/{{garden.id}}" class="ionimghuerto" src="http://huerto.test/img/{{garden.image}}"></ion-img>
 
                 <ion-card-header>
-                    <ion-card-subtitle>Huerto</ion-card-subtitle>
                     <ion-item>
                         <ion-card-title routerLink="./grounds/{{garden.id}}">{{garden.name}}</ion-card-title>
                         <ion-button (click)="presentActionSheet(garden.id)" slot="end" fill="clear">

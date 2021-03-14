@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { GardenService } from '../../services/garden.service';
 
 @Component({
   selector: 'app-tab2',
