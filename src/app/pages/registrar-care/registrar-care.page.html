@@ -1,0 +1,45 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-title>RegistrarCare</ion-title>
+        <ion-buttons slot="start">
+            <ion-back-button defaultHref="" (click)="cancelar()"></ion-back-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <ion-card>
+        <form #formulario="ngForm" (ngSubmit)="onSubmit(formulario)">
+
+            <ion-item>
+                <ion-label position="floating">Tipo</ion-label>
+                <ion-select [(ngModel)]="care.type" name="type" placeholder="Seleccione el tipo de cuidado">
+                    <ion-select-option value="eye">Revision</ion-select-option>
+                    <ion-select-option value="water">Riego</ion-select-option>
+                    <ion-select-option value="manuere">Abono</ion-select-option>
+                    <ion-select-option value="plague">Control de Plagas</ion-select-option>
+                </ion-select>
+            </ion-item>
+
+            <hr>
+
+            <ion-item>
+                <ion-label position="stacked">Descripcion</ion-label>
+                <ion-textarea name="description" maxlength="500" autoGrow="true" [(ngModel)]="care.description" required placeholder="Introduzca descripcion">
+
+                </ion-textarea>
+            </ion-item>
+
+            <hr>
+
+            <ion-button [disabled]="formulario.invalid" type="submit">
+                Registrar
+            </ion-button>
+            <ion-button (click)="cancelar()" color="danger">
+                Cancelar
+            </ion-button>
+
+
+        </form>
+    </ion-card>
+</ion-content>

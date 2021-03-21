@@ -4,19 +4,17 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { PlantPageRoutingModule } from './plant-routing.module';
+import { RegistrarPlantPageRoutingModule } from './registrar-plant-routing.module';
 
-import { PlantPage } from './plant.page';
-import { PipesModule } from '../../pipes/pipes.module';
+import { RegistrarPlantPage } from './registrar-plant.page';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    PlantPageRoutingModule,
-    PipesModule
+    RegistrarPlantPageRoutingModule
   ],
-  declarations: [PlantPage]
+  declarations: [RegistrarPlantPage]
 })
-export class PlantPageModule {}
+export class RegistrarPlantPageModule {}

@@ -26,6 +26,14 @@ const routes: Routes = [
   {
     path: 'seed',
     loadChildren: () => import('./pages/seed/seed.module').then( m => m.SeedPageModule)
+  },
+  {
+    path: 'registrar-plant',
+    loadChildren: () => import('./pages/registrar-plant/registrar-plant.module').then( m => m.RegistrarPlantPageModule)
+  },
+  {
+    path: 'registrar-care',
+    loadChildren: () => import('./pages/registrar-care/registrar-care.module').then( m => m.RegistrarCarePageModule)
   }
 ];
 @NgModule({

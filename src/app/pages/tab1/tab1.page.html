@@ -1,8 +1,10 @@
 <ion-content class="contentpadding">
 
-    <div id="ex1"></div>
+    <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)" pullFactor="0.8" pullMin="60" pullMax="120">
+        <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
 
-    <div class="divmoon">
+    <div class="divmoon animate__animated animate__fadeIn animate__faster">
         <div>
             <b>
                 {{nameDay}}
@@ -13,14 +15,52 @@
                     {{monthName}}
                 </b> {{moonYear}}
             </div>
-            <div shadow>
-                {{moonImage}}
+            <div class="noclick" shadow>
+                <div [innerHtml]="moonImage | safeHtml">
+                </div>
             </div>
             <div>
-                {{phaseName }}
+                {{phaseName}}
             </div>
         </div>
     </div>
 
-    <div id="ex2"></div>
+
+    <div class="divphases animate__animated animate__fadeIn animate__faster">
+        <div class="divtitlephases">
+            <b>
+                {{ monthName + moonYear}}
+            </b>
+
+        </div>
+        <ion-row class="rowcenter ">
+            <div *ngFor="let limit of limits" style='width:22.5%'>
+                <ion-col>
+                    <div>
+                        <span>
+                        {{limit.nday}}
+                    </span>
+                        <div [innerHtml]="limit.svg | safeHtml">
+                        </div>
+                        <div>
+                            {{limit.phasename}}
+                        </div>
+                    </div>
+                </ion-col>
+            </div>
+        </ion-row>
+    </div>
+
+    <ion-card class="animate__animated animate__fadeIn animate__faster">
+        <ion-item>
+            <ion-title class="titlecenter">Actividades para Ciclo lunar</ion-title>
+        </ion-item>
+
+        <div>
+            <ion-item *ngFor="let activity of activities">
+                <ion-label>{{activity.name}}</ion-label>
+            </ion-item>
+        </div>
+    </ion-card>
+
 </ion-content>

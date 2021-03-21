@@ -37,6 +37,7 @@ export class BedsPage implements OnInit {
   getGround(){
     this.groundService.getGround(this.reference).subscribe( data =>{
       this.nameg = data.data.name;
+      this.typeg = data.data.type;
     });
   }
 

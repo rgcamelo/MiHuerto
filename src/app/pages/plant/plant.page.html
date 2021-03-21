@@ -1,8 +1,12 @@
 <ion-header>
     <ion-toolbar>
-        <ion-title>plant</ion-title>
+        <ion-buttons slot="start">
+            <ion-back-button defaultHref="/"></ion-back-button>
+        </ion-buttons>
+        <ion-title>Información</ion-title>
     </ion-toolbar>
 </ion-header>
+
 
 <ion-content>
     <ion-item>
@@ -10,64 +14,88 @@
             <ion-card-content>
                 <ion-row class="margindata">
                     <ion-col>Nombre</ion-col>
-                    <ion-col>Esta</ion-col>
+                    <ion-col>{{plant.nombre}}</ion-col>
                 </ion-row>
                 <ion-row class="margindata">
-                    <ion-col>Nombre</ion-col>
-                    <ion-col>Esta</ion-col>
+                    <ion-col>Cantidad</ion-col>
+                    <ion-col>{{plant.cantidad}}</ion-col>
                 </ion-row>
                 <ion-row class="margindata">
-                    <ion-col>Nombre</ion-col>
-                    <ion-col>Esta</ion-col>
+                    <ion-col>Huerto</ion-col>
+                    <ion-col>{{plant.huerto}}</ion-col>
                 </ion-row>
                 <ion-row class="margindata">
-                    <ion-col>Nombre</ion-col>
-                    <ion-col>Esta</ion-col>
+                    <ion-col>Zona</ion-col>
+                    <ion-col>{{plant.zona}}</ion-col>
                 </ion-row>
                 <ion-row class="margindata">
-                    <ion-col>Nombre</ion-col>
-                    <ion-col>Esta</ion-col>
+                    <ion-col>Cama</ion-col>
+                    <ion-col>{{plant.cama}}</ion-col>
                 </ion-row>
                 <ion-row class="margindata">
-                    <ion-col>Nombre</ion-col>
-                    <ion-col>Esta</ion-col>
+                    <ion-col>Fecha de Plantacion</ion-col>
+                    <ion-col>{{plant.fechaPlantacion}}</ion-col>
                 </ion-row>
-                <ion-button color="danger" expand="block" fill="outline" shape="round">
-                    Cosechar
-                </ion-button>
             </ion-card-content>
 
             <ion-card>
-                <ion-segment scrollable="true" value="">
+                <ion-segment (ionChange)="segmentChanged($event)" scrollable=" true " value="">
 
                     <ion-segment-button value="">
                         <ion-icon name="grid-outline"></ion-icon>
                     </ion-segment-button>
-                    <ion-segment-button value="Riego">
+                    <ion-segment-button value="water">
                         <ion-icon name="water-outline"></ion-icon>
                     </ion-segment-button>
-                    <ion-segment-button value="Abono">
+                    <ion-segment-button value="manure">
                         <ion-icon name="leaf-outline"></ion-icon>
                     </ion-segment-button>
-                    <ion-segment-button value="Plagas">
+                    <ion-segment-button value="plague">
                         <ion-icon name="bug-outline"></ion-icon>
                     </ion-segment-button>
-                    <ion-segment-button value="Revision">
+                    <ion-segment-button value="Corte">
+                        <ion-icon name="checkmark-outline"></ion-icon>
+                    </ion-segment-button>
+                    <ion-segment-button value="eye">
                         <ion-icon name="eye-outline"></ion-icon>
                     </ion-segment-button>
 
 
                 </ion-segment>
-
-                <div class="timeline">
-                    <div *ngFor="let care of cares" class="container right">
-                        <div class="content">
-                            <h2></h2>
+                <div class="maxim ">
+                    <div class="timeline ">
+                        <div *ngFor="let care of cares | filtro:typeCare:'type' " class="container right ">
+                            <div class="content ">
+                                <span><h2 class="nomargin ">{{care.type}}</h2> {{care.created_at}}</span>
+                                <p>{{care.description}}</p>
+                            </div>
                         </div>
                     </div>
                 </div>
+
             </ion-card>
         </ion-card>
     </ion-item>
+
+    <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+        <ion-fab-button>
+            <ion-icon name="briefcase-outline"></ion-icon>
+        </ion-fab-button>
+        <ion-fab-list side="top">
+            <ion-fab-button color="danger">
+                <ion-icon name="logo-vimeo"></ion-icon>
+            </ion-fab-button>
+            <ion-fab-button color="primary">
+                <ion-icon name="logo-vimeo"></ion-icon>
+            </ion-fab-button>
+            <ion-fab-button color="warning">
+                <ion-icon name="logo-vimeo"></ion-icon>
+            </ion-fab-button>
+            <ion-fab-button (click)="registrarCare()" color="success">
+                <ion-icon name="reader-outline"></ion-icon>
+            </ion-fab-button>
+
+        </ion-fab-list>
+    </ion-fab>
 
 </ion-content>

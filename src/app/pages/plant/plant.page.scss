@@ -7,6 +7,13 @@ body {
     font-family: Helvetica, sans-serif;
 }
 
+.maxim {
+    display: block;
+    max-height: 500px;
+    overflow-y: scroll;
+    scroll-behavior: smooth;
+}
+
 
 /* The actual timeline (the vertical ruler) */
 
@@ -23,7 +30,7 @@ body {
     content: '';
     position: absolute;
     width: 6px;
-    background-color: white;
+    background-color: gray;
     top: 0;
     bottom: 0;
     left: 50%;
@@ -77,9 +84,9 @@ body {
     width: 0;
     z-index: 1;
     left: 30px;
-    border: medium solid white;
+    border: medium solid gray;
     border-width: 10px 10px 10px 0;
-    border-color: transparent white transparent transparent;
+    border-color: transparent gray transparent transparent;
 }
 
 
@@ -93,10 +100,17 @@ body {
 /* The actual content */
 
 .content {
-    padding: 20px 30px;
+    padding: 10px;
     background-color: white;
     position: relative;
     border-radius: 6px;
+    border-style: solid;
+    border-color: gray;
+    border-width: 1.5px;
+}
+
+.nomargin {
+    margin: 0px;
 }
 
 
@@ -116,9 +130,9 @@ body {
     /* Make sure that all arrows are pointing leftwards */
     .container::before {
         left: 60px;
-        border: medium solid white;
+        border: medium solid gray;
         border-width: 10px 10px 10px 0;
-        border-color: transparent white transparent transparent;
+        border-color: transparent gray transparent transparent;
     }
     /* Make sure all circles are at the same spot */
     .left::after,

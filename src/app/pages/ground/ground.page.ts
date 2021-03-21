@@ -31,6 +31,7 @@ export class GroundPage implements OnInit {
     console.log(this.reference);
     this.gardenService.getGrounds(this.reference).subscribe(resp =>{
       this.grounds.push(...resp.data);
+      console.log(this.grounds);
     });
   }
 

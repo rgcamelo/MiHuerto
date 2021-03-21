@@ -57,7 +57,7 @@ export class RegistrarGroundPage implements OnInit {
     let furrow:Bed = new Bed();
     furrow.type='furrow'
     for (let i = 0; i < nfurrow; i++) {
-      furrow.name="Surco "+i;
+      furrow.name=`Surco ${i}`;
       this.groundService.createBed(idGround,furrow).subscribe(res =>{
         console.log(res);
       })

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { limitDay } from 'src/app/models/moon.model';
 import { MoonService } from '../../services/moon.service';
-
 
 
 @Component({
@@ -20,6 +20,9 @@ export class Tab1Page implements OnInit {
   phaseName:string;
   phaseLimit:string;
   ligth:string;
+
+  limits:limitDay[] = [];
+  activities:string[] = [];
 
   constructor(private moonService:MoonService) {
   }
@@ -46,40 +49,45 @@ export class Tab1Page implements OnInit {
 
   
   ngOnInit(){
-    //this.load_moon_phases(this.configMoon,this.example_1);
-    //this.load_moon_phases(this.configMoon2,this.example_2);
-    //this.load_moon_phases(this.configMoon,this.obtenerNombre);
     this.cargarMoon();
   }
 
   cargarMoon(){
     this.moonService.getMoon(this.configMoon).subscribe( res =>{
       this.moonPhase(res);
+      
+    })
+    this.moonService.getMoon(this.configMoon2).subscribe(res =>{
+      this.moonPhases(res);
     })
   }
 
-  load_moon_phases(obj,callback){
-    let gets=[]
-    for (var i in obj){
-        gets.push(i + "=" +encodeURIComponent(obj[i]))
+  cargarActivities(phase:string){
+    this.activities = [];
+    if (phase == "Cuarto menguante" || phase=="Menguante") {
+      this.moonService.getCMActivities().subscribe(res =>{
+        this.activities.push(...res);
+      })
     }
-    gets.push("LDZ=" + new Date(obj.year,obj.month-1,1).getTime()/1000);
-    let xmlhttp = new XMLHttpRequest();
-    let url = "https://www.icalendar37.net/lunar/api/?" + gets.join("&")
-    console.log(gets);
-    xmlhttp.onreadystatechange = function() {
-        if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-            callback(JSON.parse(xmlhttp.responseText))
-        }
-    }
-    console.log(url);
-    xmlhttp.open("GET", url, true);
-    xmlhttp.send();
-  }
 
-  obtenerNombre(moon){
-    var day = new Date().getDate();
-    return moon.phase[day].phaseName;
+    if (phase =="Luna nueva") {
+      this.moonService.getLNActivities().subscribe(res =>{
+        this.activities.push(...res);
+      })
+    }
+
+    if (phase =="Creciente" || phase=="Cuarto creciente") {
+      this.moonService.getCCActivities().subscribe(res =>{
+        this.activities.push(...res);
+      })
+    }
+
+    if (phase =="Luna llena") {
+      this.moonService.getLLActivities().subscribe(res =>{
+        this.activities.push(...res);
+      })
+    }
+    
   }
 
   moonPhase(moon:LunarObject){    
@@ -95,46 +103,29 @@ export class Tab1Page implements OnInit {
   this.phaseLimit = moon.phase[this.day].isPhaseLimit;
   this.ligth = moon.phase[this.day].lighting;
 
-  var html = "<div>" +
-  "<b>" + moon.nameDay[dayWeek]+ "</b>" +
-  "<div>" + this.day + " <b>" + moon.monthName + "</b> " +
-  moon.year + "</div>" +
-  "<div shadow>" + moon.phase[this.day].svg + "</div>" +
-  "<div>" + moon.phase[this.day].phaseName + " " +
-  "" + ((moon.phase[this.day].isPhaseLimit )? ""  :   Math.round(moon.phase[this.day].lighting) + "%") +
-  "</div>" +
-  "</div>";
-  document.getElementById("ex1").innerHTML = html;
+  this.cargarActivities(this.phaseName);
+  } 
+
   
-} 
 
-example_2(moon){     
-  var phMax = []
-  for (var nDay in moon.phase){
-      if (moon.phase[nDay].isPhaseLimit){
-          phMax.push(
-              '<ion-col>'+
-              '<div>' +
-              '<span>' + nDay + '</span>' +
-              moon.phase[nDay].svg  +
-              '<div>' + moon.phase[nDay].phaseName  + '</div>' +
-              '</div>'+
-              '</ion-col>' 
-          ) 
+  moonPhases(moon:LunarObject){
+    this.limits = [];
+    for (let nDay in moon.phase) {
+      if (moon.phase[nDay].isPhaseLimit) {
+        let limitday:limitDay = new limitDay();
+        limitday.nday = nDay;
+        limitday.svg = moon.phase[nDay].svg;
+        limitday.phasename = moon.phase[nDay].phaseName;
+        this.limits.push(limitday);
       }
+    }
   }
-  var width = 90 / phMax.length
-  var html = "<b>" + moon.monthName + " "+ moon.year + "</b>"
-  html += '<ion-row>'
-  phMax.forEach(function(element){
-      html += '<div style="width:'+width+'%">' + element + '</div>' 
-  })
-  html += '</ion-row>'
-  document.getElementById("ex2").innerHTML = html
-}   
 
-
-
-
+  doRefresh( event){
+    this.cargarMoon();
+    event.target.complete();
+  }
 
 }
+
+

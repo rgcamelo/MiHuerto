@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { ModalController } from '@ionic/angular';
 import { BedService } from 'src/app/services/bed.service';
+import { RegistrarPlantPage } from '../registrar-plant/registrar-plant.page';
 
 @Component({
   selector: 'app-plants',
@@ -14,6 +16,7 @@ export class PlantsPage implements OnInit {
   plants: Plant[] =[];
 
   constructor(private bedService:BedService,
+    private modalCtrl: ModalController,
     private route: ActivatedRoute ) { }
 
   ngOnInit(){
@@ -36,9 +39,20 @@ export class PlantsPage implements OnInit {
     });
   }
 
-  segmentChanged(event){
-    this.name = event.detail.value;
+  async registrarPlant(){
+    const modal = await this.modalCtrl.create({
+      component: RegistrarPlantPage,
+      componentProps:{
+        'idBed' : this.reference,
+      }
+    });
+    await modal.present();
+
+    await modal.onDidDismiss().then( () =>{
+      this.cargarPlants();
+    });
   }
+
 
 
 }

@@ -94,3 +94,4 @@ interface _1 {
   dayWeek: number;
   npWidget: string;
 }
+

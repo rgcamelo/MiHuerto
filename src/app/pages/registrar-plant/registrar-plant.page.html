@@ -1,0 +1,42 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-title>RegistrarPlant</ion-title>
+        <ion-buttons slot="start">
+            <ion-back-button defaultHref="" (click)="cancelar()"></ion-back-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <ion-card>
+        <form #formulario="ngForm" (ngSubmit)="onSubmit(formulario)">
+
+
+
+            <ion-item>
+                <ion-label position="floating">Tipo</ion-label>
+                <ion-select [(ngModel)]="idSeed" name="idSeed" placeholder="Elija la semilla">
+                    <ion-select-option *ngFor="let seed of seeds" value="{{seed.id}}">{{seed.name}}</ion-select-option>
+                </ion-select>
+            </ion-item>
+
+            <hr>
+
+            <ion-item>
+                <ion-label position="floating">Cantidad a Plantar:</ion-label>
+                <ion-input type="number" required name="quantity" [(ngModel)]="plant.quantity"></ion-input>
+            </ion-item>
+
+            <hr>
+
+            <ion-button [disabled]="formulario.invalid" type="submit">
+                Registrar
+            </ion-button>
+            <ion-button (click)="cancelar()" color="danger">
+                Cancelar
+            </ion-button>
+
+
+        </form>
+    </ion-card>
+</ion-content>

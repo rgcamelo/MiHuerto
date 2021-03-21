@@ -24,4 +24,20 @@ export class MoonService {
     gets.push("LDZ=" + new Date(lunarVariables.year,lunarVariables.month-1,1).getTime()/1000);
     return this.ejecutarQuery<LunarObject>(gets.join("&"));
   }
+
+  getCMActivities(){
+    return this.http.get<any>('/assets/data/activitiesCM.json');
+  }
+
+  getLNActivities(){
+    return this.http.get<any>('/assets/data/activitiesLN.json');
+  }
+
+  getCCActivities(){
+    return this.http.get<any>('/assets/data/activitiesCC.json');
+  }
+
+  getLLActivities(){
+    return this.http.get<any>('/assets/data/activitiesLL.json');
+  }
 }

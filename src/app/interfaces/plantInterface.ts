@@ -22,15 +22,19 @@ interface Pagination {
 }
 
 interface Links {
-  next: string;
 }
 
 interface Plant {
   id: number;
   name: string;
   status: string;
+  quantity: number;
   seed: number;
+  seed_name: string;
   bed: number;
+  bed_name: string;
+  ground_name: string;
+  garden_name: string;
   created_at: string;
   updated_at: string;
   deleted_at?: any;
