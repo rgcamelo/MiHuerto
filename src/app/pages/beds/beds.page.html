@@ -3,30 +3,38 @@
         <ion-buttons slot="start">
             <ion-back-button defaultHref="/"></ion-back-button>
         </ion-buttons>
-        <ion-title>{{nameg}}</ion-title>
+        <ion-title>{{ground.name}}</ion-title>
     </ion-toolbar>
 </ion-header>
 
 <ion-content>
 
-    <ion-segment *ngIf="typeg != 'seedbed' " value="" (ionChange)="segmentChanged($event)">
-        <ion-segment-button value="">
-            <ion-icon name="grid-outline"></ion-icon>
-        </ion-segment-button>
-        <ion-segment-button value="terrace">
-            <ion-label>Bancales</ion-label>
-        </ion-segment-button>
-        <ion-segment-button value="furrow">
-            <ion-label>Surco</ion-label>
-        </ion-segment-button>
-    </ion-segment>
+    <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)" pullFactor="0.8" pullMin="60" pullMax="120">
+        <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
+
+    <ng-container *ngIf="ground.type">
+        <ion-segment *ngIf="ground.number_furrow > 0 && ground.number_terrace > 0" value="" (ionChange)="segmentChanged($event)">
+            <ion-segment-button value="">
+                <ion-icon name="grid-outline"></ion-icon>
+            </ion-segment-button>
+            <ion-segment-button value="terrace">
+                <ion-label>Bancales</ion-label>
+            </ion-segment-button>
+            <ion-segment-button value="furrow">
+                <ion-label>Surco</ion-label>
+            </ion-segment-button>
+        </ion-segment>
+    </ng-container>
+
+
 
     <!-- 
         <ion-item *ngFor="let bed of beds " routerLink="/plants/{{bed.id}} ">
             <ion-label></ion-label>
         </ion-item>
     -->
-    <ion-list>
-        <app-bed-item [id]="bed.id " [name]="bed.name " *ngFor="let bed of beds | filtro:type:'type'" routerLink="./plants/{{bed.id}}"></app-bed-item>
+    <ion-list lines="true">
+        <app-bed-item class="animate__animated animate__fadeIn animate__faster" [id]="bed.id" [name]="bed.name" *ngFor="let bed of beds | filtro:type:'type'" routerLink="./plants/{{bed.id}}"></app-bed-item>
     </ion-list>
 </ion-content>

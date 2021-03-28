@@ -31,10 +31,11 @@ export class PlantPage implements OnInit {
     this.reference = this.route.snapshot.paramMap.get('id').toString();
     this.plantService.getCares(this.reference).subscribe(resp =>{
       
-      this.cares.push(...resp.data);
+      this.cares = [...resp.data];
       this.cares.reverse();
       console.log(this.cares);
     })
+    
   }
 
   cargarPlant(){
@@ -60,11 +61,19 @@ export class PlantPage implements OnInit {
 
     await modal.onDidDismiss().then( () =>{
       //this.cargarPlants();
+      this.cargarCares();
     });
+
   }
 
   segmentChanged(event){
     this.typeCare = event.detail.value;
+  }
+
+  async doRefresh( event?){
+    console.log(event);
+    await this.cargarCares();
+    event.target.complete();
   }
 
 }

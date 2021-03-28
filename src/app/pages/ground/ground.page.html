@@ -31,22 +31,24 @@
            
        -->
 
-        <ion-item *ngFor="let ground of grounds  | filtro:type:'type'" routerLink="./beds/{{ground.id}}">
+        <ion-item *ngFor="let ground of grounds  | filtro:type:'type'">
             <ion-card class="ioncardground">
 
                 <ion-item>
-                    <div *ngIf="ground.type == 'module'">
+                    <div routerLink="./beds/{{ground.id}}" *ngIf="ground.type == 'module'">
                         <ion-avatar slot="start">
                             <ion-img src="/assets/img/modulo.jpg"></ion-img>
                         </ion-avatar>
                     </div>
-                    <div *ngIf="ground.type == 'seedbed'">
+                    <div routerLink="./beds/{{ground.id}}" *ngIf="ground.type == 'seedbed'">
                         <ion-avatar slot="start">
                             <ion-img src="/assets/img/semillero.jpg"></ion-img>
                         </ion-avatar>
                     </div>
-                    <ion-label>{{ground.name}}</ion-label>
-                    <ion-icon name="ellipsis-vertical-outline" slot="end"></ion-icon>
+                    <ion-label routerLink="./beds/{{ground.id}}"> {{ground.name}}</ion-label>
+                    <ion-button (click)="presentActionSheet(ground.id)" slot="end" fill="clear">
+                        <ion-icon name="ellipsis-vertical-outline" slot="icon-only"></ion-icon>
+                    </ion-button>
                 </ion-item>
 
                 <ion-card-content class="ioncardcontent">
@@ -80,6 +82,7 @@
             </ion-card>
         </ion-item>
     </ion-list>
+
 
     <ion-fab (click)="registrarGround()" vertical="bottom" horizontal="end" slot="fixed">
         <ion-fab-button>

@@ -22,6 +22,11 @@ export class BedService {
     return this.http.post<T>(query,object);
   }
 
+  private deleteejecutarQuery<T>(query:string){
+    query = apiUrl+query;
+    return this.http.delete<T>(query);
+  }
+
   getBed(id:string){
     return this.ejecutarQuery<BedOneObject>(`beds/${id}`);
   }
@@ -32,5 +37,9 @@ export class BedService {
 
   createPlant(idBed:string,idSeed:string,plant:Plant){
     return this.postejecutarQuery<PlantObject>(`beds/${idBed}/seed/${idSeed}/plants`,plant);
+  }
+
+  deletePlant(idBed:string,idSeed:string,idPlant:string){
+    return this.deleteejecutarQuery<PlantOneObject>(`beds/${idBed}/seed/${idSeed}/plants/${idPlant}`);
   }
 }

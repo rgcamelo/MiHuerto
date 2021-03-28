@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ModalController } from '@ionic/angular';
+import { IonList, ModalController } from '@ionic/angular';
 import { BedService } from 'src/app/services/bed.service';
+import { PlantService } from 'src/app/services/plant.service';
 import { RegistrarPlantPage } from '../registrar-plant/registrar-plant.page';
 
 @Component({
@@ -10,7 +11,7 @@ import { RegistrarPlantPage } from '../registrar-plant/registrar-plant.page';
   styleUrls: ['./plants.page.scss'],
 })
 export class PlantsPage implements OnInit {
-
+  @ViewChild(IonList) ionList: IonList;
   reference:string = '';
   name:string ='';
   plants: Plant[] =[];
@@ -28,7 +29,7 @@ export class PlantsPage implements OnInit {
     this.reference = this.route.snapshot.paramMap.get('id').toString();
     console.log(this.reference);
     this.bedService.getPlants(this.reference).subscribe(resp =>{
-      this.plants.push(...resp.data);
+      this.plants = [...resp.data];
       console.log(this.plants);
     });
   }
@@ -48,9 +49,26 @@ export class PlantsPage implements OnInit {
     });
     await modal.present();
 
-    await modal.onDidDismiss().then( () =>{
-      this.cargarPlants();
-    });
+    const { data } = await modal.onDidDismiss();
+
+    // await modal.onDidDismiss().then( () =>{
+    //   this.cargarPlants();
+    // });
+    this.cargarPlants();
+  }
+
+  async doRefresh( event){
+    console.log(event);
+    await this.cargarPlants();
+    event.target.complete();
+  }
+
+
+  async desplantar(idBed:string,idSeed:string,idPlant:string){
+    this.bedService.deletePlant(idBed,idSeed,idPlant).subscribe(res => {
+      console.log(res);
+      this.ionList.closeSlidingItems();
+    })
   }
 
 

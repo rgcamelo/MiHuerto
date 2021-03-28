@@ -26,11 +26,20 @@ export class PlantService {
      return this.ejecutarQuery<PlantOneObject>(`plants/${id}`);
   }
 
+
   createCare(id:string,care:Care){
     return this.postejecutarQuery<CareObject>(`plants/${id}/cares`,care);
   }
 
   getCares(id:string){
     return this.ejecutarQuery<CareObject>(`plants/${id}/cares`);
+  }
+
+  createCrop(id:string,care:Care){
+    return this.postejecutarQuery<CropObject>(`plants/${id}/cares`,care);
+  }
+
+  getCrops(id:string){
+    return this.ejecutarQuery<CropObject>(`plants/${id}/crops`);
   }
 }

@@ -9,6 +9,10 @@
 
 <ion-content>
 
+    <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)" pullFactor="0.8" pullMin="60" pullMax="120">
+        <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
+
     <!--
         <ion-card *ngIf="plants.length > 1" class="selectorplant">
         <ion-segment class="selectorplant" scrollable="true" value="" (ionChange)="segmentChanged($event)">
@@ -27,26 +31,36 @@
     <!--
         <app-plant-item [id]="plant.id " *ngFor="let plant of plants | filtro:name: 'name' "></app-plant-item>
     -->
+    <ion-list lines="true">
 
-    <ion-grid fixed>
-        <ion-row>
-            <ion-col size="12" size-lg="3" size-md="4" size-sm="6" size-xs="6" *ngFor="let plant of plants; let i = index">
-                <ion-card routerLink="./plant/{{plant.id}}">
-                    <ion-item>
-                        <ion-button fill="clear" slot="end">
-                            <ion-icon slot="icon-only" name="ellipsis-vertical-outline"></ion-icon>
-                        </ion-button>
-                    </ion-item>
+        <ion-item-sliding class="animate__animated animate__fadeIn animate__faster" *ngFor="let plant of plants">
 
-                    <ion-img class="animated fadeIn fast imgcomplete" src="/assets/imgwireframe/image1.png"></ion-img>
+            <ion-item-options side="start">
+                <ion-item-option>
+                    <ion-icon slot="icon-only" name="build-outline"></ion-icon>
+                </ion-item-option>
+            </ion-item-options>
 
-                    <ion-card-content>
-                        <ion-card-title>{{plant.name}}</ion-card-title>
-                    </ion-card-content>
-                </ion-card>
-            </ion-col>
-        </ion-row>
-    </ion-grid>
+            <ion-item routerLink="./plant/{{plant.id}}">
+                <ion-avatar slot="start">
+                    <img src="/assets/imgwireframe/image.png">
+                </ion-avatar>
+                <ion-label>
+                    <h3>{{plant.name}}</h3>
+                    <p>Cantidad Plantada:{{plant.quantity}}</p>
+                </ion-label>
+                <ion-label slot="end" class="ion-text-end text-small">{{plant.status}}</ion-label>
+            </ion-item>
+
+            <ion-item-options side="end">
+                <ion-item-option (click)="desplantar(plant.bed,plant.seed,plant.id)" color="danger">
+                    <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+                </ion-item-option>
+            </ion-item-options>
+
+        </ion-item-sliding>
+
+    </ion-list>
 
 
     <ion-fab (click)="registrarPlant()" vertical="bottom" horizontal="end" slot="fixed">
@@ -54,6 +68,28 @@
             <ion-icon name="add"></ion-icon>
         </ion-fab-button>
     </ion-fab>
+
+    <!-- <ion-grid fixed>
+        <ion-row>
+            <ion-col size="12 " size-lg="3 " size-md="4 " size-sm="6 " size-xs="6 " *ngFor="let plant of plants; let i=i ndex ">
+                <ion-card routerLink="./plant/{{plant.id}} ">
+                    <ion-item>
+                        <ion-button fill="clear " slot="end ">
+                            <ion-icon slot="icon-only " name="ellipsis-vertical-outline "></ion-icon>
+                        </ion-button>
+                    </ion-item>
+
+                    <ion-img class="animated fadeIn fast imgcomplete " src="/assets/imgwireframe/image1.png "></ion-img>
+
+                    <ion-card-content>
+                        <ion-card-title>{{plant.name}}</ion-card-title>
+                    </ion-card-content>
+                </ion-card>
+            </ion-col>
+        </ion-row>
+    </ion-grid> -->
+
+
 
     <!--
        <ion-item>

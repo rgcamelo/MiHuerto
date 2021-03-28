@@ -23,7 +23,7 @@ export class GardensPage implements OnInit {
 
   cargarGardens(){
     this.gardenService.getGardens().subscribe(resp =>{
-      this.gardens = resp.data;
+      this.gardens = [...resp.data];
     });
   }
 
@@ -48,7 +48,7 @@ export class GardensPage implements OnInit {
 
   async presentActionSheet(id:string) {
     const actionSheet = await this.actionSheetCtrl.create({
-      header: 'Albums',
+      header: 'Opciones',
       cssClass: 'my-custom-class',
       backdropDismiss: false,
       buttons: [{

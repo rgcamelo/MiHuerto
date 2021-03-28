@@ -19,6 +19,12 @@
 
             <hr>
 
+            <ion-item>
+                <ion-input type="file" placeholder="Seleccionar imagen" required name="image" [(ngModel)]="garden.image"></ion-input>
+            </ion-item>
+
+            <hr>
+
             <ion-button [disabled]="formulario.invalid" type="submit">
                 Registrar
             </ion-button>

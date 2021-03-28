@@ -22,6 +22,11 @@ export class GroundService {
     return this.http.post<T>(query,object);
   }
 
+  private deleteejecutarQuery<T>(query:string){
+    query = apiUrl+query;
+    return this.http.delete<T>(query);
+  }
+
   getGround(id:string){
     return this.ejecutarQuery<GroundOneObject>(`grounds/${id}`);
   }
@@ -32,5 +37,10 @@ export class GroundService {
 
   createBed(id:string,bed:Bed){
     return this.postejecutarQuery<BedObject>(`grounds/${id}/beds`,bed);
+  }
+
+  deleteBed(idGround:string,idBed:string){
+    console.log(idGround,idBed);
+    return this.deleteejecutarQuery<BedObject>(`grounds/${idGround}/beds/${idBed}`);
   }
 }
