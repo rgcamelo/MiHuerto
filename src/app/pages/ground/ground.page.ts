@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { ActionSheetController, ModalController } from '@ionic/angular';
 import { RegistrarGroundPage } from '../registrar-ground/registrar-ground.page';
 import { GroundService } from '../../services/ground.service';
+import { Ground } from 'src/app/models/ground.model';
 
 @Component({
   selector: 'app-ground',
@@ -25,17 +26,55 @@ export class GroundPage implements OnInit {
     private actionSheetCtrl: ActionSheetController) { }
 
   ngOnInit(){
-    this.cargarGrounds();
+    
+  }
+
+  ionViewWillEnter(){
+    this.doRefresh();
     this.cargarNameGarden();
   }
 
-  cargarGrounds(){
+  loadData(event){
+    this.cargarGrounds(event);
+    if (event) {
+      event.target.complete();
+    }
+  }
+
+  doRefresh(event?){
+    this.grounds = [];
+    this.reloadGround();
+    if (event) {
+      event.target.complete();
+    }
+    
+  }
+
+  reloadGround(){
+    this.reference = this.route.snapshot.paramMap.get('id').toString();
+    this.gardenService.getReloadGrounds(this.reference).subscribe(resp =>{
+      this.grounds.push(...resp.data);
+    });
+  }
+
+  cargarGrounds(event?){
     this.reference = this.route.snapshot.paramMap.get('id').toString();
     console.log(this.reference);
     this.gardenService.getGrounds(this.reference).subscribe(resp =>{
+
+      if( resp.data.length === 0){
+        if (event) {
+          event.target.complete();
+        }
+        
+      }
       this.grounds.push(...resp.data);
       console.log(this.grounds);
     });
+
+    if(event){
+      event.target.complete();
+    }
   }
 
   cargarNameGarden(){
@@ -64,7 +103,7 @@ export class GroundPage implements OnInit {
 
     const { data } = await modal.onDidDismiss();
     
-    this.cargarGrounds();
+    this.doRefresh();
     
   }
 
@@ -82,13 +121,19 @@ export class GroundPage implements OnInit {
           this.limpiarZona(id);
         }
       }, {
-        text: 'Update',
-        icon: 'pencil-outline',
+        text: 'Desplante',
+        icon: 'trash',
         handler: () => {
-          console.log('Share clicked');
+          this.LimpiarPlantas(id);
         }
       }, {
-        text: 'Cancel',
+        text: 'Regar Zona',
+        icon: 'trash',
+        handler: () => {
+          this.regarZona(id);
+        }
+      }, {
+        text: 'Cancelar',
         icon: 'close',
         role: 'cancel',
         handler: () => {
@@ -101,13 +146,54 @@ export class GroundPage implements OnInit {
 
 
   limpiarZona(id:string){
-    this.groundService.getBeds(id).subscribe( res =>{
-      res.data.forEach( bed =>{
-        this.groundService.deleteBed(id,bed.id.toString()).subscribe( res =>{
-          console.log(res);
-        });
-      })
-    })
+
+    this.groundService.getGround(id).subscribe(res => {
+      let ground:Ground = new Ground();
+      ground.status = 'vacio';
+      ground.number_furrow = 0;
+      ground.number_terrace = 0;
+      ground.number_bed = 0;
+
+      this.gardenService.updateGround(this.reference,id,ground).subscribe( res =>{
+        console.log(res);
+      });
+    });
+
+    this.doRefresh();
   }
+
+  LimpiarPlantas(id:string){
+    this.groundService.getGround(id).subscribe( res =>{
+      let ground:Ground = new Ground();
+
+      ground.status = 'desplante';
+      ground.number_furrow = res.data.number_furrow;
+      ground.number_terrace = res.data.number_terrace;
+      ground.number_bed = res.data.number_bed;
+
+      this.gardenService.updateGround(this.reference,id,ground).subscribe( res => {
+        console.log(res);
+      });
+    });
+    this.doRefresh();
+  }
+
+  regarZona(id:string){
+    this.groundService.getGround(id).subscribe(res =>{
+      let ground:Ground = new Ground();
+
+      ground.status = 'riego';
+      ground.number_furrow = res.data.number_furrow;
+      ground.number_terrace = res.data.number_terrace;
+      ground.number_bed = res.data.number_bed;
+
+      this.gardenService.updateGround(this.reference,id,ground).subscribe( res => {
+        console.log(res);
+      });
+    });
+    this.doRefresh();
+  }
+
+  
 
 }

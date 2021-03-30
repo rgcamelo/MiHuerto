@@ -13,7 +13,7 @@ export class BedItemComponent implements OnInit {
 
   plants: Plant[] =[];
 
-  constructor(private bedService:BedService,) { }
+  constructor(private bedService:BedService) { }
 
   ngOnInit() {
     this.cargarPlants();
@@ -26,5 +26,16 @@ export class BedItemComponent implements OnInit {
       this.plants.push(...resp.data);
     });
   }
+
+  limpiarBed(){
+    this.bedService.getBed(this.id).subscribe(res =>{
+      res.data.type = 'vacio';
+      
+    })
+  }
+
+   mensaje(){
+     console.log("Mensaje");
+   }
 
 }

@@ -54,14 +54,28 @@ export class RegistrarGroundPage implements OnInit {
 
   generateBedOfModule(nfurrow:number,nterrace:number,idGround:string){
 
-    let furrow:Bed = new Bed();
-    furrow.type='furrow'
-    for (let i = 0; i < nfurrow; i++) {
-      furrow.name=`Surco ${i}`;
-      this.groundService.createBed(idGround,furrow).subscribe(res =>{
-        console.log(res);
-      })
+    if (nfurrow > 0) {
+      let furrow:Bed = new Bed();
+      furrow.type='furrow'
+      for (let i = 0; i < nfurrow; i++) {
+        furrow.name=`Surco ${i}`;
+        this.groundService.createBed(idGround,furrow).subscribe(res =>{
+          console.log(res);
+        })
+      }
     }
+
+    if (nterrace > 0) {
+      let terrace:Bed = new Bed();
+      terrace.type='terrace'
+      for (let i = 0; i < nterrace; i++) {
+        terrace.name=`Bancal ${i}`;
+        this.groundService.createBed(idGround,terrace).subscribe(res =>{
+          console.log(res);
+        })
+      }
+    }
+    
   }
 
   generataBedOfSeedBed(){

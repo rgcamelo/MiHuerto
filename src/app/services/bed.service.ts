@@ -22,6 +22,8 @@ export class BedService {
     return this.http.post<T>(query,object);
   }
 
+  
+
   private deleteejecutarQuery<T>(query:string){
     query = apiUrl+query;
     return this.http.delete<T>(query);
@@ -30,6 +32,8 @@ export class BedService {
   getBed(id:string){
     return this.ejecutarQuery<BedOneObject>(`beds/${id}`);
   }
+
+  
 
   getPlants(id:string){
     return this.ejecutarQuery<PlantObject>(`beds/${id}/plants`);

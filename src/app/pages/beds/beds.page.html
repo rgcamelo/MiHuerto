@@ -35,6 +35,7 @@
         </ion-item>
     -->
     <ion-list lines="true">
-        <app-bed-item class="animate__animated animate__fadeIn animate__faster" [id]="bed.id" [name]="bed.name" *ngFor="let bed of beds | filtro:type:'type'" routerLink="./plants/{{bed.id}}"></app-bed-item>
+
+        <app-bed-item class="animate__animated animate__fadeIn animate__faster" [id]="bed.id" [name]="bed.name" *ngFor="let bed of beds | filtro:type:'type'"></app-bed-item>
     </ion-list>
 </ion-content>

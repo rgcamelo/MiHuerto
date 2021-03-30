@@ -49,7 +49,7 @@
                     <h3>{{plant.name}}</h3>
                     <p>Cantidad Plantada:{{plant.quantity}}</p>
                 </ion-label>
-                <ion-label slot="end" class="ion-text-end text-small">{{plant.status}}</ion-label>
+                <ion-label slot="end" class="ion-text-end text-small">{{plant.status | titlecase}}</ion-label>
             </ion-item>
 
             <ion-item-options side="end">

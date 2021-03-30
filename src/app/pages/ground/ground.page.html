@@ -1,7 +1,7 @@
 <ion-header>
     <ion-toolbar>
         <ion-buttons slot="start">
-            <ion-back-button defaultHref="/"></ion-back-button>
+            <ion-back-button defaultHref="tabs/tab2"></ion-back-button>
         </ion-buttons>
         <ion-title>{{nameHuerto}}</ion-title>
     </ion-toolbar>
@@ -9,6 +9,10 @@
 
 
 <ion-content>
+
+    <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)" pullFactor="0.8" pullMin="60" pullMax="120">
+        <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
 
     <ion-segment value="" (ionChange)="segmentChanged($event)">
         <ion-segment-button value="">
@@ -31,7 +35,7 @@
            
        -->
 
-        <ion-item *ngFor="let ground of grounds  | filtro:type:'type'">
+        <ion-item class="animate__animated animate__fadeIn animate__faster" *ngFor="let ground of grounds  | filtro:type:'type'">
             <ion-card class="ioncardground">
 
                 <ion-item>
@@ -89,6 +93,11 @@
             <ion-icon name="add"></ion-icon>
         </ion-fab-button>
     </ion-fab>
+
+    <ion-infinite-scroll threshold="150px" (ionInfinite)="loadData($event)">
+        <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Cargando data...">
+        </ion-infinite-scroll-content>
+    </ion-infinite-scroll>
 
 
 

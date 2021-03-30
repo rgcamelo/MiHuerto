@@ -11,6 +11,7 @@ const apiUrl = environment.apiUrl;
 })
 
 export class GardenService {
+  pageGrounds=0
 
   constructor(private http:HttpClient) { }
 
@@ -22,6 +23,11 @@ export class GardenService {
   private postejecutarQuery<T>(query:string,object:any){
     query = apiUrl+query;
     return this.http.post<T>(query,object);
+  }
+
+  private updateejecutarQuery<T>(query:string,object:any){
+    query = apiUrl+query;
+    return this.http.put<T>(query,object);
   }
 
   private deleteejecutarQuery<T>(query:string){
@@ -46,11 +52,21 @@ export class GardenService {
     return this.deleteejecutarQuery<GardenObject>(`gardens/${id}`)
   }
 
+  getReloadGrounds(id:string){
+    this.pageGrounds = 1;
+    return this.ejecutarQuery<GroundObject>(`gardens/${id}/grounds?page=1`);
+  }
+
   getGrounds(id:string){
-    return this.ejecutarQuery<GroundObject>(`gardens/${id}/grounds`);
+    this.pageGrounds++;
+    return this.ejecutarQuery<GroundObject>(`gardens/${id}/grounds?page=${this.pageGrounds}`);
   }
 
   createGround(id:string,ground:Ground){
     return this.postejecutarQuery<GroundOneObject>(`gardens/${id}/grounds`,ground);
+  }
+
+  updateGround(idGarden:string,idGround:string,ground:Ground){
+    return this.updateejecutarQuery<GroundOneObject>(`gardens/${idGarden}/grounds/${idGround}`,ground);
   }
 }
