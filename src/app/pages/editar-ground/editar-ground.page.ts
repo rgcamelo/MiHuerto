@@ -1,20 +1,20 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ModalController } from '@ionic/angular';
+import { Bed } from 'src/app/models/bed.model';
 import { GardenService } from 'src/app/services/garden.service';
+import { GroundService } from 'src/app/services/ground.service';
 import { Ground } from '../../models/ground.model';
-import { GroundService } from '../../services/ground.service';
-import { Bed } from '../../models/bed.model';
 
 @Component({
-  selector: 'app-registrar-ground',
-  templateUrl: './registrar-ground.page.html',
-  styleUrls: ['./registrar-ground.page.scss'],
+  selector: 'app-editar-ground',
+  templateUrl: './editar-ground.page.html',
+  styleUrls: ['./editar-ground.page.scss'],
 })
-export class RegistrarGroundPage implements OnInit {
+export class EditarGroundPage implements OnInit {
 
-  ground:Ground = new Ground();
   @Input() idGarden:string;
+  @Input() ground:Ground;
 
   constructor(private modalCtrl:ModalController,
     private gardenService:GardenService,
@@ -23,25 +23,41 @@ export class RegistrarGroundPage implements OnInit {
   ngOnInit() {
   }
 
-  onSubmit(formulario : NgForm){
-    if(this.ground != null){
-      this.gardenService.createGround(this.idGarden,this.ground).subscribe(res =>{
-        if(res!=null){
-          if(this.ground.type == 'module'){
-            this.generateBedOfModule(this.ground.number_furrow,this.ground.number_terrace,res.data.id.toString());
-          }
-          if(this.ground.type == 'seedbed'){
-            this.generataBedOfSeedBed(this.ground.number_bed,res.data.id.toString());
-          }
-        }
-      })
-    }
-
+   onSubmit(formulario : NgForm){
+    this.limpiarZona();
+    
     this.modalCtrl.dismiss('Registrar');
+  }
+
+  generarNuevosBeds(){
+    if(this.ground != null){
+      console.log("Llego");
+      if(this.ground.type == 'module'){
+        this.generateBedOfModule(this.ground.number_furrow,this.ground.number_terrace,this.ground.id.toString());
+      }
+      if(this.ground.type == 'seedbed'){
+        this.generataBedOfSeedBed(this.ground.number_bed,this.ground.id.toString());
+      }
+    }
   }
 
   cancelar(){
     this.modalCtrl.dismiss('Cancelar');
+  }
+
+  async limpiarZona(){
+    if (this.ground.type == 'module') {
+      this.ground.number_bed = 0;
+    }
+
+    if (this.ground.type == 'seedbed') {
+      this.ground.number_furrow = 0;
+      this.ground.number_terrace = 0;
+    }
+    this.ground.status = 'vacio';
+    await this.gardenService.updateGround(this.idGarden,this.ground.id.toString(),this.ground).subscribe( res =>{
+      this.generarNuevosBeds();
+    }); 
   }
 
   generateBedOfModule(nfurrow:number,nterrace:number,idGround:string){
@@ -75,7 +91,7 @@ export class RegistrarGroundPage implements OnInit {
       let bed:Bed = new Bed();
       bed.type='bed'
       for (let i = 0; i < nbed; i++) {
-        bed.name=`Bandeja de Semillas ${i+1}`;
+        bed.name=`Bandeja de Semillas ${i}`;
         this.groundService.createBed(idGround,bed).subscribe(res =>{
           console.log(res);
         })

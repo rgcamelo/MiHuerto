@@ -1,7 +1,7 @@
 <ion-header>
     <ion-toolbar>
         <ion-buttons slot="start">
-            <ion-back-button defaultHref="/"></ion-back-button>
+            <ion-back-button *ngIf="reference" defaultHref="grounds/{{reference}}"></ion-back-button>
         </ion-buttons>
         <ion-title>{{ground.name}}</ion-title>
     </ion-toolbar>
@@ -13,7 +13,7 @@
         <ion-refresher-content></ion-refresher-content>
     </ion-refresher>
 
-    <ng-container *ngIf="ground.type">
+    <ng-container *ngIf="ground.type == 'module'">
         <ion-segment *ngIf="ground.number_furrow > 0 && ground.number_terrace > 0" value="" (ionChange)="segmentChanged($event)">
             <ion-segment-button value="">
                 <ion-icon name="grid-outline"></ion-icon>

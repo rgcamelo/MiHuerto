@@ -5,6 +5,7 @@ import { ActionSheetController, ModalController } from '@ionic/angular';
 import { RegistrarGroundPage } from '../registrar-ground/registrar-ground.page';
 import { GroundService } from '../../services/ground.service';
 import { Ground } from 'src/app/models/ground.model';
+import { EditarGroundPage } from '../editar-ground/editar-ground.page';
 
 @Component({
   selector: 'app-ground',
@@ -107,7 +108,23 @@ export class GroundPage implements OnInit {
     
   }
 
-  async presentActionSheet(id:string) {
+  async editarGround(idGarden:string,ground:Ground){
+    const modal = await this.modalCtrl.create({
+      component: EditarGroundPage,
+      componentProps:{
+        'idGarden' : idGarden,
+        'ground' : ground,
+      }
+    });
+    await modal.present();
+
+    const { data } = await modal.onDidDismiss();
+    
+    this.doRefresh();
+    
+  }
+
+  async presentActionSheet(ground:Ground) {
     const actionSheet = await this.actionSheetCtrl.create({
       header: 'Opciones',
       cssClass: 'my-custom-class',
@@ -118,19 +135,26 @@ export class GroundPage implements OnInit {
         icon: 'trash',
         cssClass:'rojo',
         handler: () => {
-          this.limpiarZona(id);
+          this.limpiarZona(ground);
         }
       }, {
         text: 'Desplante',
-        icon: 'trash',
+        icon: 'shovel.svg',
         handler: () => {
-          this.LimpiarPlantas(id);
+          this.LimpiarPlantas(ground);
         }
       }, {
         text: 'Regar Zona',
         icon: 'trash',
         handler: () => {
-          this.regarZona(id);
+          this.regarZona(ground);
+        }
+      },
+      {
+        text: 'Editar Zona',
+        icon: 'trash',
+        handler: () => {
+          this.editarGround(this.reference,ground);
         }
       }, {
         text: 'Cancelar',
@@ -145,51 +169,32 @@ export class GroundPage implements OnInit {
   }
 
 
-  limpiarZona(id:string){
+  limpiarZona(ground:Ground){
 
-    this.groundService.getGround(id).subscribe(res => {
-      let ground:Ground = new Ground();
       ground.status = 'vacio';
       ground.number_furrow = 0;
       ground.number_terrace = 0;
       ground.number_bed = 0;
 
-      this.gardenService.updateGround(this.reference,id,ground).subscribe( res =>{
+      this.gardenService.updateGround(this.reference,ground.id.toString(),ground).subscribe( res =>{
         console.log(res);
       });
-    });
 
     this.doRefresh();
   }
 
-  LimpiarPlantas(id:string){
-    this.groundService.getGround(id).subscribe( res =>{
-      let ground:Ground = new Ground();
-
-      ground.status = 'desplante';
-      ground.number_furrow = res.data.number_furrow;
-      ground.number_terrace = res.data.number_terrace;
-      ground.number_bed = res.data.number_bed;
-
-      this.gardenService.updateGround(this.reference,id,ground).subscribe( res => {
-        console.log(res);
-      });
+  LimpiarPlantas(ground:Ground){
+    ground.status = 'desplante';
+    this.gardenService.updateGround(this.reference,ground.id.toString(),ground).subscribe( res => {
+      console.log(res);
     });
     this.doRefresh();
   }
 
-  regarZona(id:string){
-    this.groundService.getGround(id).subscribe(res =>{
-      let ground:Ground = new Ground();
-
-      ground.status = 'riego';
-      ground.number_furrow = res.data.number_furrow;
-      ground.number_terrace = res.data.number_terrace;
-      ground.number_bed = res.data.number_bed;
-
-      this.gardenService.updateGround(this.reference,id,ground).subscribe( res => {
-        console.log(res);
-      });
+  regarZona(ground:Ground){
+    ground.status = 'riego'; 
+    this.gardenService.updateGround(this.reference,ground.id.toString(),ground).subscribe( res => {
+      console.log(res);
     });
     this.doRefresh();
   }

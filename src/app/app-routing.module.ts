@@ -34,6 +34,10 @@ const routes: Routes = [
   {
     path: 'registrar-care',
     loadChildren: () => import('./pages/registrar-care/registrar-care.module').then( m => m.RegistrarCarePageModule)
+  },
+  {
+    path: 'editar-ground',
+    loadChildren: () => import('./pages/editar-ground/editar-ground.module').then( m => m.EditarGroundPageModule)
   }
 ];
 @NgModule({

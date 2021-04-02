@@ -1,0 +1,61 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-title>RegistrarGround</ion-title>
+        <ion-buttons slot="start">
+            <ion-back-button defaultHref="" (click)="cancelar()"></ion-back-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <ion-card>
+        <form #formulario="ngForm" (ngSubmit)="onSubmit(formulario)">
+
+            <ion-item>
+                <ion-label position="floating">Nombre</ion-label>
+                <ion-input type="text" required name="name" [(ngModel)]="ground.name"></ion-input>
+            </ion-item>
+
+            <hr>
+
+            <ion-item>
+                <ion-label position="floating">Tipo</ion-label>
+                <ion-select [(ngModel)]="ground.type" name="type" placeholder="Seleccione el tipo de ground">
+                    <ion-select-option value="module">Modulo</ion-select-option>
+                    <ion-select-option value="seedbed">Semillero</ion-select-option>
+                </ion-select>
+            </ion-item>
+
+            <div *ngIf="ground.type">
+                <div *ngIf="ground.type == 'module'">
+                    <ion-item>
+                        <ion-label position="floating">Numero de Surcos</ion-label>
+                        <ion-input type="number" required name="nsurcos" [(ngModel)]="ground.number_furrow"></ion-input>
+                    </ion-item>
+
+                    <ion-item>
+                        <ion-label position="floating">Numero de Bancales</ion-label>
+                        <ion-input type="number" required name="nbancales" [(ngModel)]="ground.number_terrace"></ion-input>
+                    </ion-item>
+                </div>
+
+                <div *ngIf="ground.type == 'seedbed'">
+                    <ion-item>
+                        <ion-label position="floating">Numero de Bandejas</ion-label>
+                        <ion-input type="number" required name="nbandejas" [(ngModel)]="ground.number_bed"></ion-input>
+                    </ion-item>
+                </div>
+            </div>
+
+
+            <ion-button [disabled]="formulario.invalid" type="submit">
+                Registrar
+            </ion-button>
+            <ion-button (click)="cancelar()" color="danger">
+                Cancelar
+            </ion-button>
+
+
+        </form>
+    </ion-card>
+</ion-content>

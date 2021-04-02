@@ -16,8 +16,6 @@ export class BedsPage implements OnInit {
 
   reference:string = '';
   type:string = '';
-  nameg:string='Camas';
-  typeg:string='';
   ground:Ground = new Ground();
   beds: Bed[] =[];
 
@@ -34,8 +32,19 @@ export class BedsPage implements OnInit {
     console.log(this.reference);
     this.groundService.getBeds(this.reference).subscribe(resp =>{
       this.beds = [...resp.data];
+      this.beds.sort( this.ordenar );
       console.log(this.beds);
     });
+  }
+
+  ordenar(a:Bed,b:Bed){
+    if (a.name > b.name) {
+      return 1;
+    }
+    if (a.name < b.name) {
+      return -1;
+    }
+    return 0;
   }
 
   getGround(){
