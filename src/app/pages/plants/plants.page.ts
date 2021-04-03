@@ -4,6 +4,7 @@ import { IonList, ModalController } from '@ionic/angular';
 import { BedService } from 'src/app/services/bed.service';
 import { PlantService } from 'src/app/services/plant.service';
 import { RegistrarPlantPage } from '../registrar-plant/registrar-plant.page';
+import { Plant } from '../../models/plant.model';
 
 @Component({
   selector: 'app-plants',
@@ -64,10 +65,12 @@ export class PlantsPage implements OnInit {
   }
 
 
-  async desplantar(idBed:string,idSeed:string,idPlant:string){
-    this.bedService.deletePlant(idBed,idSeed,idPlant).subscribe(res => {
+  async desplantar(idBed:string,idSeed:string,plant:Plant){
+    plant.status = 'desplantada';
+    this.bedService.updatePlant(idBed,idSeed,plant).subscribe(res => {
       console.log(res);
       this.ionList.closeSlidingItems();
+      this.cargarPlants();
     })
   }
 

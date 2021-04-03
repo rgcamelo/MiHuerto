@@ -9,6 +9,7 @@ const apiUrl = environment.apiUrl;
   providedIn: 'root'
 })
 export class GroundService {
+  pageBeds=0;
 
   constructor(private http:HttpClient) { }
 
@@ -36,8 +37,14 @@ export class GroundService {
     return this.ejecutarQuery<GroundOneObject>(`grounds/${id}`);
   }
 
+  getReloadsBeds(id:string){
+    this.pageBeds= 1;
+    return this.ejecutarQuery<BedObject>(`grounds/${id}/beds?page=${this.pageBeds}`);
+  }
+
   getBeds(id:string){
-    return this.ejecutarQuery<BedObject>(`grounds/${id}/beds`);
+    this.pageBeds++;
+    return this.ejecutarQuery<BedObject>(`grounds/${id}/beds?page=${this.pageBeds}`);
   }
 
   createBed(id:string,bed:Bed){
@@ -48,7 +55,7 @@ export class GroundService {
     return this.deleteejecutarQuery<BedOneObject>(`grounds/${idGround}/beds/${idBed}`);
   }
 
-  // updateBed(bed:Bed,idGround:string,idBed:string){
-  //   return this.updateejecutarQuery<BedOneObject>(``)
-  // }
+  updateBed(idGround:string,idBed:string,bed:Bed){
+    return this.updateejecutarQuery<BedOneObject>(`grounds/${idGround}/beds/${idBed}`,bed);
+  }
 }

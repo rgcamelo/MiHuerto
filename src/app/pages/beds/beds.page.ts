@@ -23,18 +23,50 @@ export class BedsPage implements OnInit {
     private route: ActivatedRoute ) { }
 
   ngOnInit(){
-    this.cargarBeds();
     this.getGround();
+    this.cargarBeds();
+    
   }
 
-  cargarBeds(){
-    this.reference = this.route.snapshot.paramMap.get('id').toString();
-    console.log(this.reference);
-    this.groundService.getBeds(this.reference).subscribe(resp =>{
+  ionViewWillEnter(){
+    this.doRefresh();
+  }
+
+  loadData(event){
+    this.cargarBeds(event);
+    if (event) {
+      event.target.complete();
+    }
+  }
+
+  doRefresh(event?){
+    this.reloadBed();
+    if (event) {
+      event.target.complete();
+    }
+  }
+
+  reloadBed(){
+    this.groundService.getReloadsBeds(this.reference).subscribe(resp =>{
       this.beds = [...resp.data];
+      this.beds.sort( this.ordenar );
+    });
+  }
+
+  cargarBeds(event?){
+    this.groundService.getBeds(this.reference).subscribe(resp =>{
+      if( resp.data.length === 0){
+        if (event) {
+          event.target.complete();
+        }
+      }
+      this.beds.push(...resp.data);
       this.beds.sort( this.ordenar );
       console.log(this.beds);
     });
+    if(event){
+      event.target.complete();
+    }
   }
 
   ordenar(a:Bed,b:Bed){
@@ -48,6 +80,7 @@ export class BedsPage implements OnInit {
   }
 
   getGround(){
+    this.reference = this.route.snapshot.paramMap.get('id').toString();
     this.groundService.getGround(this.reference).subscribe( data =>{
       this.ground = data.data;
     });
@@ -57,10 +90,6 @@ export class BedsPage implements OnInit {
     this.type = event.detail.value;
   }
 
-  async doRefresh( event){
-    console.log(event);
-    await this.cargarBeds();
-    event.target.complete();
-  }
+  
 
 }

@@ -22,7 +22,10 @@ export class BedService {
     return this.http.post<T>(query,object);
   }
 
-  
+  private updateejecutarQuery<T>(query:string,object:any){
+    query = apiUrl+query;
+    return this.http.put<T>(query,object);
+  }
 
   private deleteejecutarQuery<T>(query:string){
     query = apiUrl+query;
@@ -40,7 +43,11 @@ export class BedService {
   }
 
   createPlant(idBed:string,idSeed:string,plant:Plant){
-    return this.postejecutarQuery<PlantObject>(`beds/${idBed}/seed/${idSeed}/plants`,plant);
+    return this.postejecutarQuery<PlantOneObject>(`beds/${idBed}/seed/${idSeed}/plants`,plant);
+  }
+
+  updatePlant(idBed:string,idSeed:string,plant:Plant){
+    return this.updateejecutarQuery<PlantOneObject>(`beds/${idBed}/seed/${idSeed}/plants/${plant.id}`,plant);
   }
 
   deletePlant(idBed:string,idSeed:string,idPlant:string){

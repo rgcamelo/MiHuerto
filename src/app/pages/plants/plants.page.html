@@ -35,12 +35,6 @@
 
         <ion-item-sliding class="animate__animated animate__fadeIn animate__faster" *ngFor="let plant of plants">
 
-            <ion-item-options side="start">
-                <ion-item-option>
-                    <ion-icon slot="icon-only" name="build-outline"></ion-icon>
-                </ion-item-option>
-            </ion-item-options>
-
             <ion-item routerLink="./plant/{{plant.id}}">
                 <ion-avatar slot="start">
                     <img src="/assets/imgwireframe/image.png">
@@ -53,8 +47,8 @@
             </ion-item>
 
             <ion-item-options side="end">
-                <ion-item-option (click)="desplantar(plant.bed,plant.seed,plant.id)" color="danger">
-                    <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+                <ion-item-option (click)="desplantar(plant.bed,plant.seed,plant)" color="danger">
+                    <ion-icon src="./assets/icon/shovel.svg" slot="icon-only" name="trash-outline"></ion-icon>
                 </ion-item-option>
             </ion-item-options>
 

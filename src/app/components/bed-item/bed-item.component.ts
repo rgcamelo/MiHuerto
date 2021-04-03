@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { BedService } from 'src/app/services/bed.service';
+import { GroundService } from '../../services/ground.service';
 
 @Component({
   selector: 'app-bed-item',
@@ -8,12 +9,12 @@ import { BedService } from 'src/app/services/bed.service';
 })
 export class BedItemComponent implements OnInit {
 
-  @Input() name:string;
-  @Input() id:string;
+  @Input() bed:Bed;
 
   plants: Plant[] =[];
 
-  constructor(private bedService:BedService) { }
+  constructor(private bedService:BedService,
+    private groundService:GroundService) { }
 
   ngOnInit() {
     this.cargarPlants();
@@ -22,16 +23,16 @@ export class BedItemComponent implements OnInit {
   
 
   cargarPlants(){
-    this.bedService.getPlants(this.id).subscribe(resp =>{
+    this.bedService.getPlants(this.bed.id.toString()).subscribe(resp =>{
       this.plants.push(...resp.data);
     });
   }
 
   limpiarBed(){
-    this.bedService.getBed(this.id).subscribe(res =>{
-      res.data.type = 'vacio';
-      
-    })
+    this.bed.status = 'vacio'
+    this.groundService.updateBed(this.bed.zona,this.bed.id.toString(),this.bed).subscribe( res =>{
+      console.log(res);
+    });
   }
 
    mensaje(){
