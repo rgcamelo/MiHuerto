@@ -21,10 +21,6 @@ export class RegistrarCarePage implements OnInit {
   }
 
   onSubmit(formulario : NgForm){
-    console.log('submit');
-    console.log(formulario);
-    console.log(this.care);
-
     if(this.care != null){
       this.plantService.createCare(this.idPlant,this.care).subscribe(res =>{
         console.log(res);

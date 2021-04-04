@@ -130,29 +130,21 @@ export class GroundPage implements OnInit {
       cssClass: 'my-custom-class',
       backdropDismiss: false,
       buttons: [{
-        text: 'Limpiar Zona',
-        role: 'destructive',
-        icon: 'trash',
-        cssClass:'rojo',
-        handler: () => {
-          this.limpiarZona(ground);
-        }
-      }, {
         text: 'Desplante',
-        icon: 'shovel.svg',
+        icon: 'assets/icon/pala.svg',
         handler: () => {
           this.LimpiarPlantas(ground);
         }
       }, {
         text: 'Regar Zona',
-        icon: 'trash',
+        icon: 'assets/icon/aspersor.svg',
         handler: () => {
           this.regarZona(ground);
         }
       },
       {
         text: 'Editar Zona',
-        icon: 'trash',
+        icon: 'assets/icon/editar.svg',
         handler: () => {
           this.editarGround(this.reference,ground);
         }

@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
+import { Seed } from '../models/seed.model';
 
 
 const apiUrl = environment.apiUrl;
@@ -14,6 +15,15 @@ export class SeedService {
   private ejecutarQuery<T>(query:string){
     query = apiUrl+query;
     return this.http.get<T>(query);
+  }
+
+  private postejecutarQuery<T>(query:string,object:any){
+    query = apiUrl+query;
+    return this.http.post<T>(query,object);
+  }
+
+  createSeed(seed:Seed){
+    return this.postejecutarQuery<SeedOneObject>(`seeds/`,seed);
   }
 
   getSeeds(){

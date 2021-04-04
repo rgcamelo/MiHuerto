@@ -1,25 +1,24 @@
 <ion-header>
     <ion-toolbar>
-        <ion-title>
-            Registrar Huerto
-        </ion-title>
+        <ion-title>RegistrarSeed</ion-title>
         <ion-buttons slot="start">
             <ion-back-button defaultHref="" (click)="cancelar()"></ion-back-button>
         </ion-buttons>
     </ion-toolbar>
 </ion-header>
+
 <ion-content>
     <ion-card>
         <form #formulario="ngForm" (ngSubmit)="onSubmit(formulario)">
 
             <ion-item>
                 <ion-label position="floating">Nombre</ion-label>
-                <ion-input type="text" required name="name" [(ngModel)]="garden.name"></ion-input>
+                <ion-input type="text" required name="name" [(ngModel)]="seed.name"></ion-input>
             </ion-item>
 
-            <hr>
+            <!-- <hr>
 
-            <!-- <ion-item>
+            <ion-item>
                 <ion-input type="file" placeholder="Seleccionar imagen" required name="image" [(ngModel)]="garden.image"></ion-input>
             </ion-item>
 

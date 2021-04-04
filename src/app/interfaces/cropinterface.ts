@@ -3,6 +3,11 @@ interface CropObject {
   meta: Meta;
 }
 
+interface CropOneObject {
+  data: Crop;
+  meta: Meta;
+}
+
 interface Meta {
   pagination: Pagination;
 }

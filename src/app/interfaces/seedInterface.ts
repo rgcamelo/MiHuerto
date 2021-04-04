@@ -3,6 +3,11 @@ interface SeedObject {
   meta: Meta;
 }
 
+interface SeedOneObject {
+  data: Seed;
+  meta: Meta;
+}
+
 interface Meta {
   pagination: Pagination;
 }

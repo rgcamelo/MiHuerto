@@ -1,0 +1,20 @@
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+
+import { IonicModule } from '@ionic/angular';
+
+import { RegistrarCropPageRoutingModule } from './registrar-crop-routing.module';
+
+import { RegistrarCropPage } from './registrar-crop.page';
+
+@NgModule({
+  imports: [
+    CommonModule,
+    FormsModule,
+    IonicModule,
+    RegistrarCropPageRoutingModule
+  ],
+  declarations: [RegistrarCropPage]
+})
+export class RegistrarCropPageModule {}

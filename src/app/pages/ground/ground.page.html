@@ -39,16 +39,10 @@
             <ion-card class="ioncardground">
 
                 <ion-item>
-                    <div routerLink="./beds/{{ground.id}}" *ngIf="ground.type == 'module'">
-                        <ion-avatar slot="start">
-                            <ion-img src="/assets/img/modulo.jpg"></ion-img>
-                        </ion-avatar>
-                    </div>
-                    <div routerLink="./beds/{{ground.id}}" *ngIf="ground.type == 'seedbed'">
-                        <ion-avatar slot="start">
-                            <ion-img src="/assets/img/semillero.jpg"></ion-img>
-                        </ion-avatar>
-                    </div>
+                    <ion-avatar routerLink="./beds/{{ground.id}}" slot="start">
+                        <img *ngIf="ground.type == 'module'" src="/assets/icon/modulo.svg">
+                        <img *ngIf="ground.type == 'seedbed'" src="/assets/icon/semillero.svg">
+                    </ion-avatar>
                     <ion-label routerLink="./beds/{{ground.id}}"> {{ground.name}}</ion-label>
                     <ion-button (click)="presentActionSheet(ground)" slot="end" fill="clear">
                         <ion-icon name="ellipsis-vertical-outline" slot="icon-only"></ion-icon>
@@ -60,7 +54,7 @@
                         <ion-card *ngIf="ground.number_bed != 0">
                             <ion-item>
                                 <ion-avatar slot="start">
-                                    <ion-img src="/assets/img/bandeja.jpg"></ion-img>
+                                    <ion-img src="/assets/icon/bandejas.svg"></ion-img>
                                 </ion-avatar>
                                 <ion-label>{{ground.number_bed}}</ion-label>
                             </ion-item>
@@ -68,7 +62,7 @@
                         <ion-card *ngIf="ground.number_furrow != 0">
                             <ion-item>
                                 <ion-avatar slot="start">
-                                    <ion-img src="/assets/img/surco.jpg"></ion-img>
+                                    <ion-img src="/assets/icon/surco.svg"></ion-img>
                                 </ion-avatar>
                                 <ion-label>{{ground.number_furrow}}</ion-label>
                             </ion-item>
@@ -76,7 +70,7 @@
                         <ion-card *ngIf="ground.number_terrace != 0">
                             <ion-item>
                                 <ion-avatar slot="start">
-                                    <ion-img src="/assets/img/bancal.jpg"></ion-img>
+                                    <ion-img src="/assets/icon/bancal.svg"></ion-img>
                                 </ion-avatar>
                                 <ion-label>{{ground.number_terrace}}</ion-label>
                             </ion-item>

@@ -10,4 +10,10 @@
             <ion-label>{{seed.name}}</ion-label>
         </ion-item>
     </ion-list>
+
+    <ion-fab (click)="registrarSeed()" vertical="bottom" horizontal="end" slot="fixed">
+        <ion-fab-button>
+            <ion-icon name="add"></ion-icon>
+        </ion-fab-button>
+    </ion-fab>
 </ion-content>

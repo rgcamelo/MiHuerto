@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { Care } from '../models/care.model';
+import { Crop } from '../models/crop.model';
 
 const apiUrl = environment.apiUrl;
 
@@ -35,11 +36,11 @@ export class PlantService {
     return this.ejecutarQuery<CareObject>(`plants/${id}/cares`);
   }
 
-  createCrop(id:string,care:Care){
-    return this.postejecutarQuery<CropObject>(`plants/${id}/cares`,care);
+  createCrop(id:string,crop:Crop){
+    return this.postejecutarQuery<CropOneObject>(`plants/${id}/crop`,crop);
   }
 
   getCrops(id:string){
-    return this.ejecutarQuery<CropObject>(`plants/${id}/crops`);
+    return this.ejecutarQuery<CropObject>(`plants/${id}/crop`);
   }
 }

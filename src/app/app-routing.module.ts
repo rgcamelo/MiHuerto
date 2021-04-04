@@ -38,6 +38,14 @@ const routes: Routes = [
   {
     path: 'editar-ground',
     loadChildren: () => import('./pages/editar-ground/editar-ground.module').then( m => m.EditarGroundPageModule)
+  },
+  {
+    path: 'registrar-crop',
+    loadChildren: () => import('./pages/registrar-crop/registrar-crop.module').then( m => m.RegistrarCropPageModule)
+  },
+  {
+    path: 'registrar-seed',
+    loadChildren: () => import('./pages/registrar-seed/registrar-seed.module').then( m => m.RegistrarSeedPageModule)
   }
 ];
 @NgModule({

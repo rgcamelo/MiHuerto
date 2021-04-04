@@ -6,7 +6,9 @@
 
             <ion-item>
                 <ion-avatar class="ionavatarsquare" slot="start">
-                    <ion-img src="/assets/imgwireframe/image.png"></ion-img>
+                    <ion-img *ngIf="bed.type == 'furrow'" src="/assets/icon/surco.svg"></ion-img>
+                    <ion-img *ngIf="bed.type == 'terrace'" src="/assets/icon/bancal.svg"></ion-img>
+                    <ion-img *ngIf="bed.type == 'bed'" src="/assets/icon/bandejas.svg"></ion-img>
                 </ion-avatar>
                 <ion-label>{{bed.name}}</ion-label>
             </ion-item>

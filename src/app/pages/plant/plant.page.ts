@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Planta } from 'src/app/models/planta.model';
 import { ModalController } from '@ionic/angular';
 import { RegistrarCarePage } from '../registrar-care/registrar-care.page';
+import { RegistrarCropPage } from '../registrar-crop/registrar-crop.page';
 
 @Component({
   selector: 'app-plant',
@@ -63,7 +64,21 @@ export class PlantPage implements OnInit {
       //this.cargarPlants();
       this.cargarCares();
     });
+  }
 
+  async registrarCrop(){
+    const modal = await this.modalCtrl.create({
+      component: RegistrarCropPage,
+      componentProps:{
+        'idPlant' : this.reference,
+      }
+    });
+    await modal.present();
+
+    await modal.onDidDismiss().then( () =>{
+      //this.cargarPlants();
+      this.cargarCares();
+    });
   }
 
   segmentChanged(event){
