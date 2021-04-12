@@ -38,8 +38,14 @@ export class BedService {
 
   
 
-  getPlants(id:string){
-    return this.ejecutarQuery<PlantObject>(`beds/${id}/plants`);
+  getPlants(id:string,url?:string){
+    if(url){
+      return this.http.get<PlantObject>(url);
+    }
+    else{
+      return this.ejecutarQuery<PlantObject>(`beds/${id}/plants?page=1`);
+    }
+    
   }
 
   createPlant(idBed:string,idSeed:string,plant:Plant){

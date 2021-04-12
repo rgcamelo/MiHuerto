@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { IonList, ModalController } from '@ionic/angular';
+import { IonInfiniteScroll, IonList, ModalController } from '@ionic/angular';
 import { BedService } from 'src/app/services/bed.service';
 import { PlantService } from 'src/app/services/plant.service';
 import { RegistrarPlantPage } from '../registrar-plant/registrar-plant.page';
@@ -12,9 +12,11 @@ import { Plant } from '../../models/plant.model';
   styleUrls: ['./plants.page.scss'],
 })
 export class PlantsPage implements OnInit {
+  @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
   @ViewChild(IonList) ionList: IonList;
   reference:string = '';
   name:string ='';
+  next:string;
   plants: Plant[] =[];
 
   constructor(private bedService:BedService,
@@ -26,10 +28,9 @@ export class PlantsPage implements OnInit {
     this.cargarBed();
   }
 
-  cargarPlants(){
+  cargarPlants(url?:string){
     this.reference = this.route.snapshot.paramMap.get('id').toString();
-    console.log(this.reference);
-    this.bedService.getPlants(this.reference).subscribe(resp =>{
+    this.bedService.getPlants(this.reference,url).subscribe(resp =>{
       this.plants = [...resp.data];
       console.log(this.plants);
     });
@@ -50,18 +51,32 @@ export class PlantsPage implements OnInit {
     });
     await modal.present();
 
-    const { data } = await modal.onDidDismiss();
+    await modal.onDidDismiss().then( () =>{
+       this.doRefresh();
+    });
 
-    // await modal.onDidDismiss().then( () =>{
-    //   this.cargarPlants();
-    // });
-    this.cargarPlants();
   }
 
-  async doRefresh( event){
-    console.log(event);
-    await this.cargarPlants();
-    event.target.complete();
+  doRefresh(event?){
+    this.infiniteScroll.disabled = false;
+    this.plants = [];
+    this.cargarPlants();
+    if (event) {
+      event.target.complete();
+    }
+  }
+
+  loadData(event){
+    if (this.next) {
+      this.cargarPlants(this.next);
+    }else{
+      this.infiniteScroll.disabled = true;
+      
+    }
+    if (event) {
+      event.target.complete();
+    }
+    
   }
 
 

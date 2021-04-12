@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { ModalController } from '@ionic/angular';
+import { LoadingController, ModalController } from '@ionic/angular';
 import { Plant } from 'src/app/models/plant.model';
 import { SeedService } from '../../services/seed.service';
 import { BedService } from '../../services/bed.service';
@@ -19,26 +19,25 @@ export class RegistrarPlantPage implements OnInit {
 
   constructor(private modalCtrl:ModalController,
     private seedService:SeedService,
-    private bedService:BedService) { }
+    private bedService:BedService,
+    public loadingController: LoadingController) { }
 
   ngOnInit() {
     this.cargarSemillas();
   }
 
   onSubmit(formulario : NgForm){
-    console.log('submit');
-    console.log(formulario.value.idSeed);
-    console.log(this.plant);
-
+    this.presentLoading();
     this.idSeed = formulario.value.idSeed;
-
     if(this.plant != null){
       this.bedService.createPlant(this.idBed,this.idSeed,this.plant).subscribe( res =>{
+        this.dismissLoading();
         console.log(res);
+        this.modalCtrl.dismiss('Registrar');
       });
     }
 
-    this.modalCtrl.dismiss('Registrar');
+    
   }
 
   cancelar(){
@@ -49,6 +48,18 @@ export class RegistrarPlantPage implements OnInit {
     this.seedService.getSeeds().subscribe( res =>{
       this.seeds.push(...res.data);
     })
+  }
+
+  async presentLoading() {
+    const loading = await this.loadingController.create({
+      cssClass: 'my-custom-class',
+      message: 'Please wait...',
+    });
+    await loading.present();
+  }
+
+  async dismissLoading(){
+    return await this.loadingController.dismiss();
   }
 
 }

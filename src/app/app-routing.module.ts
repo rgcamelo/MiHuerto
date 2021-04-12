@@ -46,6 +46,10 @@ const routes: Routes = [
   {
     path: 'registrar-seed',
     loadChildren: () => import('./pages/registrar-seed/registrar-seed.module').then( m => m.RegistrarSeedPageModule)
+  },
+  {
+    path: 'crop',
+    loadChildren: () => import('./pages/crop/crop.module').then( m => m.CropPageModule)
   }
 ];
 @NgModule({

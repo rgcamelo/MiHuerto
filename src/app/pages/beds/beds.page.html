@@ -1,7 +1,7 @@
 <ion-header>
     <ion-toolbar>
         <ion-buttons slot="start">
-            <ion-back-button *ngIf="reference" defaultHref="/grounds/{{reference}}"></ion-back-button>
+            <ion-back-button *ngIf="reference" defaultHref="./grounds/{{ground.id}}"></ion-back-button>
         </ion-buttons>
         <ion-title>{{ground.name}}</ion-title>
     </ion-toolbar>
@@ -35,7 +35,7 @@
         </ion-item>
     -->
     <ion-list lines="true">
-        <app-bed-item class="animate__animated animate__fadeIn animate__faster" [bed]="bed" *ngFor="let bed of beds | filtro:type:'type'"></app-bed-item>
+        <app-bed-item class="animate__animated animate__fadeIn animate__faster" (ordenActualizar)="actualizar($event)" [bed]="bed" *ngFor="let bed of beds | filtro:type:'type'"></app-bed-item>
     </ion-list>
 
     <ion-infinite-scroll threshold="150px" (ionInfinite)="loadData($event)">

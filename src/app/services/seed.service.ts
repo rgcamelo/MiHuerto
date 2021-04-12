@@ -26,7 +26,21 @@ export class SeedService {
     return this.postejecutarQuery<SeedOneObject>(`seeds/`,seed);
   }
 
-  getSeeds(){
-    return this.ejecutarQuery<SeedObject>(`seeds`);
+  getSeeds(url?:string){
+    if (url) {
+      return this.http.get<SeedObject>(url);
+    }
+    else{
+      return this.ejecutarQuery<SeedObject>(`seeds?page=1`);
+    }
+  }
+
+  getCrops(id:string,url?:string){
+    if (url) {
+      return this.http.get<CropObject>(url);
+    }else{
+      return this.ejecutarQuery<CropObject>(`seeds/${id}/crops?page=1`);
+    }
+    
   }
 }

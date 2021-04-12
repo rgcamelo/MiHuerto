@@ -39,8 +39,13 @@ export class GardenService {
     return this.postejecutarQuery<GardenObject>(`gardens`,garden);
   }
 
-  getGardens(){
-    return this.ejecutarQuery<GardenObject>(`gardens`);
+  getGardens(url?:string){
+    if (url) {
+      return this.http.get<GardenObject>(url);
+    }else{
+      return this.ejecutarQuery<GardenObject>(`gardens`);
+    }
+    
   }
 
   getGarden(id:string){
@@ -48,17 +53,15 @@ export class GardenService {
   }
 
   deleteGarden(id:string){
-    return this.deleteejecutarQuery<GardenObject>(`gardens/${id}`)
+    return this.deleteejecutarQuery<GardenOneObject>(`gardens/${id}`)
   }
 
-  getReloadGrounds(id:string){
-    this.pageGrounds = 1;
-    return this.ejecutarQuery<GroundObject>(`gardens/${id}/grounds?page=1`);
-  }
-
-  getGrounds(id:string){
-    this.pageGrounds++;
-    return this.ejecutarQuery<GroundObject>(`gardens/${id}/grounds?page=${this.pageGrounds}`);
+  getGrounds(id:string,url?:string){
+    if (url) {
+      return this.http.get<GroundObject>(url);
+    }else{
+      return this.ejecutarQuery<GroundObject>(`gardens/${id}/grounds?page=1`);
+    }
   }
 
   createGround(id:string,ground:Ground){

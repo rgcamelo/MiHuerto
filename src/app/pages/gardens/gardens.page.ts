@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { ActionSheetController, ModalController} from '@ionic/angular';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { ActionSheetController, IonInfiniteScroll, LoadingController, ModalController, ToastController} from '@ionic/angular';
 import { GardenService } from 'src/app/services/garden.service';
 import { RegistrarGardenPage } from '../registrar-garden/registrar-garden.page';
 
@@ -9,27 +9,34 @@ import { RegistrarGardenPage } from '../registrar-garden/registrar-garden.page';
   styleUrls: ['./gardens.page.scss'],
 })
 export class GardensPage implements OnInit {
+  @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
 
   gardens : Garden[] = []
+  next:string;
 
   constructor(private gardenService:GardenService,
     private modalCtrl: ModalController,
-    private actionSheetCtrl: ActionSheetController
+    private actionSheetCtrl: ActionSheetController,
+    public toastController: ToastController,
+    public loadingController: LoadingController
     ) {}
 
   ngOnInit(){
     this.cargarGardens();
   }
 
-  cargarGardens(){
-    this.gardenService.getGardens().subscribe(resp =>{
-      this.gardens = [...resp.data];
+  cargarGardens(url?:string){
+    this.gardenService.getGardens(url).subscribe(resp =>{
+      this.gardens.push(...resp.data);
+      this.next = resp.meta.pagination.links.next;
     });
   }
 
   borrarGarden(id:string){
+    this.presentLoading();
     this.gardenService.deleteGarden(id).subscribe(resp =>{
-      console.log("Huerto Eliminado");
+      this.dismissLoading();
+      this.presentToast(`Huerto ${resp.data.name} Eliminado`);
     });
   }
   
@@ -40,9 +47,10 @@ export class GardensPage implements OnInit {
     });
     await modal.present();
 
-    const { data } = await modal.onDidDismiss();
-    
-    this.cargarGardens();
+    await modal.onDidDismiss().then( () => {
+      this.doRefresh();
+    });
+
     
   }
 
@@ -77,14 +85,48 @@ export class GardensPage implements OnInit {
     await actionSheet.present();
   }
 
-  imprimir(){
-    console.log("HOla");
+
+  doRefresh(event?){
+    this.infiniteScroll.disabled = false;
+    this.gardens = [];
+    this.cargarGardens();
+    if (event) {
+      event.target.complete();
+    }
+    
   }
 
-  doRefresh( event){
-    console.log(event);
-    this.cargarGardens();
-    event.target.complete();
+  loadData(event){
+    if (this.next) {
+      this.cargarGardens(this.next);
+    }else{
+      this.infiniteScroll.disabled = true;
+      
+    }
+    if (event) {
+      event.target.complete();
+    }
+    
+  }
+
+  async presentToast(message:string) {
+    const toast = await this.toastController.create({
+      message: message,
+      duration: 2000
+    });
+    toast.present();
+  }
+
+  async presentLoading() {
+    const loading = await this.loadingController.create({
+      cssClass: 'my-custom-class',
+    });
+    await loading.present();
+  }
+
+  async dismissLoading(){
+    this.doRefresh();
+    return await this.loadingController.dismiss();
   }
   
 

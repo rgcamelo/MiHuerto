@@ -1,11 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { GardenService } from '../../services/garden.service';
 import { ActivatedRoute } from '@angular/router';
-import { ActionSheetController, ModalController } from '@ionic/angular';
+import { ActionSheetController, IonInfiniteScroll, ModalController, ToastController } from '@ionic/angular';
 import { RegistrarGroundPage } from '../registrar-ground/registrar-ground.page';
 import { GroundService } from '../../services/ground.service';
 import { Ground } from 'src/app/models/ground.model';
 import { EditarGroundPage } from '../editar-ground/editar-ground.page';
+import { Garden } from '../../models/garden.model';
 
 @Component({
   selector: 'app-ground',
@@ -13,75 +14,60 @@ import { EditarGroundPage } from '../editar-ground/editar-ground.page';
   styleUrls: ['./ground.page.scss'],
 })
 export class GroundPage implements OnInit {
-
+  @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
   reference:string = '';
-
-  nameHuerto:string = '';
   type:string='';
+  next:string;
+  garden:Garden = new Garden();
   grounds: Ground[] =[];
 
   constructor(private gardenService:GardenService,
-    private groundService:GroundService,
     private route: ActivatedRoute,
     private modalCtrl: ModalController, 
-    private actionSheetCtrl: ActionSheetController) { }
+    private actionSheetCtrl: ActionSheetController,
+    public toastController: ToastController) { }
 
   ngOnInit(){
-    
-  }
-
-  ionViewWillEnter(){
-    this.doRefresh();
-    this.cargarNameGarden();
-  }
-
-  loadData(event){
-    this.cargarGrounds(event);
-    if (event) {
-      event.target.complete();
-    }
+    this.cargarGarden();
+    this.cargarGrounds();
   }
 
   doRefresh(event?){
+    this.infiniteScroll.disabled = false;
     this.grounds = [];
-    this.reloadGround();
+    this.cargarGrounds();
+    if (event) {
+      event.target.complete();
+    }
+  }
+
+  loadData(event){
+    if (this.next) {
+      this.cargarGrounds(this.next);
+    }else{
+      this.infiniteScroll.disabled = true;
+      
+    }
     if (event) {
       event.target.complete();
     }
     
   }
-
-  reloadGround(){
-    this.reference = this.route.snapshot.paramMap.get('id').toString();
-    this.gardenService.getReloadGrounds(this.reference).subscribe(resp =>{
+  cargarGrounds(url?:string){
+    this.gardenService.getGrounds(this.reference,url).subscribe(resp =>{
+      if (resp.data.length > 0){
       this.grounds.push(...resp.data);
-    });
-  }
-
-  cargarGrounds(event?){
-    this.reference = this.route.snapshot.paramMap.get('id').toString();
-    console.log(this.reference);
-    this.gardenService.getGrounds(this.reference).subscribe(resp =>{
-
-      if( resp.data.length === 0){
-        if (event) {
-          event.target.complete();
-        }
-        
-      }
-      this.grounds.push(...resp.data);
+      this.next = resp.meta.pagination.links.next;
       console.log(this.grounds);
+      }
+      
     });
-
-    if(event){
-      event.target.complete();
-    }
   }
 
-  cargarNameGarden(){
+  cargarGarden(){
+    this.reference = this.route.snapshot.paramMap.get('id').toString();
     this.gardenService.getGarden(this.reference).subscribe( res =>{
-      console.log(res);
-      this.nameHuerto = res.data.name;
+      this.garden.name = res.data.name;
     });
     
   }
@@ -89,7 +75,6 @@ export class GroundPage implements OnInit {
 
 
   segmentChanged(event){
-    //console.log(event.detail.value);
     this.type = event.detail.value;
   }
 
@@ -102,9 +87,9 @@ export class GroundPage implements OnInit {
     });
     await modal.present();
 
-    const { data } = await modal.onDidDismiss();
-    
-    this.doRefresh();
+    await modal.onDidDismiss().then( () => {
+      this.doRefresh();
+    });
     
   }
 
@@ -118,9 +103,10 @@ export class GroundPage implements OnInit {
     });
     await modal.present();
 
-    const { data } = await modal.onDidDismiss();
-    
-    this.doRefresh();
+    await modal.onDidDismiss().then( () => {
+      this.doRefresh();
+      
+    });
     
   }
 
@@ -178,17 +164,27 @@ export class GroundPage implements OnInit {
   LimpiarPlantas(ground:Ground){
     ground.status = 'desplante';
     this.gardenService.updateGround(this.reference,ground.id.toString(),ground).subscribe( res => {
-      console.log(res);
+      this.presentToast(`Plantas Desplantadas`);
+      //this.doRefresh();
     });
-    this.doRefresh();
+    
   }
 
   regarZona(ground:Ground){
     ground.status = 'riego'; 
     this.gardenService.updateGround(this.reference,ground.id.toString(),ground).subscribe( res => {
-      console.log(res);
+      this.presentToast(`Zona: ${res.data.name} Regada`);
+      //this.doRefresh();
     });
-    this.doRefresh();
+    
+  }
+
+  async presentToast(message:string) {
+    const toast = await this.toastController.create({
+      message: message,
+      duration: 2000
+    });
+    toast.present();
   }
 
   

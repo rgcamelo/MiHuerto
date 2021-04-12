@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { ModalController } from '@ionic/angular';
+import { LoadingController, ModalController } from '@ionic/angular';
 import { GardenService } from 'src/app/services/garden.service';
 import { Garden } from '../../models/garden.model';
 
@@ -14,23 +14,35 @@ export class RegistrarGardenPage implements OnInit {
   garden:Garden = new Garden();
 
   constructor(private modalCtrl: ModalController,
-    private gardenService:GardenService, ) { }
+    private gardenService:GardenService,
+    public loadingController: LoadingController ) { }
 
   ngOnInit() {
   }
 
   onSubmit(formulario : NgForm){
-    console.log('submit');
-    console.log(formulario);
-    console.log(this.garden);
-
+    this.presentLoading();
     if(this.garden != null){
       this.gardenService.createGarden(this.garden).subscribe(res =>{
+        this.dismissLoading();
         console.log(res);
+        this.modalCtrl.dismiss('Registrar');
       })
     }
 
-    this.modalCtrl.dismiss('Registrar');
+    
+  }
+
+  async presentLoading() {
+    const loading = await this.loadingController.create({
+      cssClass: 'my-custom-class',
+      message: 'Please wait...',
+    });
+    await loading.present();
+  }
+
+  async dismissLoading(){
+    return await this.loadingController.dismiss();
   }
 
   cancelar(){

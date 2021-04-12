@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { LOCALE_ID, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 
@@ -12,6 +12,11 @@ import { AppComponent } from './app.component';
 import {HttpClientModule} from '@angular/common/http'
 import { ComponentsModule } from './components/components.module';
 
+import { registerLocaleData } from '@angular/common';
+import localeEsCO from '@angular/common/locales/es-CO';
+
+registerLocaleData(localeEsCO, 'es-Co');
+
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
@@ -19,7 +24,8 @@ import { ComponentsModule } from './components/components.module';
   providers: [
     StatusBar,
     SplashScreen,
-    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
+    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    { provide: LOCALE_ID, useValue: 'es-Co' }
   ],
   bootstrap: [AppComponent]
 })

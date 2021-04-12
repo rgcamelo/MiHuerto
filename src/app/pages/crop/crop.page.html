@@ -1,0 +1,37 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-back-button defaultHref="tabs/tab3"></ion-back-button>
+        </ion-buttons>
+        <ion-title>Cosechas</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+    <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+        <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
+
+    <ion-list>
+        <ion-item *ngFor="let crop of crops" class="animate__animated animate__fadeIn animate__faster">
+            <ion-card class="ioncardground">
+                <ion-card-header>
+                    <ion-card-subtitle>{{crop.created_at | date:'longDate'}}</ion-card-subtitle>
+                    <ion-card-title>Cosecha</ion-card-title>
+                </ion-card-header>
+
+                <ion-card-content>
+                    <ion-label>Cantidad: {{crop.quantity}}</ion-label>
+                </ion-card-content>
+            </ion-card>
+
+        </ion-item>
+    </ion-list>
+
+    <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
+        <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Cargando...">
+        </ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+
+</ion-content>

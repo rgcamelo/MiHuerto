@@ -56,6 +56,11 @@
 
     </ion-list>
 
+    <ion-infinite-scroll threshold="150px" (ionInfinite)="loadData($event)">
+        <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Cargando data...">
+        </ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+
 
     <ion-fab (click)="registrarPlant()" vertical="bottom" horizontal="end" slot="fixed">
         <ion-fab-button>

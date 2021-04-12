@@ -3,7 +3,7 @@
         <ion-buttons slot="start">
             <ion-back-button defaultHref="tabs/tab2"></ion-back-button>
         </ion-buttons>
-        <ion-title>{{nameHuerto}}</ion-title>
+        <ion-title *ngIf="garden">{{garden.name}}</ion-title>
     </ion-toolbar>
 </ion-header>
 

@@ -37,14 +37,14 @@ export class GroundService {
     return this.ejecutarQuery<GroundOneObject>(`grounds/${id}`);
   }
 
-  getReloadsBeds(id:string){
-    this.pageBeds= 1;
-    return this.ejecutarQuery<BedObject>(`grounds/${id}/beds?page=${this.pageBeds}`);
-  }
 
-  getBeds(id:string){
-    this.pageBeds++;
-    return this.ejecutarQuery<BedObject>(`grounds/${id}/beds?page=${this.pageBeds}`);
+  getBeds(id:string,url?:string){
+    if(url){
+      return this.http.get<BedObject>(url);
+    }else{
+      return this.ejecutarQuery<BedObject>(`grounds/${id}/beds?page=1`);
+    }
+    
   }
 
   createBed(id:string,bed:Bed){

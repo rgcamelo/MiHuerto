@@ -10,6 +10,10 @@ const routes: Routes = [
       {
         path: '',
         loadChildren: () => import('../seed/seed.module').then( m => m.SeedPageModule)
+      },
+      {
+        path:'crops/:id',
+        loadChildren: () => import('../crop/crop.module').then( m => m.CropPageModule)
       }
     ]
   }

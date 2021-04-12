@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { ModalController } from '@ionic/angular';
+import { LoadingController, ModalController } from '@ionic/angular';
 import { GardenService } from 'src/app/services/garden.service';
 import { Ground } from '../../models/ground.model';
 import { GroundService } from '../../services/ground.service';
@@ -18,15 +18,18 @@ export class RegistrarGroundPage implements OnInit {
 
   constructor(private modalCtrl:ModalController,
     private gardenService:GardenService,
-    private groundService:GroundService) { }
+    private groundService:GroundService,
+    public loadingController: LoadingController) { }
 
   ngOnInit() {
   }
 
   onSubmit(formulario : NgForm){
+    this.presentLoading();
     if(this.ground != null){
       this.gardenService.createGround(this.idGarden,this.ground).subscribe(res =>{
         if(res!=null){
+          this.dismissLoading();
           if(this.ground.type == 'module'){
             this.generateBedOfModule(this.ground.number_furrow,this.ground.number_terrace,res.data.id.toString());
           }
@@ -50,7 +53,7 @@ export class RegistrarGroundPage implements OnInit {
       let furrow:Bed = new Bed();
       furrow.type='furrow'
       for (let i = 0; i < nfurrow; i++) {
-        furrow.name=`Surco ${i+1}`;
+        furrow.name=`Surco`;
         this.groundService.createBed(idGround,furrow).subscribe(res =>{
           console.log(res);
         })
@@ -61,7 +64,7 @@ export class RegistrarGroundPage implements OnInit {
       let terrace:Bed = new Bed();
       terrace.type='terrace'
       for (let i = 0; i < nterrace; i++) {
-        terrace.name=`Bancal ${i+1}`;
+        terrace.name=`Bancal`;
         this.groundService.createBed(idGround,terrace).subscribe(res =>{
           console.log(res);
         })
@@ -75,12 +78,24 @@ export class RegistrarGroundPage implements OnInit {
       let bed:Bed = new Bed();
       bed.type='bed'
       for (let i = 0; i < nbed; i++) {
-        bed.name=`Bandeja de Semillas ${i+1}`;
+        bed.name=`Bandeja de Semillas`;
         this.groundService.createBed(idGround,bed).subscribe(res =>{
           console.log(res);
         })
       }
     }
+  }
+
+  async presentLoading() {
+    const loading = await this.loadingController.create({
+      cssClass: 'my-custom-class',
+      message: 'Please wait...',
+    });
+    await loading.present();
+  }
+
+  async dismissLoading(){
+    return await this.loadingController.dismiss();
   }
 
 }

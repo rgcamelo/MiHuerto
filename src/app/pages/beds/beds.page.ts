@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { IonList } from '@ionic/angular';
+import { IonInfiniteScroll, IonList } from '@ionic/angular';
 import { Observable } from 'rxjs';
 import { Ground } from 'src/app/models/ground.model';
 import { GroundService } from '../../services/ground.service';
@@ -11,10 +11,11 @@ import { GroundService } from '../../services/ground.service';
   styleUrls: ['./beds.page.scss'],
 })
 export class BedsPage implements OnInit {
-
+  @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
   @ViewChild(IonList) ionList: IonList;
 
   reference:string = '';
+  next:string;
   type:string = '';
   ground:Ground = new Ground();
   beds: Bed[] =[];
@@ -25,48 +26,35 @@ export class BedsPage implements OnInit {
   ngOnInit(){
     this.getGround();
     this.cargarBeds();
-    
-  }
-
-  ionViewWillEnter(){
-    this.doRefresh();
   }
 
   loadData(event){
-    this.cargarBeds(event);
+    if (this.next) {
+      this.cargarBeds(this.next);
+    }else{
+      this.infiniteScroll.disabled = true;
+      
+    }
     if (event) {
       event.target.complete();
     }
   }
 
   doRefresh(event?){
-    this.reloadBed();
+    this.infiniteScroll.disabled = false;
+    this.beds = [];
+    this.cargarBeds();
     if (event) {
       event.target.complete();
     }
   }
 
-  reloadBed(){
-    this.groundService.getReloadsBeds(this.reference).subscribe(resp =>{
-      this.beds = [...resp.data];
-      this.beds.sort( this.ordenar );
-    });
-  }
-
-  cargarBeds(event?){
-    this.groundService.getBeds(this.reference).subscribe(resp =>{
-      if( resp.data.length === 0){
-        if (event) {
-          event.target.complete();
-        }
-      }
+  cargarBeds(url?:string){
+    this.groundService.getBeds(this.reference,url).subscribe(resp =>{
       this.beds.push(...resp.data);
       this.beds.sort( this.ordenar );
-      console.log(this.beds);
+      this.next = resp.meta.pagination.links.next;
     });
-    if(event){
-      event.target.complete();
-    }
   }
 
   ordenar(a:Bed,b:Bed){
@@ -88,6 +76,12 @@ export class BedsPage implements OnInit {
 
   segmentChanged(event){
     this.type = event.detail.value;
+  }
+
+  actualizar(si:boolean){
+    if(si == true){
+      this.doRefresh();
+    }
   }
 
   

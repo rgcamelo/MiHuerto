@@ -1,4 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter  } from '@angular/core';
+import { ToastController } from '@ionic/angular';
 import { BedService } from 'src/app/services/bed.service';
 import { GroundService } from '../../services/ground.service';
 
@@ -10,11 +11,14 @@ import { GroundService } from '../../services/ground.service';
 export class BedItemComponent implements OnInit {
 
   @Input() bed:Bed;
+  @Output() ordenActualizar:EventEmitter<boolean> = new EventEmitter<boolean>();
+  
 
   plants: Plant[] =[];
 
   constructor(private bedService:BedService,
-    private groundService:GroundService) { }
+    private groundService:GroundService,
+    public toastController: ToastController) { }
 
   ngOnInit() {
     this.cargarPlants();
@@ -31,12 +35,17 @@ export class BedItemComponent implements OnInit {
   limpiarBed(){
     this.bed.status = 'vacio'
     this.groundService.updateBed(this.bed.zona,this.bed.id.toString(),this.bed).subscribe( res =>{
-      console.log(res);
+      this.presentToast(`${res.data.name} Vacio`);
+      this.ordenActualizar.emit(true);
     });
   }
 
-   mensaje(){
-     console.log("Mensaje");
-   }
+  async presentToast(message:string) {
+    const toast = await this.toastController.create({
+      message: message,
+      duration: 2000
+    });
+    toast.present();
+  }
 
 }
