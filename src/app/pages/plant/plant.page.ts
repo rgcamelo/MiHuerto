@@ -1,8 +1,8 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { PlantService } from 'src/app/services/plant.service';
 import { ActivatedRoute } from '@angular/router';
 import { Planta } from 'src/app/models/planta.model';
-import { ModalController } from '@ionic/angular';
+import { IonInfiniteScroll, ModalController } from '@ionic/angular';
 import { RegistrarCarePage } from '../registrar-care/registrar-care.page';
 import { RegistrarCropPage } from '../registrar-crop/registrar-crop.page';
 
@@ -12,12 +12,14 @@ import { RegistrarCropPage } from '../registrar-crop/registrar-crop.page';
   styleUrls: ['./plant.page.scss'],
 })
 export class PlantPage implements OnInit {
+  @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
 
   reference:string = '';
   plant:Planta = new Planta();
   plantName:string;
   cares: Care[] = [];
   typeCare:string= '';
+  next:string;
 
   constructor(private plantService:PlantService,
     private modalCtrl: ModalController,
@@ -28,15 +30,14 @@ export class PlantPage implements OnInit {
     this.cargarPlant();
   }
 
-  cargarCares(){
+  cargarCares(url?:string){
     this.reference = this.route.snapshot.paramMap.get('id').toString();
-    this.plantService.getCares(this.reference).subscribe(resp =>{
-      
-      this.cares = [...resp.data];
-      this.cares.reverse();
+    this.plantService.getCares(this.reference,url).subscribe(resp =>{
+      this.next = resp.meta.pagination.links.next;
+      this.cares.push(...resp.data);
       console.log(this.cares);
+      
     })
-    
   }
 
   cargarPlant(){
@@ -61,8 +62,7 @@ export class PlantPage implements OnInit {
     await modal.present();
 
     await modal.onDidDismiss().then( () =>{
-      //this.cargarPlants();
-      this.cargarCares();
+      this.doRefresh();
     });
   }
 
@@ -76,8 +76,7 @@ export class PlantPage implements OnInit {
     await modal.present();
 
     await modal.onDidDismiss().then( () =>{
-      //this.cargarPlants();
-      this.cargarCares();
+      this.doRefresh();
     });
   }
 
@@ -85,10 +84,26 @@ export class PlantPage implements OnInit {
     this.typeCare = event.detail.value;
   }
 
-  async doRefresh( event?){
-    console.log(event);
-    await this.cargarCares();
-    event.target.complete();
+  loadData(event){
+    console.log("Hola");
+    if (this.next) {
+      this.cargarCares(this.next);
+    }else{
+      this.infiniteScroll.disabled = true;
+    }
+    if (event) {
+      event.target.complete();
+    }
+    
+  }
+
+  doRefresh(event?){
+    this.infiniteScroll.disabled = false;
+    this.cares= [];
+    this.cargarCares();
+    if (event) {
+      event.target.complete();
+    }
   }
 
 }

@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { ModalController } from '@ionic/angular';
+import { LoadingController, ModalController } from '@ionic/angular';
 import { Care } from 'src/app/models/care.model';
 import { PlantService } from '../../services/plant.service';
 
@@ -15,23 +15,39 @@ export class RegistrarCarePage implements OnInit {
   care:Care = new Care();
 
   constructor(private modalCtrl:ModalController,
-    private plantService:PlantService) { }
+    private plantService:PlantService,
+    public loadingController: LoadingController) { }
 
   ngOnInit() {
   }
 
   onSubmit(formulario : NgForm){
+    this.presentLoading();
     if(this.care != null){
       this.plantService.createCare(this.idPlant,this.care).subscribe(res =>{
         console.log(res);
+        this.dismissLoading();
+        this.modalCtrl.dismiss('Registrar');
       })
     }
 
-    this.modalCtrl.dismiss('Registrar');
+    
   }
 
   cancelar(){
     this.modalCtrl.dismiss('Cancelar');
+  }
+
+  async presentLoading() {
+    const loading = await this.loadingController.create({
+      cssClass: 'my-custom-class',
+      message: 'Please wait...',
+    });
+    await loading.present();
+  }
+
+  async dismissLoading(){
+    return await this.loadingController.dismiss();
   }
 
 }

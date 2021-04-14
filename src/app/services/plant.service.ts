@@ -32,15 +32,25 @@ export class PlantService {
     return this.postejecutarQuery<CareObject>(`plants/${id}/cares`,care);
   }
 
-  getCares(id:string){
-    return this.ejecutarQuery<CareObject>(`plants/${id}/cares`);
+  getCares(id:string,url?:string){
+    if(url){
+      return this.http.get<CareObject>(url);
+    }else{
+      return this.ejecutarQuery<CareObject>(`plants/${id}/cares?page=1`);
+    }
+    
   }
 
   createCrop(id:string,crop:Crop){
     return this.postejecutarQuery<CropOneObject>(`plants/${id}/crop`,crop);
   }
 
-  getCrops(id:string){
-    return this.ejecutarQuery<CropObject>(`plants/${id}/crop`);
+  getCrops(id:string,url?:string){
+    if (url) {
+      return this.http.get<CropObject>(url);
+    }else{
+      return this.ejecutarQuery<CropObject>(`plants/${id}/crop?page=1`);
+    }
+    
   }
 }

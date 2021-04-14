@@ -67,8 +67,14 @@
 
 
                 </ion-segment>
+
                 <div class="maxim">
-                    <div class="timeline">
+
+                    <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)" pullFactor="0.8" pullMin="60" pullMax="120">
+                        <ion-refresher-content></ion-refresher-content>
+                    </ion-refresher>
+
+                    <div class="timeline" (ionInfinite)="loadData($event)">
                         <div *ngFor="let care of cares | filtro:typeCare:'type' " class="container right ">
                             <div class="content">
                                 <span><h3 class="nomargin">{{care.type | careTraduc }}</h3> {{care.created_at}}</span>
@@ -76,11 +82,26 @@
                             </div>
                         </div>
                     </div>
+
+                    <!-- <ion-list>
+                        <ion-item *ngFor="let care of cares | filtro:typeCare:'type'">
+                            <ion-label>{{care.description}}</ion-label>
+                        </ion-item>
+                    </ion-list> -->
+
+
                 </div>
+
+
 
             </ion-card>
         </ion-card>
     </ion-item>
+
+    <ion-infinite-scroll threshold="150px" (ionInfinite)="loadData($event)">
+        <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Cargando data...">
+        </ion-infinite-scroll-content>
+    </ion-infinite-scroll>
 
     <ion-fab vertical="bottom" horizontal="end" slot="fixed">
         <ion-fab-button color="dark">

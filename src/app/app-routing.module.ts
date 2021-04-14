@@ -50,7 +50,7 @@ const routes: Routes = [
   {
     path: 'crop',
     loadChildren: () => import('./pages/crop/crop.module').then( m => m.CropPageModule)
-  }
+  },
 ];
 @NgModule({
   imports: [
