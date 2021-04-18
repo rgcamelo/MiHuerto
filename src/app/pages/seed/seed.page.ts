@@ -48,9 +48,9 @@ export class SeedPage implements OnInit {
     await modal.present();
 
     const { data } = await modal.onDidDismiss();
-    
-    this.cargarSeeds();
-    
+    await modal.onDidDismiss().then( () => {
+      this.doRefresh();
+    });
   }
 
   loadData(event){
