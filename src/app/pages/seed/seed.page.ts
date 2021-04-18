@@ -56,12 +56,13 @@ export class SeedPage implements OnInit {
   loadData(event){
     if (this.next) {
       this.cargarSeeds(this.next);
+      event.target.complete();
     }else{
       this.infiniteScroll.disabled = true;
     }
     
     if (event) {
-      event.target.complete();
+      
     }
   }
 
