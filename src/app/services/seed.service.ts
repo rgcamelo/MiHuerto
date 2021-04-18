@@ -23,7 +23,7 @@ export class SeedService {
   }
 
   createSeed(seed:Seed){
-    return this.postejecutarQuery<SeedOneObject>(`seeds/`,seed);
+    return this.postejecutarQuery<SeedOneObject>(`seeds`,seed);
   }
 
   getSeeds(url?:string){
