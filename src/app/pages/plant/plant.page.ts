@@ -33,9 +33,12 @@ export class PlantPage implements OnInit {
   cargarCares(url?:string){
     this.reference = this.route.snapshot.paramMap.get('id').toString();
     this.plantService.getCares(this.reference,url).subscribe(resp =>{
-      this.next = resp.meta.pagination.links.next;
-      this.cares.push(...resp.data);
-      console.log(this.cares);
+      if (resp.data.length > 0) {
+        this.next = resp.meta.pagination.links.next;
+        this.cares.push(...resp.data);
+        console.log(this.cares);
+      }
+      
       
     })
   }

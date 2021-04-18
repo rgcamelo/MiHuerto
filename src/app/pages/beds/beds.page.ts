@@ -51,9 +51,12 @@ export class BedsPage implements OnInit {
 
   cargarBeds(url?:string){
     this.groundService.getBeds(this.reference,url).subscribe(resp =>{
-      this.beds.push(...resp.data);
+      if (resp.data.length > 0) {
+        this.beds.push(...resp.data);
       this.beds.sort( this.ordenar );
       this.next = resp.meta.pagination.links.next;
+      }
+      
     });
   }
 

@@ -33,8 +33,11 @@ export class SeedPage implements OnInit {
 
   cargarSeeds(url?:string){
     this.seedService.getSeeds(url).subscribe( res =>{
-      this.seeds.push(...res.data);
-      this.next = res.meta.pagination.links.next;
+      if (res.data.length > 0) {
+        this.seeds.push(...res.data);
+        this.next = res.meta.pagination.links.next;
+      }
+      
     })
   }
 

@@ -27,8 +27,11 @@ export class GardensPage implements OnInit {
 
   cargarGardens(url?:string){
     this.gardenService.getGardens(url).subscribe(resp =>{
-      this.gardens.push(...resp.data);
-      this.next = resp.meta.pagination.links.next;
+      if(resp.data.length > 0){
+        this.gardens.push(...resp.data);
+        this.next = resp.meta.pagination.links.next;
+      }
+      
     });
   }
 

@@ -31,8 +31,11 @@ export class PlantsPage implements OnInit {
   cargarPlants(url?:string){
     this.reference = this.route.snapshot.paramMap.get('id').toString();
     this.bedService.getPlants(this.reference,url).subscribe(resp =>{
-      this.plants.push(...resp.data);
-      console.log(this.plants);
+      if (resp.data.length > 0) {
+        this.plants.push(...resp.data);
+        console.log(this.plants);
+      }
+      
     });
   }
 

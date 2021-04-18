@@ -55,10 +55,11 @@ export class GroundPage implements OnInit {
   }
   cargarGrounds(url?:string){
     this.gardenService.getGrounds(this.reference,url).subscribe(resp =>{
+      console.log(resp);
       if (resp.data.length > 0){
       this.grounds.push(...resp.data);
       this.next = resp.meta.pagination.links.next;
-      console.log(this.grounds);
+      
       }
       
     });

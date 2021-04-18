@@ -25,24 +25,15 @@ export class CropPage implements OnInit {
   cargarCrops(url?:string){
     this.reference = this.route.snapshot.paramMap.get('id').toString();
     this.seedService.getCrops(this.reference,url).subscribe( res => {
-      this.crops.push(...res.data);
-      this.next = res.meta.pagination.links.next;
-      this.crops.sort( this.ordenar );
-      this.crops.reverse();
-      console.log(this.crops);
+      if (res.data.length > 0) {
+        this.crops.push(...res.data);
+        this.next = res.meta.pagination.links.next;
+        console.log(this.crops);
+      }
+      
     })
 
     
-  }
-
-  ordenar(a:Crop,b:Crop){
-    if (a.created_at > b.created_at) {
-      return 1;
-    }
-    if (a.created_at < b.created_at) {
-      return -1;
-    }
-    return 0;
   }
 
   doRefresh(event?){
