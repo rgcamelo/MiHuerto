@@ -1,0 +1,47 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-title *ngIf="tipo == 'surco'">Registrar Surcos</ion-title>
+        <ion-title *ngIf="tipo == 'bancal'">Registrar Bancales</ion-title>
+        <ion-title *ngIf="tipo == 'bandeja'">Registar Bandejas</ion-title>
+        <ion-buttons slot="start">
+            <ion-back-button defaultHref="" (click)="cancelar()"></ion-back-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+    <ion-card class="p-2">
+        <form #formulario="ngForm" (ngSubmit)="onSubmit(formulario)">
+            <ion-item>
+                <ion-label position="floating">Numero</ion-label>
+                <ion-input min="1" type="number" required name="numero" [(ngModel)]="numero"></ion-input>
+            </ion-item>
+
+            <ion-item>
+                <ion-label position="floating">Ancho</ion-label>
+                <ion-input min="1" type="number" required name="ancho" [(ngModel)]="ancho"></ion-input>
+            </ion-item>
+
+            <ion-item>
+                <ion-label position="floating">Largo</ion-label>
+                <ion-input min="1" type="number" required name="largo" [(ngModel)]="largo"></ion-input>
+            </ion-item>
+
+            <br>
+
+            <div class="text-center">
+                <ion-button [disabled]="!Valid" type="submit">
+                    Registrar
+                </ion-button>
+                <ion-button (click)="cancelar()" color="danger">
+                    Cancelar
+                </ion-button>
+            </div>
+
+
+
+        </form>
+    </ion-card>
+
+</ion-content>

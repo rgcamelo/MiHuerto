@@ -27,20 +27,26 @@ export class RegistrarGroundPage implements OnInit {
   onSubmit(formulario : NgForm){
     this.presentLoading();
     if(this.ground != null){
-      this.gardenService.createGround(this.idGarden,this.ground).subscribe(res =>{
-        if(res!=null){
-          this.dismissLoading();
-          if(this.ground.type == 'module'){
-            this.generateBedOfModule(this.ground.number_furrow,this.ground.number_terrace,res.data.id.toString());
-          }
-          if(this.ground.type == 'seedbed'){
-            this.generataBedOfSeedBed(this.ground.number_bed,res.data.id.toString());
-          }
-        }
+      this.gardenService.createGround(this.idGarden,this.ground).subscribe(async res =>{
+        this.modalCtrl.dismiss('Registrar');
+        this.dismissLoading();
+        // if(res!=null){
+          
+        //   if(this.ground.type == 'module'){
+        //     await this.generateBedOfModule(this.ground.number_furrow,this.ground.number_terrace,res.data.id.toString());
+        //     this.modalCtrl.dismiss('Registrar');
+        //     this.dismissLoading();
+        //   }
+        //   if(this.ground.type == 'seedbed'){
+        //     await this.generataBedOfSeedBed(this.ground.number_bed,res.data.id.toString());
+        //     
+        //   }
+          
+        // }
       })
     }
 
-    this.modalCtrl.dismiss('Registrar');
+    
   }
 
   cancelar(){
@@ -53,7 +59,8 @@ export class RegistrarGroundPage implements OnInit {
       let furrow:Bed = new Bed();
       furrow.type='furrow'
       for (let i = 0; i < nfurrow; i++) {
-        furrow.name=`Surco`;
+        furrow.name=`Surco ${i+1}`;
+        furrow.number = i;
         this.groundService.createBed(idGround,furrow).subscribe(res =>{
           console.log(res);
         })
@@ -64,7 +71,8 @@ export class RegistrarGroundPage implements OnInit {
       let terrace:Bed = new Bed();
       terrace.type='terrace'
       for (let i = 0; i < nterrace; i++) {
-        terrace.name=`Bancal`;
+        terrace.name=`Bancal ${i+1}`;
+        terrace.number = i;
         this.groundService.createBed(idGround,terrace).subscribe(res =>{
           console.log(res);
         })
@@ -78,7 +86,8 @@ export class RegistrarGroundPage implements OnInit {
       let bed:Bed = new Bed();
       bed.type='bed'
       for (let i = 0; i < nbed; i++) {
-        bed.name=`Bandeja de Semillas`;
+        bed.name=`Bandeja de Germinación ${i+1}`;
+        bed.number = i;
         this.groundService.createBed(idGround,bed).subscribe(res =>{
           console.log(res);
         })

@@ -51,6 +51,10 @@ const routes: Routes = [
     path: 'crop',
     loadChildren: () => import('./pages/crop/crop.module').then( m => m.CropPageModule)
   },
+  {
+    path: 'registar-bed',
+    loadChildren: () => import('./pages/registar-bed/registar-bed.module').then( m => m.RegistarBedPageModule)
+  },
 ];
 @NgModule({
   imports: [

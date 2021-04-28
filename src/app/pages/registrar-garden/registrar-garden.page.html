@@ -1,7 +1,7 @@
 <ion-header>
     <ion-toolbar>
         <ion-title>
-            Registrar Huerto
+            Nuevo Huerto
         </ion-title>
         <ion-buttons slot="start">
             <ion-back-button defaultHref="" (click)="cancelar()"></ion-back-button>
@@ -9,7 +9,7 @@
     </ion-toolbar>
 </ion-header>
 <ion-content>
-    <ion-card>
+    <ion-card class="p-2">
         <form #formulario="ngForm" (ngSubmit)="onSubmit(formulario)">
 
             <ion-item>
@@ -17,7 +17,6 @@
                 <ion-input type="text" required name="name" [(ngModel)]="garden.name"></ion-input>
             </ion-item>
 
-            <hr>
 
             <!-- <ion-item>
                 <ion-input type="file" placeholder="Seleccionar imagen" required name="image" [(ngModel)]="garden.image"></ion-input>
@@ -25,12 +24,16 @@
 
             <hr> -->
 
-            <ion-button [disabled]="formulario.invalid" type="submit">
-                Registrar
-            </ion-button>
-            <ion-button (click)="cancelar()" color="danger">
-                Cancelar
-            </ion-button>
+            <br>
+            <div class="text-center">
+                <ion-button class="btn-block" [disabled]="formulario.invalid" type="submit">
+                    Registrar
+                </ion-button>
+                <ion-button (click)="cancelar()" color="danger">
+                    Cancelar
+                </ion-button>
+            </div>
+
 
 
         </form>

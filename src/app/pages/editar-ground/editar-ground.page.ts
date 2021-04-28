@@ -70,6 +70,7 @@ export class EditarGroundPage implements OnInit {
       furrow.type='furrow'
       for (let i = 0; i < nfurrow; i++) {
         furrow.name=`Surco ${i+1}`;
+        furrow.number = i;
         this.groundService.createBed(idGround,furrow).subscribe(res =>{
           console.log(res);
         })
@@ -81,6 +82,7 @@ export class EditarGroundPage implements OnInit {
       terrace.type='terrace'
       for (let i = 0; i < nterrace; i++) {
         terrace.name=`Bancal ${i+1}`;
+        terrace.number=i;
         this.groundService.createBed(idGround,terrace).subscribe(res =>{
           console.log(res);
         })
@@ -94,7 +96,8 @@ export class EditarGroundPage implements OnInit {
       let bed:Bed = new Bed();
       bed.type='bed'
       for (let i = 0; i < nbed; i++) {
-        bed.name=`Bandeja de Semillas ${i}`;
+        bed.name=`Bandeja de Germinación ${i}`;
+        bed.number= i;
         this.groundService.createBed(idGround,bed).subscribe(res =>{
           console.log(res);
         })

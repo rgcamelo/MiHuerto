@@ -27,6 +27,9 @@ interface Links {
 interface Bed {
   id: number;
   name: string;
+  number:number;
+  x:number;
+  y:number;
   status: string;
   type: string;
   zona: string;

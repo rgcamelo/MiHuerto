@@ -24,9 +24,10 @@ export class RegistrarGardenPage implements OnInit {
     this.presentLoading();
     if(this.garden != null){
       this.gardenService.createGarden(this.garden).subscribe(res =>{
-        this.dismissLoading();
+        
         console.log(res);
         this.modalCtrl.dismiss('Registrar');
+        this.dismissLoading();
       })
     }
 

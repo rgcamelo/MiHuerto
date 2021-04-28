@@ -1,6 +1,6 @@
 <ion-header>
     <ion-toolbar>
-        <ion-title>RegistrarGround</ion-title>
+        <ion-title>Nueva Zona</ion-title>
         <ion-buttons slot="start">
             <ion-back-button defaultHref="" (click)="cancelar()"></ion-back-button>
         </ion-buttons>
@@ -8,7 +8,7 @@
 </ion-header>
 
 <ion-content>
-    <ion-card>
+    <ion-card class="p-2">
         <form #formulario="ngForm" (ngSubmit)="onSubmit(formulario)">
 
             <ion-item>
@@ -16,7 +16,7 @@
                 <ion-input type="text" required name="name" [(ngModel)]="ground.name"></ion-input>
             </ion-item>
 
-            <hr>
+            <br>
 
             <ion-item>
                 <ion-label position="floating">Tipo</ion-label>
@@ -26,7 +26,9 @@
                 </ion-select>
             </ion-item>
 
-            <div *ngIf="ground.type">
+            <br>
+
+            <!-- <div *ngIf="ground.type">
                 <div *ngIf="ground.type == 'module'">
                     <ion-item>
                         <ion-label position="floating">Numero de Surcos</ion-label>
@@ -45,15 +47,19 @@
                         <ion-input type="number" required name="nbandejas" [(ngModel)]="ground.number_bed"></ion-input>
                     </ion-item>
                 </div>
+            </div> -->
+
+            <br>
+
+            <div class="text-center">
+                <ion-button [disabled]="formulario.invalid" type="submit">
+                    Registrar
+                </ion-button>
+                <ion-button (click)="cancelar()" color="danger">
+                    Cancelar
+                </ion-button>
             </div>
 
-
-            <ion-button [disabled]="formulario.invalid" type="submit">
-                Registrar
-            </ion-button>
-            <ion-button (click)="cancelar()" color="danger">
-                Cancelar
-            </ion-button>
 
 
         </form>

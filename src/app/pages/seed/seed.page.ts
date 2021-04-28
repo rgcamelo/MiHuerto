@@ -47,7 +47,6 @@ export class SeedPage implements OnInit {
     });
     await modal.present();
 
-    const { data } = await modal.onDidDismiss();
     await modal.onDidDismiss().then( () => {
       this.doRefresh();
     });

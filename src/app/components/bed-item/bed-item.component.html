@@ -12,7 +12,13 @@
                 </ion-avatar>
                 <ion-label>{{bed.name}}</ion-label>
             </ion-item>
-
+            <ion-item *ngIf="bed.type == 'furrow' || bed.type == 'terrace'">
+                <ion-label>Ancho: {{bed.x}}</ion-label>
+                <ion-label>Largo: {{bed.y}}</ion-label>
+            </ion-item>
+            <ion-item *ngIf="bed.type == 'bed'">
+                <ion-label>Numero de huecos: {{bed.x * bed.y}}</ion-label>
+            </ion-item>
             <ion-card-content class="ioncardcontent">
                 <ion-item>
                     <ion-card class="ioncardground" *ngIf="plants.length > 0">

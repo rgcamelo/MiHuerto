@@ -1,9 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { IonInfiniteScroll, IonList } from '@ionic/angular';
+import { IonInfiniteScroll, IonList, ModalController } from '@ionic/angular';
 import { Observable } from 'rxjs';
 import { Ground } from 'src/app/models/ground.model';
 import { GroundService } from '../../services/ground.service';
+import { RegistarBedPage } from '../registar-bed/registar-bed.page';
 
 @Component({
   selector: 'app-beds',
@@ -21,7 +22,8 @@ export class BedsPage implements OnInit {
   beds: Bed[] =[];
 
   constructor(private groundService:GroundService,
-    private route: ActivatedRoute ) { }
+    private route: ActivatedRoute,
+    private modalCtrl: ModalController ) { }
 
   ngOnInit(){
     this.getGround();
@@ -53,7 +55,6 @@ export class BedsPage implements OnInit {
     this.groundService.getBeds(this.reference,url).subscribe(resp =>{
       if (resp.data.length > 0) {
         this.beds.push(...resp.data);
-      this.beds.sort( this.ordenar );
       this.next = resp.meta.pagination.links.next;
       }
       
@@ -79,12 +80,28 @@ export class BedsPage implements OnInit {
 
   segmentChanged(event){
     this.type = event.detail.value;
+    
   }
 
   actualizar(si:boolean){
     if(si == true){
       this.doRefresh();
     }
+  }
+
+  async registrarBed(tipo:string){
+    const modal = await this.modalCtrl.create({
+      component: RegistarBedPage,
+      componentProps:{
+        'ground' : this.ground,
+        'tipo' : tipo,
+      }
+    });
+    await modal.present();
+
+    await modal.onDidDismiss().then( () => {
+      this.doRefresh();
+    });
   }
 
   
