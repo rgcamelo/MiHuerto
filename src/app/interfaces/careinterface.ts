@@ -17,6 +17,7 @@ interface Pagination {
 }
 
 interface Links {
+  next: string;
 }
 
 interface Care {

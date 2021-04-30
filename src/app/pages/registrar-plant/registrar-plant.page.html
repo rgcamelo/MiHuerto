@@ -1,6 +1,7 @@
 <ion-header>
     <ion-toolbar>
-        <ion-title>RegistrarPlant</ion-title>
+        <ion-title *ngIf="bed.type != 'bed'">A Plantar</ion-title>
+        <ion-title *ngIf="bed.type == 'bed'">A Germinar</ion-title>
         <ion-buttons slot="start">
             <ion-back-button defaultHref="" (click)="cancelar()"></ion-back-button>
         </ion-buttons>
@@ -11,25 +12,28 @@
     <ion-card>
         <form #formulario="ngForm" (ngSubmit)="onSubmit(formulario)">
 
-
-
             <ion-item>
-                <ion-label position="floating">Tipo</ion-label>
-                <ion-select [(ngModel)]="idSeed" name="idSeed" placeholder="Elija la semilla">
-                    <ion-select-option *ngFor="let seed of seeds" value="{{seed.id}}">{{seed.name}}</ion-select-option>
-                </ion-select>
+                <ion-label>Awesome Label</ion-label>
+                <ion-searchbar required name="seed" [value]="name" [(ngModel)]="name" (ionChange)="searchSeeds($event)" (ionFocus)="limpiar($event)" placeholder="Buscar Semilla"></ion-searchbar>
             </ion-item>
 
-            <hr>
+            <ion-list *ngIf="this.seeds.length > 0 && !this.seleccionado" class="maxh">
+                <ion-item *ngFor="let s of seeds" (click)="medClicked($event, s)">
+                    {{ s.name }}
+                </ion-item>
+            </ion-list>
 
             <ion-item>
-                <ion-label position="floating">Cantidad a Plantar:</ion-label>
+                <ion-label *ngIf="bed.type != 'bed'" ng position="floating">Cantidad a Plantar:</ion-label>
+                <ion-label *ngIf="bed.type == 'bed'" ng position="floating">Cantidad a Germinar:</ion-label>
                 <ion-input type="number" required name="quantity" [(ngModel)]="plant.quantity"></ion-input>
+
+
             </ion-item>
 
-            <hr>
+            <br>
 
-            <ion-button [disabled]="formulario.invalid" type="submit">
+            <ion-button [disabled]="formulario.invalid &&  !nameValid" type="submit">
                 Registrar
             </ion-button>
             <ion-button (click)="cancelar()" color="danger">

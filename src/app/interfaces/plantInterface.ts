@@ -1,9 +1,9 @@
-interface PlantObject {
+export interface PlantObject {
   data: Plant[];
   meta: Meta;
 }
 
-interface PlantOneObject {
+export interface PlantOneObject {
   data: Plant;
   meta: Meta;
 }
@@ -22,9 +22,10 @@ interface Pagination {
 }
 
 interface Links {
+  next: string;
 }
 
-interface Plant {
+export interface Plant {
   id: number;
   name: string;
   status: string;
@@ -32,6 +33,7 @@ interface Plant {
   seed: number;
   seed_name: string;
   bed: number;
+  bed_type:string;
   bed_name: string;
   ground_name: string;
   garden_name: string;

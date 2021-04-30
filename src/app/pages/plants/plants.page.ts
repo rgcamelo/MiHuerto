@@ -5,6 +5,7 @@ import { BedService } from 'src/app/services/bed.service';
 import { PlantService } from 'src/app/services/plant.service';
 import { RegistrarPlantPage } from '../registrar-plant/registrar-plant.page';
 import { Plant } from '../../models/plant.model';
+import { Bed } from 'src/app/interfaces/bedInterface';
 
 @Component({
   selector: 'app-plants',
@@ -17,6 +18,7 @@ export class PlantsPage implements OnInit {
   reference:string = '';
   name:string ='';
   next:string;
+  bed:Bed;
   plants: Plant[] =[];
 
   constructor(private bedService:BedService,
@@ -32,7 +34,7 @@ export class PlantsPage implements OnInit {
     this.reference = this.route.snapshot.paramMap.get('id').toString();
     this.bedService.getPlants(this.reference,url).subscribe(resp =>{
       if (resp.data.length > 0) {
-        this.plants.push(...resp.data);
+        this.plants = [...resp.data];
         console.log(this.plants);
       }
       
@@ -41,7 +43,7 @@ export class PlantsPage implements OnInit {
 
   cargarBed(){
     this.bedService.getBed(this.reference).subscribe(res =>{
-      this.name = res.data.name;
+      this.bed = res.data;
     });
   }
 
@@ -49,7 +51,7 @@ export class PlantsPage implements OnInit {
     const modal = await this.modalCtrl.create({
       component: RegistrarPlantPage,
       componentProps:{
-        'idBed' : this.reference,
+        'bed' : this.bed,
       }
     });
     await modal.present();

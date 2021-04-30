@@ -28,7 +28,7 @@ export class CareTraducPipe implements PipeTransform {
     }
 
     if(value == 'eye'){
-      return 'Observación'
+      return 'Anotación'
     }
 
     if(value == 'planted'){

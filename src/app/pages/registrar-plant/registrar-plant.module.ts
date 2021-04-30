@@ -13,7 +13,7 @@ import { RegistrarPlantPage } from './registrar-plant.page';
     CommonModule,
     FormsModule,
     IonicModule,
-    RegistrarPlantPageRoutingModule
+    RegistrarPlantPageRoutingModule,
   ],
   declarations: [RegistrarPlantPage]
 })

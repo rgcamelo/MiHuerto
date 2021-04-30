@@ -23,11 +23,21 @@
                 <ion-item>
                     <ion-card class="ioncardground" *ngIf="plants.length > 0">
 
-                        <ion-item class="ioncardcontent">
-                            <ion-avatar class="animate__animated animate__fadeIn animate__faster" *ngFor="let plant of plants" slot="start">
-                                <ion-img src="/assets/imgwireframe/image.png"></ion-img>
+                        <!-- <ion-item  class="ioncardcontent space">
+                            <ion-avatar class="animate__animated animate__fadeIn animate__faster" slot="start">
+                                
                             </ion-avatar>
-                        </ion-item>
+                        </ion-item> -->
+                        <!-- <div class="container">
+                            <div class="row">
+                                <div  class="col">
+                                </div>
+                            </div> -->
+
+                        <div class="d-flex align-content-start flex-wrap">
+                            <img *ngFor="let plant of plants" class="imagen rounded-circle animate__animated animate__fadeIn animate__faster" src="/assets/imgwireframe/image.png">
+                        </div>
+
                     </ion-card>
 
                 </ion-item>

@@ -1,6 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
+import { BedOneObject } from '../interfaces/bedInterface';
+import { PlantObject, PlantOneObject } from '../interfaces/plantInterface';
 import { Plant } from '../models/plant.model';
 
 const apiUrl = environment.apiUrl;

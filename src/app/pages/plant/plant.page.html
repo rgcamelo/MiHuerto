@@ -10,112 +10,115 @@
 
 <ion-content>
 
+    <ng-container *ngIf="plant">
+        <ion-item>
+            <ion-card class="ioncardground">
+                <ion-card-content>
+                    <ion-row class="margindata">
+                        <ion-col>Nombre</ion-col>
+                        <ion-col>{{plant.name}}</ion-col>
+                    </ion-row>
+                    <ion-row class="margindata">
+                        <ion-col>Cantidad</ion-col>
+                        <ion-col>{{plant.quantity}}</ion-col>
+                    </ion-row>
+                    <ion-row class="margindata">
+                        <ion-col>Huerto</ion-col>
+                        <ion-col>{{plant.garden_name}}</ion-col>
+                    </ion-row>
+                    <ion-row class="margindata">
+                        <ion-col>Zona</ion-col>
+                        <ion-col>{{plant.ground_name}}</ion-col>
+                    </ion-row>
+                    <ion-row class="margindata">
+                        <ion-col>Cama</ion-col>
+                        <ion-col>{{plant.bed_name}}</ion-col>
+                    </ion-row>
+                    <ion-row class="margindata">
+                        <ion-col>Fecha de Plantacion</ion-col>
+                        <ion-col>{{plant.created_at}}</ion-col>
+                    </ion-row>
+                </ion-card-content>
 
-    <ion-item>
-        <ion-card class="ioncardground">
-            <ion-card-content>
-                <ion-row class="margindata">
-                    <ion-col>Nombre</ion-col>
-                    <ion-col>{{plant.nombre}}</ion-col>
-                </ion-row>
-                <ion-row class="margindata">
-                    <ion-col>Cantidad</ion-col>
-                    <ion-col>{{plant.cantidad}}</ion-col>
-                </ion-row>
-                <ion-row class="margindata">
-                    <ion-col>Huerto</ion-col>
-                    <ion-col>{{plant.huerto}}</ion-col>
-                </ion-row>
-                <ion-row class="margindata">
-                    <ion-col>Zona</ion-col>
-                    <ion-col>{{plant.zona}}</ion-col>
-                </ion-row>
-                <ion-row class="margindata">
-                    <ion-col>Cama</ion-col>
-                    <ion-col>{{plant.cama}}</ion-col>
-                </ion-row>
-                <ion-row class="margindata">
-                    <ion-col>Fecha de Plantacion</ion-col>
-                    <ion-col>{{plant.fechaPlantacion}}</ion-col>
-                </ion-row>
-            </ion-card-content>
+                <ion-card>
+                    <ion-segment (ionChange)="segmentChanged($event)" scrollable=" true " value="">
 
-            <ion-card>
-                <ion-segment (ionChange)="segmentChanged($event)" scrollable=" true " value="">
-
-                    <ion-segment-button value="">
-                        <ion-icon name="grid-outline"></ion-icon>
-                    </ion-segment-button>
-                    <ion-segment-button value="water">
-                        <ion-icon src="./assets/icon/regadera.svg"></ion-icon>
-                    </ion-segment-button>
-                    <ion-segment-button value="manure">
-                        <ion-icon src="./assets/icon/fertilizer.svg"></ion-icon>
-                    </ion-segment-button>
-                    <ion-segment-button value="plague">
-                        <ion-icon src="./assets/icon/plagas.svg"></ion-icon>
-                    </ion-segment-button>
-                    <ion-segment-button value="prune">
-                        <ion-icon src="./assets/icon/tijeras-de-podar.svg"></ion-icon>
-                    </ion-segment-button>
-                    <ion-segment-button value="crop">
-                        <ion-icon src="./assets/icon/verduras.svg"></ion-icon>
-                    </ion-segment-button>
-                    <ion-segment-button value="eye">
-                        <ion-icon src="./assets/icon/lista-de-verificacion.svg"></ion-icon>
-                    </ion-segment-button>
+                        <ion-segment-button value="">
+                            <ion-icon name="grid-outline"></ion-icon>
+                        </ion-segment-button>
+                        <ion-segment-button value="water">
+                            <ion-icon src="./assets/icon/regadera.svg"></ion-icon>
+                        </ion-segment-button>
+                        <ion-segment-button value="manure">
+                            <ion-icon src="./assets/icon/fertilizer.svg"></ion-icon>
+                        </ion-segment-button>
+                        <ion-segment-button value="plague">
+                            <ion-icon src="./assets/icon/plagas.svg"></ion-icon>
+                        </ion-segment-button>
+                        <ion-segment-button value="prune">
+                            <ion-icon src="./assets/icon/tijeras-de-podar.svg"></ion-icon>
+                        </ion-segment-button>
+                        <ion-segment-button *ngIf="plant.bed_type != 'bed'" value="crop">
+                            <ion-icon src="./assets/icon/verduras.svg"></ion-icon>
+                        </ion-segment-button>
+                        <ion-segment-button value="eye">
+                            <ion-icon src="./assets/icon/lista-de-verificacion.svg"></ion-icon>
+                        </ion-segment-button>
 
 
-                </ion-segment>
+                    </ion-segment>
 
-                <div class="maxim">
+                    <div class="maxim">
 
-                    <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)" pullFactor="0.8" pullMin="60" pullMax="120">
-                        <ion-refresher-content></ion-refresher-content>
-                    </ion-refresher>
+                        <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)" pullFactor="0.8" pullMin="60" pullMax="120">
+                            <ion-refresher-content></ion-refresher-content>
+                        </ion-refresher>
 
-                    <div class="timeline" (ionInfinite)="loadData($event)">
-                        <div *ngFor="let care of cares | filtro:typeCare:'type' " class="container right ">
-                            <div class="content">
-                                <span><h3 class="nomargin">{{care.type | careTraduc }}</h3> {{care.created_at}}</span>
-                                <p>{{care.description}}</p>
+                        <div class="timeline" (ionInfinite)="loadData($event)">
+                            <div *ngFor="let care of cares | filtro:typeCare:'type' " class="container right ">
+                                <div class="content">
+                                    <span><h3 class="nomargin">{{care.type | careTraduc }}</h3> {{care.created_at}}</span>
+                                    <p>{{care.description}}</p>
+                                </div>
                             </div>
                         </div>
+
+                        <!-- <ion-list>
+                            <ion-item *ngFor="let care of cares | filtro:typeCare:'type'">
+                                <ion-label>{{care.description}}</ion-label>
+                            </ion-item>
+                        </ion-list> -->
+
+
                     </div>
 
-                    <!-- <ion-list>
-                        <ion-item *ngFor="let care of cares | filtro:typeCare:'type'">
-                            <ion-label>{{care.description}}</ion-label>
-                        </ion-item>
-                    </ion-list> -->
 
 
-                </div>
-
-
-
+                </ion-card>
             </ion-card>
-        </ion-card>
-    </ion-item>
+        </ion-item>
 
-    <ion-infinite-scroll threshold="150px" (ionInfinite)="loadData($event)">
-        <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Cargando data...">
-        </ion-infinite-scroll-content>
-    </ion-infinite-scroll>
+        <ion-infinite-scroll threshold="150px" (ionInfinite)="loadData($event)">
+            <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Cargando data...">
+            </ion-infinite-scroll-content>
+        </ion-infinite-scroll>
 
-    <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-        <ion-fab-button color="dark">
-            <ion-icon src="./assets/icon/caja-de-herramientas.svg"></ion-icon>
-        </ion-fab-button>
-        <ion-fab-list side="top">
-            <ion-fab-button (click)="registrarCrop()" color="dark">
-                <ion-icon src="./assets/icon/verduras.svg"></ion-icon>
+        <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+            <ion-fab-button color="dark">
+                <ion-icon src="./assets/icon/caja-de-herramientas.svg"></ion-icon>
             </ion-fab-button>
-            <ion-fab-button (click)="registrarCare()" color="dark">
-                <ion-icon src="./assets/icon/lapiz.svg"></ion-icon>
-            </ion-fab-button>
+            <ion-fab-list side="top">
+                <ion-fab-button *ngIf="plant.bed_type != 'bed'" (click)="registrarCrop()" color="dark">
+                    <ion-icon src="./assets/icon/verduras.svg"></ion-icon>
+                </ion-fab-button>
+                <ion-fab-button (click)="registrarCare()" color="dark">
+                    <ion-icon src="./assets/icon/lapiz.svg"></ion-icon>
+                </ion-fab-button>
 
-        </ion-fab-list>
-    </ion-fab>
+            </ion-fab-list>
+        </ion-fab>
+    </ng-container>
+
+
 
 </ion-content>

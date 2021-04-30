@@ -22,14 +22,21 @@ export class RegistrarSeedPage implements OnInit {
 
   onSubmit(formulario : NgForm){
     this.presentLoading()
+    this.seed.name = this.capitalizeFirstLetter(this.seed.name);
     if(this.seed != null){
       this.seedService.createSeed(this.seed).subscribe(res =>{
+
         this.dismissLoading();
+        this.modalCtrl.dismiss('Registrar');
         console.log(res);
       })
     }
 
-    this.modalCtrl.dismiss('Registrar');
+    
+  }
+
+  capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
   }
 
   cancelar(){

@@ -24,6 +24,7 @@ export class RegistrarCropPage implements OnInit {
   onSubmit(formulario : NgForm){
     if(this.crop != null){
       this.plantService.createCrop(this.idPlant,this.crop).subscribe(res =>{
+        this.modalCtrl.dismiss('Registrar');
         console.log(res);
       });
 
@@ -35,7 +36,7 @@ export class RegistrarCropPage implements OnInit {
       });
     }
 
-    this.modalCtrl.dismiss('Registrar');
+    
   }
 
   cancelar(){

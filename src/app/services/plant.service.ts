@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
+import { PlantOneObject } from '../interfaces/plantInterface';
 import { Care } from '../models/care.model';
 import { Crop } from '../models/crop.model';
 

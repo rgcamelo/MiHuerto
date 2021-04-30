@@ -1,9 +1,9 @@
-interface SeedObject {
+export interface SeedObject {
   data: Seed[];
   meta: Meta;
 }
 
-interface SeedOneObject {
+export interface SeedOneObject {
   data: Seed;
   meta: Meta;
 }
@@ -25,7 +25,7 @@ interface Links {
   next: string;
 }
 
-interface Seed {
+export interface Seed {
   id: number;
   name: string;
   status: string;

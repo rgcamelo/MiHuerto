@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
+import { SeedObject, SeedOneObject } from '../interfaces/seedInterface';
 import { Seed } from '../models/seed.model';
 
 
@@ -35,6 +36,10 @@ export class SeedService {
     }
   }
 
+  getSeedsAll(){
+    return this.ejecutarQuery<SeedObject>(`seeds`);
+  }
+
   getCrops(id:string,url?:string){
     if (url) {
       return this.http.get<CropObject>(url);
@@ -42,5 +47,9 @@ export class SeedService {
       return this.ejecutarQuery<CropObject>(`seeds/${id}/crops?page=1`);
     }
     
+  }
+
+  searchSeed(buscar:string){
+    return this.ejecutarQuery<SeedObject>(`seeds?name=${buscar}`);
   }
 }

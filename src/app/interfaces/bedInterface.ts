@@ -1,9 +1,9 @@
-interface BedObject {
+export interface BedObject {
   data: Bed[];
   meta: Meta;
 }
 
-interface BedOneObject {
+export interface BedOneObject {
   data: Bed;
   meta: Meta;
 }
@@ -22,9 +22,10 @@ interface Pagination {
 }
 
 interface Links {
+  next: string;
 }
 
-interface Bed {
+export interface Bed {
   id: number;
   name: string;
   number:number;

@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { IonInfiniteScroll, IonList, ModalController } from '@ionic/angular';
-import { Observable } from 'rxjs';
+import { Bed } from 'src/app/interfaces/bedInterface';
 import { Ground } from 'src/app/models/ground.model';
 import { GroundService } from '../../services/ground.service';
 import { RegistarBedPage } from '../registar-bed/registar-bed.page';
@@ -59,16 +59,6 @@ export class BedsPage implements OnInit {
       }
       
     });
-  }
-
-  ordenar(a:Bed,b:Bed){
-    if (a.name > b.name) {
-      return 1;
-    }
-    if (a.name < b.name) {
-      return -1;
-    }
-    return 0;
   }
 
   getGround(){

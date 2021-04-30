@@ -4,26 +4,33 @@
     </ion-toolbar>
 </ion-header>
 
-<ion-content>
-
+<ion-content class="maxh">
     <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
         <ion-refresher-content></ion-refresher-content>
     </ion-refresher>
 
-    <ion-list>
-        <ion-item *ngFor="let seed of seeds">
-            <ion-label routerLink="crops/{{seed.id}}">{{seed.name}}</ion-label>
-        </ion-item>
-    </ion-list>
+    <div *ngIf="seeds">
+        <ion-list>
+            <ion-item *ngFor="let seed of seeds">
+                <ion-label routerLink="crops/{{seed.id}}">{{seed.name}}</ion-label>
+            </ion-item>
+        </ion-list>
 
-    <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
-        <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Cargando...">
-        </ion-infinite-scroll-content>
-    </ion-infinite-scroll>
+
+    </div>
+
+
+
+
 
     <ion-fab (click)="registrarSeed()" vertical="bottom" horizontal="end" slot="fixed">
         <ion-fab-button>
             <ion-icon name="add"></ion-icon>
         </ion-fab-button>
     </ion-fab>
+
+    <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
+        <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data...">
+        </ion-infinite-scroll-content>
+    </ion-infinite-scroll>
 </ion-content>

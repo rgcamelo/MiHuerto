@@ -1,5 +1,7 @@
 import { Component, Input, OnInit, Output, EventEmitter  } from '@angular/core';
 import { ToastController } from '@ionic/angular';
+import { Bed } from 'src/app/interfaces/bedInterface';
+import { Plant } from 'src/app/interfaces/plantInterface';
 import { BedService } from 'src/app/services/bed.service';
 import { GroundService } from '../../services/ground.service';
 

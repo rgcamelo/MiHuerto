@@ -3,7 +3,7 @@
         <ion-buttons slot="start">
             <ion-back-button defaultHref="/"></ion-back-button>
         </ion-buttons>
-        <ion-title>{{name}}</ion-title>
+        <ion-title *ngIf="bed">{{bed.name}}</ion-title>
     </ion-toolbar>
 </ion-header>
 
@@ -41,7 +41,7 @@
                 </ion-avatar>
                 <ion-label>
                     <h3>{{plant.name}}</h3>
-                    <p>Cantidad Plantada:{{plant.quantity}}</p>
+                    <p>Cantidad:{{plant.quantity}}</p>
                 </ion-label>
                 <ion-label slot="end" class="ion-text-end text-small">{{plant.status | titlecase}}</ion-label>
             </ion-item>

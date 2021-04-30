@@ -5,6 +5,7 @@ import { Planta } from 'src/app/models/planta.model';
 import { IonInfiniteScroll, ModalController } from '@ionic/angular';
 import { RegistrarCarePage } from '../registrar-care/registrar-care.page';
 import { RegistrarCropPage } from '../registrar-crop/registrar-crop.page';
+import { Plant } from 'src/app/interfaces/plantInterface';
 
 @Component({
   selector: 'app-plant',
@@ -15,7 +16,7 @@ export class PlantPage implements OnInit {
   @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
 
   reference:string = '';
-  plant:Planta = new Planta();
+  plant:Plant;
   plantName:string;
   cares: Care[] = [];
   typeCare:string= '';
@@ -46,12 +47,7 @@ export class PlantPage implements OnInit {
   cargarPlant(){
     this.plantService.getPlant(this.reference).subscribe(res =>{
       console.log(res.data);
-      this.plant.nombre = res.data.name;
-      this.plant.cantidad = res.data.quantity;
-      this.plant.huerto = res.data.garden_name;
-      this.plant.zona = res.data.ground_name;
-      this.plant.cama = res.data.bed_name;
-      this.plant.fechaPlantacion = res.data.created_at;
+      this.plant = res.data
     });
   }
 

@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { IonInfiniteScroll } from '@ionic/angular';
+import { IonInfiniteScroll, IonList, IonRefresher } from '@ionic/angular';
 import { ModalController } from '@ionic/angular';
+import { Seed } from 'src/app/interfaces/seedInterface';
 import { SeedService } from '../../services/seed.service';
 import { RegistrarSeedPage } from '../registrar-seed/registrar-seed.page';
 
@@ -11,9 +12,11 @@ import { RegistrarSeedPage } from '../registrar-seed/registrar-seed.page';
 })
 export class SeedPage implements OnInit {
   @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
-
-  seeds:Seed[] = [];
+  @ViewChild(IonRefresher) refresher: IonRefresher;
+  @ViewChild(IonList) ionList: IonList;
   next:string;
+  seeds:Seed[] = [];
+  
   constructor(private seedService:SeedService,
     private modalCtrl: ModalController) { }
 
@@ -21,24 +24,37 @@ export class SeedPage implements OnInit {
     this.cargarSeeds();
   }
 
-  doRefresh(event?){
-    this.infiniteScroll.disabled = false;
+  async doRefresh(event?){
     this.seeds = [];
-    this.cargarSeeds();
+    console.log("Reinicio",this.infiniteScroll.disabled);
+     this.infiniteScroll.disabled = false;
+    await this.cargarSeeds();
     if (event) {
+      console.log(event);
       event.target.complete();
     }
-    
+
   }
 
-  cargarSeeds(url?:string){
-    this.seedService.getSeeds(url).subscribe( res =>{
+  async cargarSeeds(url?:string){
+    try {
+      const res = await this.seedService.getSeeds(url).toPromise()
       if (res.data.length > 0) {
-        this.seeds.push(...res.data);
-        this.next = res.meta.pagination.links.next;
-      }
+            if (this.infiniteScroll.disabled == true) {
+              this.infiniteScroll.disabled = false;
+            }
+            console.log("Recargando",this.infiniteScroll.disabled)
+            this.seeds.push(...res.data);
+            this.next = res.meta.pagination.links.next;
+          }
+    } catch (error) {
       
-    })
+    }
+    
+
+    // .subscribe( res =>{
+    //   
+    // })
   }
 
   async registrarSeed(){
@@ -48,20 +64,20 @@ export class SeedPage implements OnInit {
     await modal.present();
 
     await modal.onDidDismiss().then( () => {
-      this.doRefresh();
+      this.seeds = [];
+      this.cargarSeeds();
     });
   }
 
   loadData(event){
-    if (this.next) {
-      this.cargarSeeds(this.next);
-      event.target.complete();
-    }else{
-      this.infiniteScroll.disabled = true;
-    }
-    
     if (event) {
-      
+      event.target.complete();
+      if (this.next != undefined) {
+        console.log(this.infiniteScroll.disabled);
+        this.cargarSeeds(this.next);
+      }else{
+         this.infiniteScroll.disabled = true;
+      }
     }
   }
 
