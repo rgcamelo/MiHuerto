@@ -1,5 +1,8 @@
 {
   "name": "huerto",
-  "integrations": {},
+  "integrations": {
+    "capacitor": {},
+    "cordova": {}
+  },
   "type": "angular"
 }

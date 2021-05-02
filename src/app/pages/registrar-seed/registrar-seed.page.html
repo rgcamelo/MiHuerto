@@ -1,6 +1,6 @@
 <ion-header>
     <ion-toolbar>
-        <ion-title>RegistrarSeed</ion-title>
+        <ion-title>Registrar Semilla</ion-title>
         <ion-buttons slot="start">
             <ion-back-button defaultHref="" (click)="cancelar()"></ion-back-button>
         </ion-buttons>
@@ -16,6 +16,37 @@
                 <ion-input type="text" required name="name" [(ngModel)]="seed.name"></ion-input>
             </ion-item>
 
+            <ion-row>
+                <ion-col size="6">
+                    <ion-button (click)="camara()" expand="full" fill="clear" shape="round">
+                        <ion-icon slot="start" name="camera"></ion-icon>
+                        Camará
+                    </ion-button>
+                </ion-col>
+                <ion-col size="6">
+                    <ion-button (click)="libreria()" expand="full" fill="clear" shape="round">
+                        <ion-icon slot="start" name="images"></ion-icon>
+                        Galería
+                    </ion-button>
+                </ion-col>
+            </ion-row>
+
+            <ion-row>
+                <ion-col size="3" *ngIf="tempImage">
+                    <ion-card>
+                        <img [src]="tempImage" alt="">
+                    </ion-card>
+                </ion-col>
+            </ion-row>
+
+            <ion-row>
+                <ion-col *ngIf="tempImage" size="12">
+                    <ion-button (click)="quitarImagen()" expand="block" shape="round" color="danger">
+
+                    </ion-button>
+                </ion-col>
+            </ion-row>
+
             <!-- <hr>
 
             <ion-item>
@@ -23,13 +54,20 @@
             </ion-item>
 
             <hr> -->
+            <ion-row>
+                <ion-col size="6">
+                    <ion-button [disabled]="formulario.invalid" expand="full" shape="round" type="submit" color="success">
+                        Registrar
+                    </ion-button>
+                </ion-col>
+                <ion-col size="6">
+                    <ion-button (click)="cancelar()" expand="full" shape="round" color="danger">
+                        Cancelar
+                    </ion-button>
+                </ion-col>
+            </ion-row>
 
-            <ion-button [disabled]="formulario.invalid" type="submit">
-                Registrar
-            </ion-button>
-            <ion-button (click)="cancelar()" color="danger">
-                Cancelar
-            </ion-button>
+
 
 
         </form>

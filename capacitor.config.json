@@ -1,0 +1,14 @@
+{
+    "appId": "io.ionic.huerto",
+    "appName": "huerto",
+    "bundledWebRuntime": false,
+    "npmClient": "npm",
+    "webDir": "www",
+    "plugins": {
+        "SplashScreen": {
+            "launchShowDuration": 0,
+            "showSpinner": true
+        }
+    },
+    "cordova": {}
+}

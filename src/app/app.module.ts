@@ -14,18 +14,25 @@ import { ComponentsModule } from './components/components.module';
 
 import { registerLocaleData } from '@angular/common';
 import localeEsCO from '@angular/common/locales/es-CO';
+import { AngularFireModule } from '@angular/fire';
+import { environment } from 'src/environments/environment';
+import {AngularFireStorageModule} from '@angular/fire/storage';
+import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
+import { Camera } from '@ionic-native/camera/ngx';
 
 registerLocaleData(localeEsCO, 'es-Co');
 
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule, ComponentsModule],
+  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule, ComponentsModule, AngularFireModule.initializeApp(environment.firebaseConfig), AngularFireStorageModule],
   providers: [
     StatusBar,
     SplashScreen,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    { provide: LOCALE_ID, useValue: 'es-Co' }
+    { provide: LOCALE_ID, useValue: 'es-Co' },
+    InAppBrowser,
+    Camera
   ],
   bootstrap: [AppComponent]
 })
