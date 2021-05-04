@@ -11,8 +11,11 @@
 
     <div *ngIf="seeds">
         <ion-list>
-            <ion-item *ngFor="let seed of seeds">
-                <ion-label routerLink="crops/{{seed.id}}">{{seed.name}}</ion-label>
+            <ion-item routerLink="crops/{{seed.id}}" *ngFor="let seed of seeds">
+                <ion-avatar slot="start">
+                    <img [src]="seed.image">
+                </ion-avatar>
+                <ion-label>{{seed.name}}</ion-label>
             </ion-item>
         </ion-list>
 

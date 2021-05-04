@@ -1,6 +1,6 @@
 <ion-header>
     <ion-toolbar>
-        <ion-title>Registrar Semilla</ion-title>
+        <ion-title>Registrar Semilla en prueba</ion-title>
         <ion-buttons slot="start">
             <ion-back-button defaultHref="" (click)="cancelar()"></ion-back-button>
         </ion-buttons>
@@ -9,7 +9,7 @@
 
 <ion-content>
     <ion-card>
-        <form #formulario="ngForm" (ngSubmit)="onSubmit(formulario)">
+        <form #formulario="ngForm" (ngSubmit)="guardar()">
 
             <ion-item>
                 <ion-label position="floating">Nombre</ion-label>
@@ -42,7 +42,7 @@
             <ion-row>
                 <ion-col *ngIf="tempImage" size="12">
                     <ion-button (click)="quitarImagen()" expand="block" shape="round" color="danger">
-
+                        <ion-icon name="close-outline"></ion-icon>
                     </ion-button>
                 </ion-col>
             </ion-row>
@@ -56,7 +56,7 @@
             <hr> -->
             <ion-row>
                 <ion-col size="6">
-                    <ion-button [disabled]="formulario.invalid" expand="full" shape="round" type="submit" color="success">
+                    <ion-button [disabled]="formulario.invalid && hayImagen" expand="full" shape="round" type="submit" color="success">
                         Registrar
                     </ion-button>
                 </ion-col>
@@ -66,9 +66,6 @@
                     </ion-button>
                 </ion-col>
             </ion-row>
-
-
-
 
         </form>
     </ion-card>

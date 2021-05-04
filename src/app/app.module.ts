@@ -19,6 +19,7 @@ import { environment } from 'src/environments/environment';
 import {AngularFireStorageModule} from '@angular/fire/storage';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 import { Camera } from '@ionic-native/camera/ngx';
+import { File } from '@ionic-native/file/ngx';
 
 registerLocaleData(localeEsCO, 'es-Co');
 
@@ -32,7 +33,8 @@ registerLocaleData(localeEsCO, 'es-Co');
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     { provide: LOCALE_ID, useValue: 'es-Co' },
     InAppBrowser,
-    Camera
+    Camera,
+    File,
   ],
   bootstrap: [AppComponent]
 })
