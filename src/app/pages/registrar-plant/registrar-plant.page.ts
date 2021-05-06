@@ -22,6 +22,7 @@ export class RegistrarPlantPage implements OnInit {
   seed:Seed;
   name:string = '';
   seleccionado = false;
+  image:string = '';
   @Input() bed:Bed;
 
   constructor(private modalCtrl:ModalController,
@@ -74,13 +75,14 @@ export class RegistrarPlantPage implements OnInit {
   medClicked(event, item) {
     this.seed = item;
     this.name = item.name;
+    this.image = item.image
     this.seleccionado = true;
     console.log(item);
   }
 
   limpiar(event){
-    console.log("hola");
     this.name = "";
+    this.image = "";
     this.seleccionado = false;
   }
 

@@ -13,6 +13,10 @@
     <ng-container *ngIf="plant">
         <ion-item>
             <ion-card class="ioncardground">
+                <div class="objetfit">
+                    <img [src]="plant.image" />
+                </div>
+
                 <ion-card-content>
                     <ion-row class="margindata">
                         <ion-col>Nombre</ion-col>
@@ -77,7 +81,7 @@
                         <div class="timeline" (ionInfinite)="loadData($event)">
                             <div *ngFor="let care of cares | filtro:typeCare:'type' " class="container right ">
                                 <div class="content">
-                                    <span><h3 class="nomargin">{{care.type | careTraduc }}</h3> {{care.created_at}}</span>
+                                    <span><h3 class="nomargin">{{care.type | careTraduc: plant.bed_type }}</h3> {{care.created_at}}</span>
                                     <p>{{care.description}}</p>
                                 </div>
                             </div>

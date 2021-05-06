@@ -35,7 +35,7 @@
                             </div> -->
 
                         <div class="d-flex align-content-start flex-wrap">
-                            <img *ngFor="let plant of plants" class="imagen rounded-circle animate__animated animate__fadeIn animate__faster" src="/assets/imgwireframe/image.png">
+                            <img *ngFor="let plant of plants" class="imagen rounded-circle animate__animated animate__fadeIn animate__faster" [src]="plant.image">
                         </div>
 
                     </ion-card>

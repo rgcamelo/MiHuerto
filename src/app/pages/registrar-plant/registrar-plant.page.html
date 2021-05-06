@@ -12,6 +12,10 @@
     <ion-card>
         <form #formulario="ngForm" (ngSubmit)="onSubmit(formulario)">
 
+            <div class="objetfit ">
+                <img class="animate__animated animate__fadeIn animate__faster" *ngIf="image" [src]="image" />
+            </div>
+
             <ion-item>
                 <ion-label>Awesome Label</ion-label>
                 <ion-searchbar required name="seed" [value]="name" [(ngModel)]="name" (ionChange)="searchSeeds($event)" (ionFocus)="limpiar($event)" placeholder="Buscar Semilla"></ion-searchbar>

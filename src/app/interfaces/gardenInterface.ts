@@ -1,10 +1,10 @@
 
-interface GardenObject {
+export interface GardenObject {
   data: Garden[];
   meta: Meta;
 }
 
-interface GardenOneObject {
+export interface GardenOneObject {
   data: Garden;
   meta: Meta;
 }
@@ -26,7 +26,7 @@ interface Links {
   next: string;
 }
 
-interface Garden {
+export interface Garden {
   id: number;
   name: string;
   status: string;

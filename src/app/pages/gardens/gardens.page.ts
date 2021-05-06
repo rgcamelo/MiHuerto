@@ -1,6 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActionSheetController, IonInfiniteScroll, LoadingController, ModalController, ToastController} from '@ionic/angular';
+import { Garden, GardenObject, GardenOneObject } from 'src/app/interfaces/gardenInterface';
 import { GardenService } from 'src/app/services/garden.service';
+import { LoadingService } from 'src/app/services/loading.service';
+import { ToastService } from 'src/app/services/toast.service';
 import { RegistrarGardenPage } from '../registrar-garden/registrar-garden.page';
 
 @Component({
@@ -17,8 +20,8 @@ export class GardensPage implements OnInit {
   constructor(private gardenService:GardenService,
     private modalCtrl: ModalController,
     private actionSheetCtrl: ActionSheetController,
-    public toastController: ToastController,
-    public loadingController: LoadingController
+    public toast: ToastService,
+    public loading:LoadingService
     ) {}
 
   ngOnInit(){
@@ -26,8 +29,11 @@ export class GardensPage implements OnInit {
   }
 
   cargarGardens(url?:string){
-    this.gardenService.getGardens(url).subscribe(resp =>{
+    this.loading.presentLoading();
+    this.gardenService.getGardens(url).subscribe( resp =>{
+      this.loading.dismiss();
       if(resp.data.length > 0){
+        
         this.gardens.push(...resp.data);
         this.next = resp.meta.pagination.links.next;
       }
@@ -36,11 +42,11 @@ export class GardensPage implements OnInit {
   }
 
   borrarGarden(id:string){
-    this.presentLoading();
-    this.gardenService.deleteGarden(id).subscribe(resp =>{
-      this.dismissLoading();
-      this.presentToast(`Huerto ${resp.data.name} Eliminado`);
+    this.gardenService.deleteGarden(id).subscribe( res =>{
+      this.toast.presentToast(`Huerto ${res.data.name} Eliminado`);
+      this.doRefresh();
     });
+    
   }
   
 
@@ -51,6 +57,7 @@ export class GardensPage implements OnInit {
     await modal.present();
 
     await modal.onDidDismiss().then( () => {
+      this.toast.presentToast(`Nuevo Huerto añadido`);
       this.doRefresh();
     });
 
@@ -63,7 +70,7 @@ export class GardensPage implements OnInit {
       cssClass: 'my-custom-class',
       backdropDismiss: false,
       buttons: [{
-        text: 'Delete',
+        text: 'Borrar',
         role: 'destructive',
         icon: 'trash',
         cssClass:'rojo',
@@ -71,7 +78,7 @@ export class GardensPage implements OnInit {
           this.borrarGarden(id);
         }
       }, {
-        text: 'Update',
+        text: 'Editar',
         icon: 'pencil-outline',
         handler: () => {
           console.log('Share clicked');
@@ -112,25 +119,7 @@ export class GardensPage implements OnInit {
     
   }
 
-  async presentToast(message:string) {
-    const toast = await this.toastController.create({
-      message: message,
-      duration: 2000
-    });
-    toast.present();
-  }
 
-  async presentLoading() {
-    const loading = await this.loadingController.create({
-      cssClass: 'my-custom-class',
-    });
-    await loading.present();
-  }
-
-  async dismissLoading(){
-    this.doRefresh();
-    return await this.loadingController.dismiss();
-  }
   
 
 }

@@ -2,10 +2,12 @@ import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { PlantService } from 'src/app/services/plant.service';
 import { ActivatedRoute } from '@angular/router';
 import { Planta } from 'src/app/models/planta.model';
-import { IonInfiniteScroll, ModalController } from '@ionic/angular';
+import { IonInfiniteScroll, LoadingController, ModalController } from '@ionic/angular';
 import { RegistrarCarePage } from '../registrar-care/registrar-care.page';
 import { RegistrarCropPage } from '../registrar-crop/registrar-crop.page';
 import { Plant } from 'src/app/interfaces/plantInterface';
+import { LoadingService } from '../../services/loading.service';
+import { ToastService } from '../../services/toast.service';
 
 @Component({
   selector: 'app-plant',
@@ -24,7 +26,9 @@ export class PlantPage implements OnInit {
 
   constructor(private plantService:PlantService,
     private modalCtrl: ModalController,
-    private route: ActivatedRoute ) { }
+    private route: ActivatedRoute,
+    private loading:LoadingService,
+    private toast:ToastService) { }
 
   ngOnInit() {
     this.cargarCares();
@@ -45,7 +49,9 @@ export class PlantPage implements OnInit {
   }
 
   cargarPlant(){
+    this.loading.presentLoading();
     this.plantService.getPlant(this.reference).subscribe(res =>{
+      this.loading.dismiss();
       console.log(res.data);
       this.plant = res.data
     });
@@ -62,6 +68,7 @@ export class PlantPage implements OnInit {
 
     await modal.onDidDismiss().then( () =>{
       this.doRefresh();
+      this.toast.presentToast(`Listo`);
     });
   }
 
@@ -76,6 +83,7 @@ export class PlantPage implements OnInit {
 
     await modal.onDidDismiss().then( () =>{
       this.doRefresh();
+      this.toast.presentToast(`Listo`);
     });
   }
 
@@ -104,5 +112,4 @@ export class PlantPage implements OnInit {
       event.target.complete();
     }
   }
-
 }

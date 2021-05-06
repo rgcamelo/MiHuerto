@@ -19,7 +19,7 @@ export class RegistrarSeedPage implements OnInit {
   tempImage: string;
   img:string;
   seed:Seed = new Seed();
-  hayImagen = false;
+  noHayImagen = true;
 
   constructor(private seedService:SeedService,
     private modalCtrl:ModalController,
@@ -71,7 +71,7 @@ export class RegistrarSeedPage implements OnInit {
   procesarImagen(options:CameraOptions){
     this.camera.getPicture(options).then((imageData) => {
       this.tempImage = `data:image/jpeg;base64,${imageData}`;
-      this.hayImagen = true;
+      this.noHayImagen = false;
     }, error => {
       console.log('ERROR -> ' + JSON.stringify(error));
     });
@@ -105,6 +105,7 @@ export class RegistrarSeedPage implements OnInit {
     this.seed.name = this.capitalizeFirstLetter(this.seed.name);
     if(this.seed != null){
       this.seedService.createSeed(this.seed).subscribe(res =>{
+        this.quitarImagen();
         this.dismissLoading();
         this.modalCtrl.dismiss('Registrar');
         console.log(res);
@@ -114,7 +115,7 @@ export class RegistrarSeedPage implements OnInit {
 
   quitarImagen(){
     this.tempImage =''; 
-    this.hayImagen = false;
+    this.noHayImagen = true;
   }
 
   async presentLoading() {

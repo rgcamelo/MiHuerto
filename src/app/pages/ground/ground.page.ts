@@ -1,12 +1,14 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { GardenService } from '../../services/garden.service';
 import { ActivatedRoute } from '@angular/router';
-import { ActionSheetController, IonInfiniteScroll, ModalController, ToastController } from '@ionic/angular';
+import { ActionSheetController, IonInfiniteScroll, LoadingController, ModalController, ToastController } from '@ionic/angular';
 import { RegistrarGroundPage } from '../registrar-ground/registrar-ground.page';
 import { GroundService } from '../../services/ground.service';
 import { Ground } from 'src/app/models/ground.model';
 import { EditarGroundPage } from '../editar-ground/editar-ground.page';
 import { Garden } from '../../models/garden.model';
+import { LoadingService } from 'src/app/services/loading.service';
+import { ToastService } from 'src/app/services/toast.service';
 
 @Component({
   selector: 'app-ground',
@@ -25,7 +27,8 @@ export class GroundPage implements OnInit {
     private route: ActivatedRoute,
     private modalCtrl: ModalController, 
     private actionSheetCtrl: ActionSheetController,
-    public toastController: ToastController) { }
+    private toast:ToastService,
+    public loading:LoadingService) { }
 
   ngOnInit(){
     this.cargarGarden();
@@ -54,8 +57,9 @@ export class GroundPage implements OnInit {
     
   }
   cargarGrounds(url?:string){
+    this.loading.presentLoading();
     this.gardenService.getGrounds(this.reference,url).subscribe(resp =>{
-      console.log(resp);
+      this.loading.dismiss();
       if (resp.data.length > 0){
       this.grounds.push(...resp.data);
       this.next = resp.meta.pagination.links.next;
@@ -89,6 +93,7 @@ export class GroundPage implements OnInit {
     await modal.present();
 
     await modal.onDidDismiss().then( () => {
+      this.toast.presentToast(`Nueva zona Registrada`);
       this.doRefresh();
     });
     
@@ -165,7 +170,7 @@ export class GroundPage implements OnInit {
   LimpiarPlantas(ground:Ground){
     ground.status = 'desplante';
     this.gardenService.updateGround(this.reference,ground.id.toString(),ground).subscribe( res => {
-      this.presentToast(`Plantas Desplantadas`);
+      this.toast.presentToast(`Plantas Desplantadas`);
       //this.doRefresh();
     });
     
@@ -174,20 +179,12 @@ export class GroundPage implements OnInit {
   regarZona(ground:Ground){
     ground.status = 'riego'; 
     this.gardenService.updateGround(this.reference,ground.id.toString(),ground).subscribe( res => {
-      this.presentToast(`Zona: ${res.data.name} Regada`);
+      this.toast.presentToast(`Zona: ${res.data.name} Regada`);
       //this.doRefresh();
     });
     
   }
 
-  async presentToast(message:string) {
-    const toast = await this.toastController.create({
-      message: message,
-      duration: 2000
-    });
-    toast.present();
-  }
 
-  
 
 }

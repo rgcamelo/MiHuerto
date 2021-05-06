@@ -1,6 +1,6 @@
 <ion-header>
     <ion-toolbar>
-        <ion-title>Registrar Semilla en prueba</ion-title>
+        <ion-title>Registrar Semilla</ion-title>
         <ion-buttons slot="start">
             <ion-back-button defaultHref="" (click)="cancelar()"></ion-back-button>
         </ion-buttons>
@@ -32,11 +32,9 @@
             </ion-row>
 
             <ion-row>
-                <ion-col size="3" *ngIf="tempImage">
-                    <ion-card>
-                        <img [src]="tempImage" alt="">
-                    </ion-card>
-                </ion-col>
+                <div class="objetfit">
+                    <img class="animate__animated animate__fadeIn animate__faster" *ngIf="tempImage" [src]="tempImage" />
+                </div>
             </ion-row>
 
             <ion-row>
@@ -56,7 +54,7 @@
             <hr> -->
             <ion-row>
                 <ion-col size="6">
-                    <ion-button [disabled]="formulario.invalid && hayImagen" expand="full" shape="round" type="submit" color="success">
+                    <ion-button [disabled]="formulario.invalid || noHayImagen" expand="full" shape="round" type="submit" color="success">
                         Registrar
                     </ion-button>
                 </ion-col>

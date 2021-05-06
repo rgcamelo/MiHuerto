@@ -1,10 +1,12 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { IonInfiniteScroll, IonList, ModalController } from '@ionic/angular';
+import { IonInfiniteScroll, IonList, LoadingController, ModalController } from '@ionic/angular';
 import { Bed } from 'src/app/interfaces/bedInterface';
 import { Ground } from 'src/app/models/ground.model';
+import { LoadingService } from 'src/app/services/loading.service';
 import { GroundService } from '../../services/ground.service';
 import { RegistarBedPage } from '../registar-bed/registar-bed.page';
+import { ToastService } from '../../services/toast.service';
 
 @Component({
   selector: 'app-beds',
@@ -23,7 +25,9 @@ export class BedsPage implements OnInit {
 
   constructor(private groundService:GroundService,
     private route: ActivatedRoute,
-    private modalCtrl: ModalController ) { }
+    private modalCtrl: ModalController,
+    private loading: LoadingService,
+    private toast: ToastService ) { }
 
   ngOnInit(){
     this.getGround();
@@ -52,7 +56,9 @@ export class BedsPage implements OnInit {
   }
 
   cargarBeds(url?:string){
+    this.loading.presentLoading();
     this.groundService.getBeds(this.reference,url).subscribe(resp =>{
+      this.loading.dismiss();
       if (resp.data.length > 0) {
         this.beds.push(...resp.data);
       this.next = resp.meta.pagination.links.next;
@@ -90,10 +96,10 @@ export class BedsPage implements OnInit {
     await modal.present();
 
     await modal.onDidDismiss().then( () => {
+      this.toast.presentToast(`Listo`);
       this.doRefresh();
     });
   }
-
   
 
 }

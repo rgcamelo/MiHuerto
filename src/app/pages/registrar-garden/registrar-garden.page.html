@@ -10,23 +10,46 @@
 </ion-header>
 <ion-content>
     <ion-card class="p-2">
-        <form #formulario="ngForm" (ngSubmit)="onSubmit(formulario)">
+        <form #formulario="ngForm" (ngSubmit)="guardar()">
+
+            <ion-row>
+                <ion-col size="6">
+                    <ion-button (click)="camara()" expand="full" fill="clear" shape="round">
+                        <ion-icon slot="start" name="camera"></ion-icon>
+                        Camará
+                    </ion-button>
+                </ion-col>
+                <ion-col size="6">
+                    <ion-button (click)="libreria()" expand="full" fill="clear" shape="round">
+                        <ion-icon slot="start" name="images"></ion-icon>
+                        Galería
+                    </ion-button>
+                </ion-col>
+            </ion-row>
+
+            <ion-row>
+                <div class="objetfit">
+                    <img class="animate__animated animate__fadeIn animate__faster" *ngIf="tempImage" [src]="tempImage" />
+                </div>
+            </ion-row>
+
+            <ion-row>
+                <ion-col *ngIf="tempImage" size="12">
+                    <ion-button (click)="quitarImagen()" expand="block" shape="round" color="danger">
+                        <ion-icon name="close-outline"></ion-icon>
+                    </ion-button>
+                </ion-col>
+            </ion-row>
+
 
             <ion-item>
                 <ion-label position="floating">Nombre</ion-label>
                 <ion-input type="text" required name="name" [(ngModel)]="garden.name"></ion-input>
             </ion-item>
 
-
-            <!-- <ion-item>
-                <ion-input type="file" placeholder="Seleccionar imagen" required name="image" [(ngModel)]="garden.image"></ion-input>
-            </ion-item>
-
-            <hr> -->
-
             <br>
             <div class="text-center">
-                <ion-button class="btn-block" [disabled]="formulario.invalid" type="submit">
+                <ion-button class="btn-block" [disabled]="formulario.invalid || noHayImagen" type="submit">
                     Registrar
                 </ion-button>
                 <ion-button (click)="cancelar()" color="danger">

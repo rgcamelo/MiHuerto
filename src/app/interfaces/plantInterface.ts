@@ -32,6 +32,7 @@ export interface Plant {
   quantity: number;
   seed: number;
   seed_name: string;
+  image:string;
   bed: number;
   bed_type:string;
   bed_name: string;

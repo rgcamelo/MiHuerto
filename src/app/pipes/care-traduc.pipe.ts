@@ -5,7 +5,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class CareTraducPipe implements PipeTransform {
 
-  transform(value: string): string {
+  transform(value: string, type:string ): string {
     
     if (value == 'water') {
       return 'Control de Riego';
@@ -32,6 +32,9 @@ export class CareTraducPipe implements PipeTransform {
     }
 
     if(value == 'planted'){
+      if(type == 'bed'){
+        return 'Puesta en Germinación'
+      }
       return 'Dia de Plantación'
     }
 

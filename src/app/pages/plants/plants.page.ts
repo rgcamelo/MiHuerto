@@ -1,11 +1,13 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { IonInfiniteScroll, IonList, ModalController } from '@ionic/angular';
+import { IonInfiniteScroll, IonList, LoadingController, ModalController } from '@ionic/angular';
 import { BedService } from 'src/app/services/bed.service';
 import { PlantService } from 'src/app/services/plant.service';
 import { RegistrarPlantPage } from '../registrar-plant/registrar-plant.page';
 import { Plant } from '../../models/plant.model';
 import { Bed } from 'src/app/interfaces/bedInterface';
+import { LoadingService } from 'src/app/services/loading.service';
+import { ToastService } from 'src/app/services/toast.service';
 
 @Component({
   selector: 'app-plants',
@@ -23,7 +25,9 @@ export class PlantsPage implements OnInit {
 
   constructor(private bedService:BedService,
     private modalCtrl: ModalController,
-    private route: ActivatedRoute ) { }
+    private route: ActivatedRoute,
+    private loading:LoadingService,
+    private toast:ToastService ) { }
 
   ngOnInit(){
     this.cargarPlants();
@@ -31,8 +35,10 @@ export class PlantsPage implements OnInit {
   }
 
   cargarPlants(url?:string){
+    this.loading.presentLoading();
     this.reference = this.route.snapshot.paramMap.get('id').toString();
     this.bedService.getPlants(this.reference,url).subscribe(resp =>{
+      this.loading.dismiss();
       if (resp.data.length > 0) {
         this.plants = [...resp.data];
         console.log(this.plants);
@@ -58,6 +64,7 @@ export class PlantsPage implements OnInit {
 
     await modal.onDidDismiss().then( () =>{
        this.doRefresh();
+       this.toast.presentToast(`Listo`);
     });
 
   }
@@ -93,6 +100,8 @@ export class PlantsPage implements OnInit {
       this.cargarPlants();
     })
   }
+
+
 
 
 

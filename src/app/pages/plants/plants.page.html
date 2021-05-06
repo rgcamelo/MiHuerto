@@ -37,7 +37,7 @@
 
             <ion-item routerLink="./plant/{{plant.id}}">
                 <ion-avatar slot="start">
-                    <img src="/assets/imgwireframe/image.png">
+                    <img [src]="plant.image">
                 </ion-avatar>
                 <ion-label>
                     <h3>{{plant.name}}</h3>

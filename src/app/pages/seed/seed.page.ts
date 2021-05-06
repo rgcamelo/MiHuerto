@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { IonInfiniteScroll, IonList, IonRefresher } from '@ionic/angular';
 import { ModalController } from '@ionic/angular';
 import { Seed } from 'src/app/interfaces/seedInterface';
+import { ToastService } from 'src/app/services/toast.service';
 import { SeedService } from '../../services/seed.service';
 import { RegistrarSeedPage } from '../registrar-seed/registrar-seed.page';
 
@@ -18,7 +19,8 @@ export class SeedPage implements OnInit {
   seeds:Seed[] = [];
   
   constructor(private seedService:SeedService,
-    private modalCtrl: ModalController) { }
+    private modalCtrl: ModalController,
+    private toast:ToastService) { }
 
   ngOnInit() {
     this.cargarSeeds();
@@ -43,7 +45,7 @@ export class SeedPage implements OnInit {
             if (this.infiniteScroll.disabled == true) {
               this.infiniteScroll.disabled = false;
             }
-            console.log("Recargando",this.infiniteScroll.disabled)
+
             this.seeds.push(...res.data);
             this.next = res.meta.pagination.links.next;
           }
@@ -66,6 +68,7 @@ export class SeedPage implements OnInit {
     await modal.onDidDismiss().then( () => {
       this.seeds = [];
       this.cargarSeeds();
+      this.toast.presentToast(`Listo`);
     });
   }
 
