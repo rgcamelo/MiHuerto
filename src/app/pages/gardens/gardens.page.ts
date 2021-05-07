@@ -1,10 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ActionSheetController, IonInfiniteScroll, LoadingController, ModalController, ToastController} from '@ionic/angular';
-import { Garden, GardenObject, GardenOneObject } from 'src/app/interfaces/gardenInterface';
+import { ActionSheetController, AlertController, IonInfiniteScroll, LoadingController, ModalController, ToastController} from '@ionic/angular';
+import { Garden } from 'src/app/interfaces/gardenInterface';
 import { GardenService } from 'src/app/services/garden.service';
 import { LoadingService } from 'src/app/services/loading.service';
 import { ToastService } from 'src/app/services/toast.service';
 import { RegistrarGardenPage } from '../registrar-garden/registrar-garden.page';
+import { EditarGardenPage } from '../editar-garden/editar-garden.page';
 
 @Component({
   selector: 'app-gardens',
@@ -21,7 +22,8 @@ export class GardensPage implements OnInit {
     private modalCtrl: ModalController,
     private actionSheetCtrl: ActionSheetController,
     public toast: ToastService,
-    public loading:LoadingService
+    public loading:LoadingService,
+    public alertController: AlertController
     ) {}
 
   ngOnInit(){
@@ -46,7 +48,6 @@ export class GardensPage implements OnInit {
       this.toast.presentToast(`Huerto ${res.data.name} Eliminado`);
       this.doRefresh();
     });
-    
   }
   
 
@@ -56,15 +57,34 @@ export class GardensPage implements OnInit {
     });
     await modal.present();
 
-    await modal.onDidDismiss().then( () => {
-      this.toast.presentToast(`Nuevo Huerto añadido`);
+    await modal.onDidDismiss().then( res => {
       this.doRefresh();
+      if (res.data != 'Cancelar') {
+        this.toast.presentToast(`Nuevo Huerto añadido`);
+      }
     });
-
-    
   }
 
-  async presentActionSheet(id:string) {
+  async editarGarden(garden:Garden){
+    const modal = await this.modalCtrl.create({
+      component: EditarGardenPage,
+      componentProps:{
+        'garden' : garden,
+      }
+    });
+    await modal.present();
+
+    await modal.onDidDismiss().then( res => {
+      this.doRefresh();
+      if (res.data != 'Cancelar') {
+        this.toast.presentToast(`Huerto editado`);
+      }
+    });
+  }
+
+
+
+  async presentActionSheet(garden:Garden) {
     const actionSheet = await this.actionSheetCtrl.create({
       header: 'Opciones',
       cssClass: 'my-custom-class',
@@ -75,13 +95,13 @@ export class GardensPage implements OnInit {
         icon: 'trash',
         cssClass:'rojo',
         handler: () => {
-          this.borrarGarden(id);
+          this.presentAlertConfirm(garden.id.toString());
         }
       }, {
         text: 'Editar',
         icon: 'pencil-outline',
         handler: () => {
-          console.log('Share clicked');
+          this.editarGarden(garden);
         }
       }, {
         text: 'Cancel',
@@ -117,6 +137,32 @@ export class GardensPage implements OnInit {
       event.target.complete();
     }
     
+  }
+
+  async presentAlertConfirm(id:string) {
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: 'Borrar Huerto',
+      message: '¿Esta seguro de que va a borrar este huerto?',
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+          cssClass: 'rojo',
+          handler: (blah) => {
+            console.log('Confirm Cancel: blah');
+          }
+        }, {
+          text: 'Si',
+          cssClass: 'success',
+          handler: () => {
+            this.borrarGarden(id);
+          }
+        }
+      ]
+    });
+
+    await alert.present();
   }
 
 

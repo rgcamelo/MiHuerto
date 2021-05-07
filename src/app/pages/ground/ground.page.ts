@@ -92,9 +92,12 @@ export class GroundPage implements OnInit {
     });
     await modal.present();
 
-    await modal.onDidDismiss().then( () => {
-      this.toast.presentToast(`Nueva zona Registrada`);
+    await modal.onDidDismiss().then( res => {
+      
       this.doRefresh();
+      if (res.data != 'Cancelar') {
+        this.toast.presentToast(`Nueva zona Registrada`);      
+      }
     });
     
   }

@@ -1,20 +1,16 @@
 <ion-header>
     <ion-toolbar>
-        <ion-title>Nueva Semilla</ion-title>
+        <ion-title>
+            Editar Huerto
+        </ion-title>
         <ion-buttons slot="start">
             <ion-back-button defaultHref="" (click)="cancelar()"></ion-back-button>
         </ion-buttons>
     </ion-toolbar>
 </ion-header>
-
 <ion-content>
-    <ion-card>
-        <form #formulario="ngForm" (ngSubmit)="guardar()">
-
-            <ion-item>
-                <ion-label position="floating">Nombre</ion-label>
-                <ion-input type="text" required name="name" [(ngModel)]="seed.name"></ion-input>
-            </ion-item>
+    <ion-card class="p-2">
+        <form #formulario="ngForm" (ngSubmit)="editar()">
 
             <ion-row>
                 <ion-col size="6">
@@ -45,25 +41,23 @@
                 </ion-col>
             </ion-row>
 
-            <!-- <hr>
 
             <ion-item>
-                <ion-input type="file" placeholder="Seleccionar imagen" required name="image" [(ngModel)]="garden.image"></ion-input>
+                <ion-label position="floating">Nombre</ion-label>
+                <ion-input type="text" required name="name" [(ngModel)]="garden.name"></ion-input>
             </ion-item>
 
-            <hr> -->
-            <ion-row>
-                <ion-col size="6">
-                    <ion-button [disabled]="formulario.invalid || noHayImagen" expand="full" shape="round" type="submit" color="success">
-                        Registrar
-                    </ion-button>
-                </ion-col>
-                <ion-col size="6">
-                    <ion-button (click)="cancelar()" expand="full" shape="round" color="danger">
-                        Cancelar
-                    </ion-button>
-                </ion-col>
-            </ion-row>
+            <br>
+            <div class="text-center">
+                <ion-button class="btn-block" [disabled]="formulario.invalid || noHayImagen" type="submit">
+                    Registrar
+                </ion-button>
+                <ion-button (click)="cancelar()" color="danger">
+                    Cancelar
+                </ion-button>
+            </div>
+
+
 
         </form>
     </ion-card>

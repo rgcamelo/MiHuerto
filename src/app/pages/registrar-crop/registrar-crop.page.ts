@@ -30,7 +30,7 @@ export class RegistrarCropPage implements OnInit {
 
       let care:Care = new Care();
       care.type = 'crop';
-      care.description = `Se han cosechado ${this.crop.quantity}`;
+      care.description = `Se han cosechado ${this.crop.quantity}lb`;
       this.plantService.createCare(this.idPlant,care).subscribe( res =>{
         console.log(res);
       });

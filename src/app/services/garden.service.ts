@@ -53,6 +53,10 @@ export class GardenService {
     return this.ejecutarQuery<GardenOneObject>(`gardens/${id}`);
   }
 
+  updateGarden(id:string,garden:Garden){
+    return this.updateejecutarQuery<GardenOneObject>(`gardens/${id}`,garden);
+  }
+
   deleteGarden(id:string){
     return this.deleteejecutarQuery<GardenOneObject>(`gardens/${id}`)
   }

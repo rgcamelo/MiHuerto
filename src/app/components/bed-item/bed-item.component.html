@@ -13,8 +13,8 @@
                 <ion-label>{{bed.name}}</ion-label>
             </ion-item>
             <ion-item *ngIf="bed.type == 'furrow' || bed.type == 'terrace'">
-                <ion-label>Ancho: {{bed.x}}</ion-label>
-                <ion-label>Largo: {{bed.y}}</ion-label>
+                <ion-label>Ancho: {{bed.x}}m</ion-label>
+                <ion-label>Largo: {{bed.y}}m</ion-label>
             </ion-item>
             <ion-item *ngIf="bed.type == 'bed'">
                 <ion-label>Numero de huecos: {{bed.x * bed.y}}</ion-label>

@@ -66,9 +66,11 @@ export class PlantPage implements OnInit {
     });
     await modal.present();
 
-    await modal.onDidDismiss().then( () =>{
+    await modal.onDidDismiss().then( res =>{
       this.doRefresh();
-      this.toast.presentToast(`Listo`);
+      if (res.data != 'Cancelar') {
+        this.toast.presentToast(`Listo`);
+      }
     });
   }
 
@@ -81,9 +83,11 @@ export class PlantPage implements OnInit {
     });
     await modal.present();
 
-    await modal.onDidDismiss().then( () =>{
+    await modal.onDidDismiss().then( res =>{
       this.doRefresh();
-      this.toast.presentToast(`Listo`);
+      if (res.data != 'Cancelar') {
+        this.toast.presentToast(`Listo`);
+      }
     });
   }
 

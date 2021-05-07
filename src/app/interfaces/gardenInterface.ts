@@ -28,6 +28,7 @@ interface Links {
 
 export interface Garden {
   id: number;
+  image:string
   name: string;
   status: string;
   created_at: string;

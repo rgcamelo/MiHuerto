@@ -55,6 +55,10 @@ const routes: Routes = [
     path: 'registar-bed',
     loadChildren: () => import('./pages/registar-bed/registar-bed.module').then( m => m.RegistarBedPageModule)
   },
+  {
+    path: 'editar-garden',
+    loadChildren: () => import('./pages/editar-garden/editar-garden.module').then( m => m.EditarGardenPageModule)
+  },
 ];
 @NgModule({
   imports: [

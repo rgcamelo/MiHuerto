@@ -95,8 +95,10 @@ export class BedsPage implements OnInit {
     });
     await modal.present();
 
-    await modal.onDidDismiss().then( () => {
-      this.toast.presentToast(`Listo`);
+    await modal.onDidDismiss().then( res => {
+      if (res.data != 'Cancelar') {
+        this.toast.presentToast(`Nueva cama registrada`);
+      }
       this.doRefresh();
     });
   }

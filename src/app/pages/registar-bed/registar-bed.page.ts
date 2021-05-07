@@ -6,6 +6,7 @@ import { Bed } from '../../models/bed.model';
 import { GroundService } from 'src/app/services/ground.service';
 import { GardenService } from 'src/app/services/garden.service';
 import { finalize } from 'rxjs/operators';
+import { LoadingService } from 'src/app/services/loading.service';
 
 @Component({
   selector: 'app-registar-bed',
@@ -20,7 +21,7 @@ export class RegistarBedPage implements OnInit {
   largo:number = 0;
 
   constructor(private modalCtrl:ModalController,
-    public loadingController: LoadingController,
+    private loading :LoadingService,
     private groundService:GroundService,
     private gardenService:GardenService) { }
 
@@ -28,7 +29,7 @@ export class RegistarBedPage implements OnInit {
   }
 
   async onSubmit(formulario : NgForm){
-    this.presentLoading();
+    this.loading.presentLoading();
     if(this.tipo == 'surco'){
       this.generarFurrows();
     }
@@ -62,7 +63,7 @@ export class RegistarBedPage implements OnInit {
            await this.groundService.createBed(this.ground.id.toString(),furrow).toPromise();
         }
 
-        this.dismissLoading();
+        this.loading.dismiss();
             this.modalCtrl.dismiss('Registrar');
         }
       }); 
@@ -82,7 +83,7 @@ export class RegistarBedPage implements OnInit {
           terrace.y = this.largo;
           await this.groundService.createBed(this.ground.id.toString(),terrace).toPromise();
         }
-          this.dismissLoading();
+          this.loading.dismiss();
           this.modalCtrl.dismiss('Registrar');
         }
       }); 
@@ -103,7 +104,7 @@ export class RegistarBedPage implements OnInit {
           bed.y = this.largo;
           await this.groundService.createBed(this.ground.id.toString(),bed).toPromise();
         }
-          this.dismissLoading();
+          this.loading.dismiss();
           this.modalCtrl.dismiss('Registrar');
         }
       }); 
@@ -114,20 +115,8 @@ export class RegistarBedPage implements OnInit {
     this.modalCtrl.dismiss('Cancelar');
   }
 
-  async presentLoading() {
-    const loading = await this.loadingController.create({
-      cssClass: 'my-custom-class',
-      message: 'Please wait...',
-    });
-    await loading.present();
-  }
-
-  async dismissLoading(){
-    return await this.loadingController.dismiss();
-  }
-
   get Valid(){
-    return this.numero > 0 &&  this.ancho >0 && this.largo > 0; 
+    return this.numero > 1 &&  this.ancho >0 && this.largo > 0; 
   }
 
 }

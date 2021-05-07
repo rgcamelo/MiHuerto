@@ -65,10 +65,13 @@ export class SeedPage implements OnInit {
     });
     await modal.present();
 
-    await modal.onDidDismiss().then( () => {
+    await modal.onDidDismiss().then( res => {
       this.seeds = [];
       this.cargarSeeds();
-      this.toast.presentToast(`Listo`);
+      if (res.data != 'Cancelar') {
+        this.toast.presentToast(`Listo`);
+      }
+      
     });
   }
 

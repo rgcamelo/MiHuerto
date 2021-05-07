@@ -15,6 +15,7 @@ export class EditarGroundPage implements OnInit {
 
   @Input() idGarden:string;
   @Input() ground:Ground;
+  oldGround:Ground;
 
   constructor(private modalCtrl:ModalController,
     private gardenService:GardenService,
@@ -22,6 +23,7 @@ export class EditarGroundPage implements OnInit {
     public loadingController: LoadingController) { }
 
   ngOnInit() {
+    this.oldGround = {...this.ground};
   }
 
    onSubmit(formulario : NgForm){
@@ -115,6 +117,11 @@ export class EditarGroundPage implements OnInit {
 
   async dismissLoading(){
     return await this.loadingController.dismiss();
+  }
+
+  get igual(){
+      let t = this.oldGround.name == this.ground.name && this.oldGround.type == this.ground.type;
+    return t
   }
 
 }

@@ -1,6 +1,6 @@
 <ion-header>
     <ion-toolbar>
-        <ion-title>RegistrarCare</ion-title>
+        <ion-title>Nueva Cosecha</ion-title>
         <ion-buttons slot="start">
             <ion-back-button defaultHref="" (click)="cancelar()"></ion-back-button>
         </ion-buttons>
@@ -12,7 +12,7 @@
         <form #formulario="ngForm" (ngSubmit)="onSubmit(formulario)">
 
             <ion-item>
-                <ion-label position="floating">Cantidad de Cosecha:</ion-label>
+                <ion-label position="floating">Peso de Cosecha (libras)</ion-label>
                 <ion-input type="number" required name="quantity" [(ngModel)]="crop.quantity"></ion-input>
             </ion-item>
 

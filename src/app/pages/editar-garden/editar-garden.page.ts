@@ -1,46 +1,37 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { NgForm } from '@angular/forms';
-import { LoadingController, ModalController } from '@ionic/angular';
-import { GardenService } from 'src/app/services/garden.service';
-import { Garden } from '../../models/garden.model';
-import { Garden as Jardin} from 'src/app/interfaces/gardenInterface';
+import { AngularFireStorage, AngularFireStorageReference } from '@angular/fire/storage';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
-import * as uuid from 'uuid';
-import {AngularFireStorage, AngularFireStorageReference} from '@angular/fire/storage';
+import { ModalController } from '@ionic/angular';
 import { finalize } from 'rxjs/operators';
+import { Garden } from 'src/app/interfaces/gardenInterface';
+import { Garden as Jardin } from 'src/app/models/garden.model';
+import { GardenService } from 'src/app/services/garden.service';
 import { LoadingService } from 'src/app/services/loading.service';
+import * as uuid from 'uuid';
 
 @Component({
-  selector: 'app-registrar-garden',
-  templateUrl: './registrar-garden.page.html',
-  styleUrls: ['./registrar-garden.page.scss'],
+  selector: 'app-editar-garden',
+  templateUrl: './editar-garden.page.html',
+  styleUrls: ['./editar-garden.page.scss'],
 })
-export class RegistrarGardenPage implements OnInit {
+export class EditarGardenPage implements OnInit {
+  @Input() garden:Garden;
+  tempImage:string;
   noHayImagen = true;
-  tempImage: string; 
-  garden:Garden = new Garden();
+  editGarden:Jardin = new Jardin();
 
-  constructor(private modalCtrl: ModalController,
-    private gardenService:GardenService,
-    private loading:LoadingService,
+  constructor(
+    private modalCtrl: ModalController,
     private camera:Camera,
-    private storage:AngularFireStorage, ) { }
+    private storage:AngularFireStorage,
+    private loading:LoadingService,
+    private gardenService:GardenService,
+  ) { }
 
   ngOnInit() {
-  }
-
-  onSubmit(formulario : NgForm){
-    this.loading.presentLoading();
-    if(this.garden != null){
-      this.gardenService.createGarden(this.garden).subscribe(res =>{
-        
-        console.log(res);
-        this.modalCtrl.dismiss('Registrar');
-        this.loading.dismiss();
-      })
-    }
-
-    
+    console.log(this.garden);
+    this.tempImage = this.garden.image;
+    this.editGarden.name = this.garden.name;
   }
 
   camara(){
@@ -80,8 +71,24 @@ export class RegistrarGardenPage implements OnInit {
     });
   }
 
-  guardar(){
+  async editar(){
     this.loading.presentLoading()
+    if (this.garden.name != this.editGarden.name) {
+      this.editGarden.name = this.garden.name;
+    }
+    if (this.tempImage != this.garden.image) {
+      await this.borraimagenActual();
+      this.guardar();
+    }
+  }
+
+  async borraimagenActual(){
+    const ref = this.storage.refFromURL(this.garden.image);
+    const borrar = await ref.delete().toPromise();
+  }
+
+  guardar(){
+    
     const uui = uuid.v4();
     const nombre = `${uui}.jpg`;
     const ref = this.storage.ref(`images/${nombre}`);
@@ -98,7 +105,7 @@ export class RegistrarGardenPage implements OnInit {
 
   obtenerUrl(ref:AngularFireStorageReference){
     ref.getDownloadURL().subscribe( res => {
-      this.garden.image = res;
+      this.editGarden.image = res;
       this.guardarJardin();
     });
   }
@@ -106,16 +113,16 @@ export class RegistrarGardenPage implements OnInit {
   guardarJardin(){
     console.log("Llego");
     if(this.garden != null){
-      this.gardenService.createGarden(this.garden).subscribe(res =>{
+      this.gardenService.updateGarden(this.garden.id.toString(),this.editGarden).subscribe(res =>{
         this.quitarImagen();
         this.loading.dismiss();
-        this.modalCtrl.dismiss('Registrar');
+        this.modalCtrl.dismiss('Editar');
       })
     }
   }
 
   quitarImagen(){
-    this.tempImage =''; 
+    this.tempImage = this.garden.image; 
     this.noHayImagen = true;
   }
 
@@ -124,4 +131,3 @@ export class RegistrarGardenPage implements OnInit {
   }
 
 }
-
