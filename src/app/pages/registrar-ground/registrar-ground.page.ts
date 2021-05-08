@@ -5,6 +5,7 @@ import { GardenService } from 'src/app/services/garden.service';
 import { Ground } from '../../models/ground.model';
 import { GroundService } from '../../services/ground.service';
 import { Bed } from '../../models/bed.model';
+import { LoadingService } from 'src/app/services/loading.service';
 
 @Component({
   selector: 'app-registrar-ground',
@@ -19,17 +20,17 @@ export class RegistrarGroundPage implements OnInit {
   constructor(private modalCtrl:ModalController,
     private gardenService:GardenService,
     private groundService:GroundService,
-    public loadingController: LoadingController) { }
+    public loading: LoadingService,) { }
 
   ngOnInit() {
   }
 
   onSubmit(formulario : NgForm){
-    this.presentLoading();
+    this.loading.presentLoading();
     if(this.ground != null){
       this.gardenService.createGround(this.idGarden,this.ground).subscribe(async res =>{
         this.modalCtrl.dismiss('Registrar');
-        this.dismissLoading();
+        this.loading.dismiss();
         // if(res!=null){
           
         //   if(this.ground.type == 'module'){
@@ -95,16 +96,5 @@ export class RegistrarGroundPage implements OnInit {
     }
   }
 
-  async presentLoading() {
-    const loading = await this.loadingController.create({
-      cssClass: 'my-custom-class',
-      message: 'Please wait...',
-    });
-    await loading.present();
-  }
-
-  async dismissLoading(){
-    return await this.loadingController.dismiss();
-  }
 
 }

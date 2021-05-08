@@ -4,6 +4,7 @@ import { LoadingController, ModalController } from '@ionic/angular';
 import { Bed } from 'src/app/models/bed.model';
 import { GardenService } from 'src/app/services/garden.service';
 import { GroundService } from 'src/app/services/ground.service';
+import { LoadingService } from 'src/app/services/loading.service';
 import { Ground } from '../../models/ground.model';
 
 @Component({
@@ -20,14 +21,14 @@ export class EditarGroundPage implements OnInit {
   constructor(private modalCtrl:ModalController,
     private gardenService:GardenService,
     private groundService:GroundService,
-    public loadingController: LoadingController) { }
+    public loading: LoadingService,) { }
 
   ngOnInit() {
     this.oldGround = {...this.ground};
   }
 
    onSubmit(formulario : NgForm){
-    this.presentLoading();
+    this.loading.presentLoading();
     this.limpiarZona();
   }
 
@@ -46,7 +47,7 @@ export class EditarGroundPage implements OnInit {
     }
     this.ground.status = 'vacio';
     this.gardenService.updateGround(this.idGarden,this.ground.id.toString(),this.ground).subscribe( res =>{
-      this.dismissLoading();
+      this.loading.dismiss();
       this.generarNuevosBeds();
       this.modalCtrl.dismiss('Registrar');
     }); 
@@ -105,18 +106,6 @@ export class EditarGroundPage implements OnInit {
         })
       }
     }
-  }
-
-  async presentLoading() {
-    const loading = await this.loadingController.create({
-      cssClass: 'my-custom-class',
-      message: 'Please wait...',
-    });
-    await loading.present();
-  }
-
-  async dismissLoading(){
-    return await this.loadingController.dismiss();
   }
 
   get igual(){

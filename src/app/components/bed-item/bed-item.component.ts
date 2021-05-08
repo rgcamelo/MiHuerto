@@ -2,6 +2,7 @@ import { Component, Input, OnInit, Output, EventEmitter  } from '@angular/core';
 import { ToastController } from '@ionic/angular';
 import { Bed } from 'src/app/interfaces/bedInterface';
 import { Plant } from 'src/app/interfaces/plantInterface';
+import { AlertService } from 'src/app/services/alert.service';
 import { BedService } from 'src/app/services/bed.service';
 import { GroundService } from '../../services/ground.service';
 
@@ -20,7 +21,8 @@ export class BedItemComponent implements OnInit {
 
   constructor(private bedService:BedService,
     private groundService:GroundService,
-    public toastController: ToastController) { }
+    public toastController: ToastController,
+    private alert:AlertService) { }
 
   ngOnInit() {
     this.cargarPlants();
@@ -34,12 +36,23 @@ export class BedItemComponent implements OnInit {
     });
   }
 
-  limpiarBed(){
-    this.bed.status = 'vacio'
-    this.groundService.updateBed(this.bed.zona,this.bed.id.toString(),this.bed).subscribe( res =>{
-      this.presentToast(`${res.data.name} Vacio`);
-      this.ordenActualizar.emit(true);
-    });
+  async limpiarBed(){
+    let mens;
+    if (this.bed.type == 'bed'){
+      mens = `Esta acción vaciara la ${this.bed.name} ¿Desea continuar?`;
+    } 
+    else{
+      mens = `Esta acción vaciara el ${this.bed.name} ¿Desea continuar?`;
+    }
+    const res = await this.alert.presentAlertConfirm('Atención',mens);
+          if (res == 'ok'){
+            this.bed.status = 'vacio'
+            this.groundService.updateBed(this.bed.zona,this.bed.id.toString(),this.bed).subscribe( res =>{
+            this.presentToast(`${res.data.name} se vacio`);
+            this.ordenActualizar.emit(true);
+            });
+          }
+    
   }
 
   async presentToast(message:string) {

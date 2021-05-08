@@ -46,9 +46,12 @@
                 <ion-label slot="end" class="ion-text-end text-small">{{plant.status | titlecase}}</ion-label>
             </ion-item>
 
-            <ion-item-options side="end">
-                <ion-item-option (click)="desplantar(plant.bed,plant.seed,plant)" color="danger">
-                    <ion-icon src="./assets/icon/shovel.svg" slot="icon-only" name="trash-outline"></ion-icon>
+            <ion-item-options side="start">
+                <ion-item-option (click)="desplantar(plant.bed,plant.seed,plant)" color="light">
+                    <ion-icon src="./assets/icon/escoba_color.svg" slot="icon-only" name="trash-outline"></ion-icon>
+                </ion-item-option>
+                <ion-item-option color="light">
+                    <ion-icon src="./assets/icon/transplante.svg" slot="icon-only"></ion-icon>
                 </ion-item-option>
             </ion-item-options>
 

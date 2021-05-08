@@ -8,6 +8,7 @@ import { Plant } from '../../models/plant.model';
 import { Bed } from 'src/app/interfaces/bedInterface';
 import { LoadingService } from 'src/app/services/loading.service';
 import { ToastService } from 'src/app/services/toast.service';
+import { AlertService } from 'src/app/services/alert.service';
 
 @Component({
   selector: 'app-plants',
@@ -27,7 +28,8 @@ export class PlantsPage implements OnInit {
     private modalCtrl: ModalController,
     private route: ActivatedRoute,
     private loading:LoadingService,
-    private toast:ToastService ) { }
+    private toast:ToastService,
+    private alert:AlertService ) { }
 
   ngOnInit(){
     this.cargarPlants();
@@ -95,12 +97,16 @@ export class PlantsPage implements OnInit {
 
 
   async desplantar(idBed:string,idSeed:string,plant:Plant){
-    plant.status = 'desplantada';
-    this.bedService.updatePlant(idBed,idSeed,plant).subscribe(res => {
-      console.log(res);
-      this.ionList.closeSlidingItems();
-      this.cargarPlants();
-    })
+    const res = await this.alert.presentAlertConfirm('Atención',`¿Esta seguro de eliminar este elemento?`);
+          if (res == 'ok'){
+            plant.status = 'desplantada';
+            this.bedService.updatePlant(idBed,idSeed,plant).subscribe(res => {
+            console.log(res);
+            this.ionList.closeSlidingItems();
+            this.cargarPlants();
+            })
+          }
+    
   }
 
 

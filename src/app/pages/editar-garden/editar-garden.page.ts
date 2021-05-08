@@ -17,7 +17,7 @@ import * as uuid from 'uuid';
 export class EditarGardenPage implements OnInit {
   @Input() garden:Garden;
   tempImage:string;
-  noHayImagen = true;
+  noHayImagen = false;
   editGarden:Jardin = new Jardin();
 
   constructor(
@@ -75,6 +75,7 @@ export class EditarGardenPage implements OnInit {
     this.loading.presentLoading()
     if (this.garden.name != this.editGarden.name) {
       this.editGarden.name = this.garden.name;
+      this.guardarJardin();
     }
     if (this.tempImage != this.garden.image) {
       await this.borraimagenActual();
@@ -129,5 +130,10 @@ export class EditarGardenPage implements OnInit {
   cancelar(){
     this.modalCtrl.dismiss('Cancelar');
   }
+
+  get igual(){
+    let t = this.tempImage == this.garden.image && this.editGarden.name == this.garden.name;
+  return t
+}
 
 }

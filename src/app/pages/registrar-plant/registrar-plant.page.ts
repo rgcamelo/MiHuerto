@@ -6,6 +6,7 @@ import { SeedService } from '../../services/seed.service';
 import { BedService } from '../../services/bed.service';
 import { Bed } from 'src/app/interfaces/bedInterface';
 import { Seed } from 'src/app/interfaces/seedInterface';
+import { LoadingService } from 'src/app/services/loading.service';
 
 
 @Component({
@@ -28,7 +29,7 @@ export class RegistrarPlantPage implements OnInit {
   constructor(private modalCtrl:ModalController,
     private seedService:SeedService,
     private bedService:BedService,
-    public loadingController: LoadingController) { 
+    public loading: LoadingService,) { 
     }
 
 
@@ -36,11 +37,11 @@ export class RegistrarPlantPage implements OnInit {
   }
 
   onSubmit(formulario : NgForm){
-    this.presentLoading();
+    this.loading.presentLoading();
     if(this.plant != null){
       this.bedService.createPlant(this.bed.id.toString(),this.seed.id.toString(),this.plant).subscribe( res =>{
         if (res) {
-          this.dismissLoading();
+          this.loading.dismiss();
           this.modalCtrl.dismiss('Registrar');
         }
         
@@ -93,18 +94,6 @@ export class RegistrarPlantPage implements OnInit {
 
   get nameValid(){
     return this.name.length > 0 && this.seleccionado && this.plant.quantity > 0
-  }
-
-  async presentLoading() {
-    const loading = await this.loadingController.create({
-      cssClass: 'my-custom-class',
-      message: 'Please wait...',
-    });
-    await loading.present();
-  }
-
-  async dismissLoading(){
-    return await this.loadingController.dismiss();
   }
 
 }

@@ -92,20 +92,20 @@ export class GardensPage implements OnInit {
       buttons: [{
         text: 'Borrar',
         role: 'destructive',
-        icon: 'trash',
+        icon: 'assets/icon/eliminar.svg',
         cssClass:'rojo',
         handler: () => {
           this.presentAlertConfirm(garden.id.toString());
         }
       }, {
         text: 'Editar',
-        icon: 'pencil-outline',
+        icon: 'assets/icon/editar.svg',
         handler: () => {
           this.editarGarden(garden);
         }
       }, {
         text: 'Cancel',
-        icon: 'close',
+        icon: 'assets/icon/cerrar.svg',
         role: 'cancel',
         handler: () => {
           console.log('Cancel clicked');
@@ -141,24 +141,24 @@ export class GardensPage implements OnInit {
 
   async presentAlertConfirm(id:string) {
     const alert = await this.alertController.create({
-      cssClass: 'my-custom-class',
-      header: 'Borrar Huerto',
-      message: '¿Esta seguro de que va a borrar este huerto?',
+      cssClass: 'd-flex justify-content-center',
+      header: '¿Esta seguro de que desea a borrar este huerto?',
       buttons: [
         {
-          text: 'Cancelar',
-          role: 'cancel',
-          cssClass: 'rojo',
-          handler: (blah) => {
-            console.log('Confirm Cancel: blah');
-          }
-        }, {
           text: 'Si',
-          cssClass: 'success',
+          cssClass: 'text-success',
           handler: () => {
             this.borrarGarden(id);
           }
-        }
+        },
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+          cssClass: 'text-danger',
+          handler: (blah) => {
+            console.log('Confirm Cancel: blah');
+          }
+        }, 
       ]
     });
 

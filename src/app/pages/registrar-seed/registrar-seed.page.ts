@@ -8,6 +8,7 @@ import * as uuid from 'uuid';
 import {AngularFireStorage, AngularFireStorageReference} from '@angular/fire/storage';
 import { File } from "@ionic-native/file/ngx";
 import { finalize } from 'rxjs/operators';
+import { LoadingService } from 'src/app/services/loading.service';
 
 declare var window:any;
 @Component({
@@ -23,7 +24,7 @@ export class RegistrarSeedPage implements OnInit {
 
   constructor(private seedService:SeedService,
     private modalCtrl:ModalController,
-    public loadingController: LoadingController,
+    public loading: LoadingService,
     private camera:Camera,
     private storage:AngularFireStorage,
     private file: File) { }
@@ -78,7 +79,7 @@ export class RegistrarSeedPage implements OnInit {
   }
 
   guardar(){
-    this.presentLoading()
+    this.loading.presentLoading()
     const uui = uuid.v4();
     const nombre = `${uui}.jpg`;
     const ref = this.storage.ref(`images/${nombre}`);
@@ -106,7 +107,7 @@ export class RegistrarSeedPage implements OnInit {
     if(this.seed != null){
       this.seedService.createSeed(this.seed).subscribe(res =>{
         this.quitarImagen();
-        this.dismissLoading();
+        this.loading.dismiss();
         this.modalCtrl.dismiss('Registrar');
         console.log(res);
       })
@@ -116,18 +117,6 @@ export class RegistrarSeedPage implements OnInit {
   quitarImagen(){
     this.tempImage =''; 
     this.noHayImagen = true;
-  }
-
-  async presentLoading() {
-    const loading = await this.loadingController.create({
-      cssClass: 'my-custom-class',
-      message: 'Please wait...',
-    });
-    await loading.present();
-  }
-
-  async dismissLoading(){
-    return await this.loadingController.dismiss();
   }
 
 

@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { GardenService } from '../../services/garden.service';
 import { ActivatedRoute } from '@angular/router';
-import { ActionSheetController, IonInfiniteScroll, LoadingController, ModalController, ToastController } from '@ionic/angular';
+import { ActionSheetController, AlertController, IonInfiniteScroll, LoadingController, ModalController, ToastController } from '@ionic/angular';
 import { RegistrarGroundPage } from '../registrar-ground/registrar-ground.page';
 import { GroundService } from '../../services/ground.service';
 import { Ground } from 'src/app/models/ground.model';
@@ -9,6 +9,7 @@ import { EditarGroundPage } from '../editar-ground/editar-ground.page';
 import { Garden } from '../../models/garden.model';
 import { LoadingService } from 'src/app/services/loading.service';
 import { ToastService } from 'src/app/services/toast.service';
+import { AlertService } from 'src/app/services/alert.service';
 
 @Component({
   selector: 'app-ground',
@@ -28,7 +29,8 @@ export class GroundPage implements OnInit {
     private modalCtrl: ModalController, 
     private actionSheetCtrl: ActionSheetController,
     private toast:ToastService,
-    public loading:LoadingService) { }
+    public loading:LoadingService,
+    public alert:AlertService) { }
 
   ngOnInit(){
     this.cargarGarden();
@@ -125,16 +127,31 @@ export class GroundPage implements OnInit {
       cssClass: 'my-custom-class',
       backdropDismiss: false,
       buttons: [{
-        text: 'Desplante',
+        text: 'Eliminar Camas',
         icon: 'assets/icon/pala.svg',
-        handler: () => {
-          this.LimpiarPlantas(ground);
+        handler: async () => {
+          const res = await this.alert.presentAlertConfirm('Atención',`Esta accion eliminara las camas, ¿Desea continuar?`);
+          if(res == 'ok'){
+            this.limpiarZona(ground);
+          }
+        }
+      },{
+        text: 'Despejar Camas',
+        icon: 'assets/icon/limpiar.svg',
+        handler: async () => {
+          const res = await this.alert.presentAlertConfirm('Atención',`Esta accion dejara las camas vacias, ¿Desea continuar?`);
+          if(res == 'ok'){
+            this.LimpiarPlantas(ground);
+          }
         }
       }, {
         text: 'Regar Zona',
         icon: 'assets/icon/aspersor.svg',
-        handler: () => {
-          this.regarZona(ground);
+        handler: async () => {
+          const res = await this.alert.presentAlertConfirm('Atención',`¿Esta seguro de realizar un riego en ${ground.name}?`);
+          if (res == 'ok'){
+            this.regarZona(ground);
+          }
         }
       },
       {
@@ -143,9 +160,22 @@ export class GroundPage implements OnInit {
         handler: () => {
           this.editarGround(this.reference,ground);
         }
-      }, {
+      },
+      {
+        text: 'Borrar',
+        role: 'destructive',
+        icon: 'assets/icon/eliminar.svg',
+        cssClass:'rojo',
+        handler: async () => {
+          const res = await this.alert.presentAlertConfirm('Atención',`¿Esta seguro de eliminar la zona ${ground.name}?`);
+          if (res == 'ok'){
+            this.eliminarZona(ground);
+          }
+        }
+      }
+      , {
         text: 'Cancelar',
-        icon: 'close',
+        icon: 'assets/icon/cerrar.svg',
         role: 'cancel',
         handler: () => {
           console.log('Cancel clicked');
@@ -165,15 +195,16 @@ export class GroundPage implements OnInit {
 
       this.gardenService.updateGround(this.reference,ground.id.toString(),ground).subscribe( res =>{
         console.log(res);
+        //this.doRefresh();
       });
 
-    this.doRefresh();
+    
   }
 
   LimpiarPlantas(ground:Ground){
     ground.status = 'desplante';
     this.gardenService.updateGround(this.reference,ground.id.toString(),ground).subscribe( res => {
-      this.toast.presentToast(`Plantas Desplantadas`);
+      this.toast.presentToast(`Limpieza Realizada`);
       //this.doRefresh();
     });
     
@@ -185,9 +216,12 @@ export class GroundPage implements OnInit {
       this.toast.presentToast(`Zona: ${res.data.name} Regada`);
       //this.doRefresh();
     });
-    
   }
 
-
-
+  eliminarZona(ground:Ground){
+    this.gardenService.deleteGround(this.reference,ground.id.toString()).subscribe(res => {
+      this.toast.presentToast(`Zona ${res.data.name} eliminada`);
+      this.doRefresh();
+    })
+  }
 }

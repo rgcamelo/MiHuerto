@@ -76,4 +76,10 @@ export class GardenService {
   updateGround(idGarden:string,idGround:string,ground:Ground){
     return this.updateejecutarQuery<GroundOneObject>(`gardens/${idGarden}/grounds/${idGround}`,ground);
   }
+
+  deleteGround(idGarden:string,idGround:string){
+    return this.deleteejecutarQuery<GroundOneObject>(`gardens/${idGarden}/grounds/${idGround}`);
+  }
+
+  
 }

@@ -1,6 +1,6 @@
 <ion-header>
     <ion-toolbar>
-        <ion-title>RegistrarCare</ion-title>
+        <ion-title>Añadir a Bitacora</ion-title>
         <ion-buttons slot="start">
             <ion-back-button defaultHref="" (click)="cancelar()"></ion-back-button>
         </ion-buttons>
@@ -23,7 +23,7 @@
                 </ion-select>
             </ion-item>
 
-            <hr>
+            <br>
 
             <ion-item>
                 <ion-label position="stacked">Descripcion</ion-label>
@@ -32,14 +32,17 @@
                 </ion-textarea>
             </ion-item>
 
-            <hr>
+            <br>
 
-            <ion-button [disabled]="formulario.invalid" type="submit">
-                Registrar
-            </ion-button>
-            <ion-button (click)="cancelar()" color="danger">
-                Cancelar
-            </ion-button>
+            <div class="text-center">
+                <ion-button [disabled]="formulario.invalid" type="submit">
+                    Registrar
+                </ion-button>
+                <ion-button (click)="cancelar()" color="danger">
+                    Cancelar
+                </ion-button>
+            </div>
+
 
 
         </form>

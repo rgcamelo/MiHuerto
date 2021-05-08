@@ -17,14 +17,17 @@
             </ion-item>
 
 
-            <hr>
+            <br>
 
-            <ion-button [disabled]="formulario.invalid" type="submit">
-                Cosechar
-            </ion-button>
-            <ion-button (click)="cancelar()" color="danger">
-                Cancelar
-            </ion-button>
+            <div class="text-center">
+                <ion-button [disabled]="formulario.invalid" type="submit">
+                    Cosechar
+                </ion-button>
+                <ion-button (click)="cancelar()" color="danger">
+                    Cancelar
+                </ion-button>
+            </div>
+
 
 
         </form>
