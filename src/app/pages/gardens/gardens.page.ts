@@ -31,7 +31,7 @@ export class GardensPage implements OnInit {
   }
 
   cargarGardens(url?:string){
-    //this.loading.presentLoading();
+    this.loading.presentLoading();
     this.gardenService.getGardens(url).subscribe( resp =>{
       
       if(resp.data.length > 0){
@@ -39,7 +39,7 @@ export class GardensPage implements OnInit {
         this.gardens.push(...resp.data);
         this.next = resp.meta.pagination.links.next;
       }
-      //this.loading.dismiss();
+      this.loading.dismiss();
     });
   }
 

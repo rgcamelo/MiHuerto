@@ -59,9 +59,9 @@ export class GroundPage implements OnInit {
     
   }
   cargarGrounds(url?:string){
-    //this.loading.presentLoading();
+    this.loading.presentLoading();
     this.gardenService.getGrounds(this.reference,url).subscribe(resp =>{
-      //this.loading.dismiss();
+      this.loading.dismiss();
       if (resp.data.length > 0){
       this.grounds.push(...resp.data);
       this.next = resp.meta.pagination.links.next;

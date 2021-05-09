@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Care } from 'src/app/interfaces/careinterface';
 import { PlantService } from '../../services/plant.service';
 
 @Component({

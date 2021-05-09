@@ -1,5 +1,10 @@
-interface CareObject {
+export interface CareObject {
   data: Care[];
+  meta: Meta;
+}
+
+export interface CareOneObject {
+  data: Care;
   meta: Meta;
 }
 
@@ -20,7 +25,7 @@ interface Links {
   next: string;
 }
 
-interface Care {
+export interface Care {
   id: number;
   type: string;
   plant: number;

@@ -5,7 +5,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class CareIconPipe implements PipeTransform {
 
-  transform(value: string, type:string): string {
+  transform(value: string, type?:string): string {
     
     if (value == 'water') {
       return './assets/icon/regadera.svg';

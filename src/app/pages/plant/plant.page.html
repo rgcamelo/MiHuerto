@@ -109,10 +109,10 @@
                                 </ion-item>
 
                                 <ion-item-options *ngIf="care.type != 'planted'" side="start">
-                                    <ion-item-option color="light">
+                                    <ion-item-option (click)="deleteCare(care)" color="light">
                                         <ion-icon src="./assets/icon/eliminar.svg" slot="icon-only" name="trash-outline"></ion-icon>
                                     </ion-item-option>
-                                    <ion-item-option color="light">
+                                    <ion-item-option (click)="updateCare(care)" color="light">
                                         <ion-icon src="./assets/icon/editar.svg" slot="icon-only"></ion-icon>
                                     </ion-item-option>
                                 </ion-item-options>

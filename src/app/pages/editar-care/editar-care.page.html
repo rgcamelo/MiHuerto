@@ -14,12 +14,12 @@
             <br>
 
             <div *ngIf="care.type" class="text-center">
-                <img class="imagen" [src]="care.type|careIcon: plant.bed_type">
+                <img class="imagen" [src]="care.type|careIcon">
             </div>
 
             <ion-item>
                 <ion-label position="floating">Tipo</ion-label>
-                <ion-select [(ngModel)]="care.type" name="type" placeholder="Seleccione el tipo de cuidado">
+                <ion-select disabled [(ngModel)]="care.type" name="type" placeholder="Seleccione el tipo de cuidado">
                     <ion-select-option value="eye">Revision</ion-select-option>
                     <ion-select-option value="water">Riego</ion-select-option>
                     <ion-select-option value="manure">Abono</ion-select-option>
@@ -41,7 +41,7 @@
             <br>
 
             <div class="text-center">
-                <ion-button [disabled]="formulario.invalid" type="submit">
+                <ion-button [disabled]="formulario.invalid || igual" type="submit">
                     Registrar
                 </ion-button>
                 <ion-button (click)="cancelar()" color="danger">

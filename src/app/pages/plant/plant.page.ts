@@ -8,6 +8,9 @@ import { RegistrarCropPage } from '../registrar-crop/registrar-crop.page';
 import { Plant } from 'src/app/interfaces/plantInterface';
 import { LoadingService } from '../../services/loading.service';
 import { ToastService } from '../../services/toast.service';
+import { Care } from 'src/app/interfaces/careinterface';
+import { AlertService } from 'src/app/services/alert.service';
+import { EditarCarePage } from '../editar-care/editar-care.page';
 
 @Component({
   selector: 'app-plant',
@@ -28,7 +31,8 @@ export class PlantPage implements OnInit {
     private modalCtrl: ModalController,
     private route: ActivatedRoute,
     private loading:LoadingService,
-    private toast:ToastService) { }
+    private toast:ToastService,
+    private alert:AlertService) { }
 
   ngOnInit() {
     this.cargarCares();
@@ -49,9 +53,9 @@ export class PlantPage implements OnInit {
   }
 
   cargarPlant(){
-    //this.loading.presentLoading();
+    this.loading.presentLoading();
     this.plantService.getPlant(this.reference).subscribe(res =>{
-      //this.loading.dismiss();
+      this.loading.dismiss();
       console.log(res.data);
       this.plant = res.data
     });
@@ -61,7 +65,7 @@ export class PlantPage implements OnInit {
     const modal = await this.modalCtrl.create({
       component: RegistrarCarePage,
       componentProps:{
-        'idPlant' : this.reference,
+        'plant' : this.plant,
       }
     });
     await modal.present();
@@ -115,5 +119,33 @@ export class PlantPage implements OnInit {
     if (event) {
       event.target.complete();
     }
+  }
+
+  async deleteCare(care:Care){
+    const res = await this.alert.presentAlertConfirm('Atención',`Esta accion eliminara este elemento de la bitácora, ¿Desea continuar?`);
+          if(res == 'ok'){
+            this.plantService.deleteCare(this.plant.id.toString(),care.id.toString()).subscribe( res =>{
+              this.toast.presentToast('Elemento de bitácora borrado');
+              this.doRefresh();
+            });
+          }
+  }
+
+  async updateCare(care:Care){
+    const modal = await this.modalCtrl.create({
+      component: EditarCarePage,
+      componentProps:{
+        'care' : care,
+        'plant' : this.plant,
+      }
+    });
+    await modal.present();
+
+    await modal.onDidDismiss().then( res => {
+      this.doRefresh();
+      if (res.data != 'Cancelar') {
+        this.toast.presentToast(`Bitácora editada`);
+      }
+    });
   }
 }

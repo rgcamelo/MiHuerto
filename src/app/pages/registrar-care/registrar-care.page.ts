@@ -5,6 +5,7 @@ import { Care } from 'src/app/models/care.model';
 import { AlertService } from 'src/app/services/alert.service';
 import { PlantService } from '../../services/plant.service';
 import { LoadingService } from '../../services/loading.service';
+import { Plant } from 'src/app/interfaces/plantInterface';
 
 @Component({
   selector: 'app-registrar-care',
@@ -13,7 +14,7 @@ import { LoadingService } from '../../services/loading.service';
 })
 export class RegistrarCarePage implements OnInit {
 
-  @Input() idPlant:string;
+  @Input() plant:Plant;
   care:Care = new Care();
 
   constructor(private modalCtrl:ModalController,
@@ -30,7 +31,7 @@ export class RegistrarCarePage implements OnInit {
       const res = await this.alert.presentAlertConfirm('Atención',`¿Esta seguro de registrar este nuevo elemento en la bitacora?`);
           if (res == 'ok'){
             this.loading.presentLoading();
-            this.plantService.createCare(this.idPlant,this.care).subscribe(res =>{
+            this.plantService.createCare(this.plant.id.toString(),this.care).subscribe(res =>{
               console.log(res);
               this.loading.dismiss();
               this.modalCtrl.dismiss('Registrar');

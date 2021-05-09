@@ -4,9 +4,9 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { RegistrarCarePageRoutingModule } from './registrar-care-routing.module';
+import { EditarCarePageRoutingModule } from './editar-care-routing.module';
 
-import { RegistrarCarePage } from './registrar-care.page';
+import { EditarCarePage } from './editar-care.page';
 import { PipesModule } from 'src/app/pipes/pipes.module';
 
 @NgModule({
@@ -14,9 +14,9 @@ import { PipesModule } from 'src/app/pipes/pipes.module';
     CommonModule,
     FormsModule,
     IonicModule,
-    RegistrarCarePageRoutingModule,
+    EditarCarePageRoutingModule,
     PipesModule,
   ],
-  declarations: [RegistrarCarePage]
+  declarations: [EditarCarePage]
 })
-export class RegistrarCarePageModule {}
+export class EditarCarePageModule {}
