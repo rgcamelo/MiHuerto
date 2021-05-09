@@ -34,6 +34,7 @@
 
 .ioncardground {
     width: 100%;
+    padding: 0px;
 }
 
 .ioncardcontent {
@@ -44,3 +45,26 @@
 // .ion-md-shovel {
 //     content: url(./assets/icon/shovel.svg);
 // }
+ion-content.background {
+    //--background: url('../../../assets/svg/fondo.svg') 0 0/100% 100% no-repeat;
+    //--background: url('../../../assets/svg/fondo.svg') no-repeat center/cover fixed;
+    --background: none;
+    background-image: url('./assets/svg/fondo2.svg');
+    background-color: white !important;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.invisiblefondo {
+    //background-image: url('../../../assets/svg/fondo.svg');
+    background-color: transparent !important;
+}
+
+.segfondo {
+    background-color: white;
+}
+
+ion-item.transp {
+    --background: transparent;
+}

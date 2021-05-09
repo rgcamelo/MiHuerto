@@ -8,10 +8,10 @@
 </ion-header>
 
 
-<ion-content>
+<ion-content class="background">
 
     <ng-container *ngIf="plant">
-        <ion-item>
+        <ion-item class="transp">
             <ion-card class="ioncardground">
                 <div class="objetfit">
                     <img [src]="plant.image" />
@@ -137,14 +137,14 @@
         </ion-infinite-scroll>
 
         <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-            <ion-fab-button color="dark">
+            <ion-fab-button color="light">
                 <ion-icon src="./assets/icon/caja-de-herramientas.svg"></ion-icon>
             </ion-fab-button>
             <ion-fab-list side="top">
-                <ion-fab-button *ngIf="plant.bed_type != 'bed'" (click)="registrarCrop()" color="dark">
+                <ion-fab-button *ngIf="plant.bed_type != 'bed'" (click)="registrarCrop()" color="light">
                     <ion-icon src="./assets/icon/verduras.svg"></ion-icon>
                 </ion-fab-button>
-                <ion-fab-button (click)="registrarCare()" color="dark">
+                <ion-fab-button (click)="registrarCare()" color="light">
                     <ion-icon src="./assets/icon/lapiz.svg"></ion-icon>
                 </ion-fab-button>
 

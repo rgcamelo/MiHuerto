@@ -8,25 +8,25 @@
 </ion-header>
 
 
-<ion-content>
+<ion-content class="background">
 
     <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)" pullFactor="0.8" pullMin="60" pullMax="120">
         <ion-refresher-content></ion-refresher-content>
     </ion-refresher>
 
     <ion-segment *ngIf="grounds.length>0" value="" (ionChange)="segmentChanged($event)">
-        <ion-segment-button value="">
+        <ion-segment-button class="segfondo" value="">
             <ion-icon name="grid-outline"></ion-icon>
         </ion-segment-button>
-        <ion-segment-button value="seedbed">
+        <ion-segment-button class="segfondo" value="seedbed">
             <ion-label>Semilleros</ion-label>
         </ion-segment-button>
-        <ion-segment-button value="module">
+        <ion-segment-button class="segfondo" value="module">
             <ion-label>Modulos</ion-label>
         </ion-segment-button>
     </ion-segment>
 
-    <ion-list>
+    <ion-list class="invisiblefondo">
         <!-- <ion-item ">
             <ion-label></ion-label>
         </ion-item>  -->
@@ -35,7 +35,7 @@
            
        -->
 
-        <ion-item class="animate__animated animate__fadeIn animate__faster" *ngFor="let ground of grounds  | filtro:type:'type'">
+        <ion-item class="transp animate__animated animate__fadeIn animate__faster" *ngFor="let ground of grounds  | filtro:type:'type'">
             <ion-card class="ioncardground">
 
                 <ion-item>

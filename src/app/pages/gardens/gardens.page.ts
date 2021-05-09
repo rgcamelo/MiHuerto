@@ -31,15 +31,15 @@ export class GardensPage implements OnInit {
   }
 
   cargarGardens(url?:string){
-    this.loading.presentLoading();
+    //this.loading.presentLoading();
     this.gardenService.getGardens(url).subscribe( resp =>{
-      this.loading.dismiss();
+      
       if(resp.data.length > 0){
         
         this.gardens.push(...resp.data);
         this.next = resp.meta.pagination.links.next;
       }
-      
+      //this.loading.dismiss();
     });
   }
 

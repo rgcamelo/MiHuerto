@@ -7,7 +7,7 @@
     </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content class="background">
 
     <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)" pullFactor="0.8" pullMin="60" pullMax="120">
         <ion-refresher-content></ion-refresher-content>
@@ -15,13 +15,13 @@
 
     <ng-container *ngIf="ground.type == 'module'">
         <ion-segment *ngIf="ground.number_furrow > 0 && ground.number_terrace > 0" value="" (ionChange)="segmentChanged($event)">
-            <ion-segment-button value="">
+            <ion-segment-button class="segfondo" value="">
                 <ion-icon name="grid-outline"></ion-icon>
             </ion-segment-button>
-            <ion-segment-button value="terrace">
+            <ion-segment-button class="segfondo" value="terrace">
                 <ion-label>Bancales</ion-label>
             </ion-segment-button>
-            <ion-segment-button value="furrow">
+            <ion-segment-button class="segfondo" value="furrow">
                 <ion-label>Surco</ion-label>
             </ion-segment-button>
         </ion-segment>
@@ -34,7 +34,7 @@
             <ion-label></ion-label>
         </ion-item>
     -->
-    <ion-list lines="true">
+    <ion-list class="invisiblefondo" lines="true">
         <app-bed-item class="animate__animated animate__fadeIn animate__faster" (ordenActualizar)="actualizar($event)" [bed]="bed" *ngFor="let bed of beds | filtro:type:'type'"></app-bed-item>
     </ion-list>
 

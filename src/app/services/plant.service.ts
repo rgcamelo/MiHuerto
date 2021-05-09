@@ -24,6 +24,11 @@ export class PlantService {
     return this.http.post<T>(query,object);
   }
 
+  private deleteejecutarQuery<T>(query:string){
+    query = apiUrl+query;
+    return this.http.delete<T>(query);
+  }
+
   getPlant(id:string){
      return this.ejecutarQuery<PlantOneObject>(`plants/${id}`);
   }
@@ -39,8 +44,11 @@ export class PlantService {
     }else{
       return this.ejecutarQuery<CareObject>(`plants/${id}/cares?page=1`);
     }
-    
   }
+
+  // deleteCare(){
+  //   return this.deleteejecutarQuery<CareOneObject>
+  // }
 
   createCrop(id:string,crop:Crop){
     return this.postejecutarQuery<CropOneObject>(`plants/${id}/crop`,crop);

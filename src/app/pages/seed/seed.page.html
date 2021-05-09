@@ -4,12 +4,12 @@
     </ion-toolbar>
 </ion-header>
 
-<ion-content class="maxh">
+<ion-content class="maxh background">
     <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
         <ion-refresher-content></ion-refresher-content>
     </ion-refresher>
 
-    <div *ngIf="seeds">
+    <div *ngIf="seeds" class="p-3">
         <ion-list>
             <ion-item routerLink="crops/{{seed.id}}" *ngFor="let seed of seeds">
                 <ion-avatar slot="start">

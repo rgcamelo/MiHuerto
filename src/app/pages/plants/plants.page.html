@@ -7,7 +7,7 @@
     </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content class="background">
 
     <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)" pullFactor="0.8" pullMin="60" pullMax="120">
         <ion-refresher-content></ion-refresher-content>
@@ -31,7 +31,7 @@
     <!--
         <app-plant-item [id]="plant.id " *ngFor="let plant of plants | filtro:name: 'name' "></app-plant-item>
     -->
-    <ion-list lines="true">
+    <ion-list class="p-3 invisiblefondo" lines="true">
 
         <ion-item-sliding class="animate__animated animate__fadeIn animate__faster" *ngFor="let plant of plants">
 
