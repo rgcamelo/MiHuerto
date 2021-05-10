@@ -9,6 +9,7 @@ import { Bed } from 'src/app/interfaces/bedInterface';
 import { LoadingService } from 'src/app/services/loading.service';
 import { ToastService } from 'src/app/services/toast.service';
 import { AlertService } from 'src/app/services/alert.service';
+import { TransplantPage } from '../transplant/transplant.page';
 
 @Component({
   selector: 'app-plants',
@@ -37,10 +38,10 @@ export class PlantsPage implements OnInit {
   }
 
   cargarPlants(url?:string){
-    this.loading.presentLoading();
+    //this.loading.presentLoading();
     this.reference = this.route.snapshot.paramMap.get('id').toString();
     this.bedService.getPlants(this.reference,url).subscribe(resp =>{
-      this.loading.dismiss();
+      //this.loading.dismiss();
       if (resp.data.length > 0) {
         this.plants = [...resp.data];
         console.log(this.plants);
@@ -66,7 +67,7 @@ export class PlantsPage implements OnInit {
 
     await modal.onDidDismiss().then( res =>{
        this.doRefresh();
-       if (res.data != 'Cancelar') {
+       if (res.data == 'Registrar') {
         this.toast.presentToast(`Listo`);
       }
     });
@@ -107,6 +108,24 @@ export class PlantsPage implements OnInit {
             })
           }
     
+  }
+
+  async transplantar(plant:Plant){
+    const modal = await this.modalCtrl.create({
+      component: TransplantPage,
+      componentProps:{
+        'plant' : plant,
+      }
+    });
+    await modal.present();
+
+    await modal.onDidDismiss().then( res =>{
+       this.doRefresh();
+       if (res.data == 'Transplantar') {
+        this.toast.presentToast(`Transplante exitoso`);
+      }
+    });
+
   }
 
 

@@ -72,8 +72,8 @@ export class PlantPage implements OnInit {
 
     await modal.onDidDismiss().then( res =>{
       this.doRefresh();
-      if (res.data != 'Cancelar') {
-        this.toast.presentToast(`Listo`);
+      if (res.data == 'Registrar') {
+        this.toast.presentToast(`Nuevo elemento añadido a la bitácora`);
       }
     });
   }
@@ -89,8 +89,8 @@ export class PlantPage implements OnInit {
 
     await modal.onDidDismiss().then( res =>{
       this.doRefresh();
-      if (res.data != 'Cancelar') {
-        this.toast.presentToast(`Listo`);
+      if (res.data == 'Registrar') {
+        this.toast.presentToast(`Nueva cosecha registrada`);
       }
     });
   }
@@ -100,7 +100,6 @@ export class PlantPage implements OnInit {
   }
 
   loadData(event){
-    console.log("Hola");
     if (this.next) {
       this.cargarCares(this.next);
     }else{
@@ -143,7 +142,7 @@ export class PlantPage implements OnInit {
 
     await modal.onDidDismiss().then( res => {
       this.doRefresh();
-      if (res.data != 'Cancelar') {
+      if (res.data == 'Editar') {
         this.toast.presentToast(`Bitácora editada`);
       }
     });

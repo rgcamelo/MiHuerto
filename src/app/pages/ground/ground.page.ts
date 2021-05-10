@@ -97,7 +97,7 @@ export class GroundPage implements OnInit {
     await modal.onDidDismiss().then( res => {
       
       this.doRefresh();
-      if (res.data != 'Cancelar') {
+      if (res.data == 'Registrar') {
         this.toast.presentToast(`Nueva zona Registrada`);      
       }
     });
@@ -114,9 +114,11 @@ export class GroundPage implements OnInit {
     });
     await modal.present();
 
-    await modal.onDidDismiss().then( () => {
+    await modal.onDidDismiss().then( res => {
       this.doRefresh();
-      
+      if (res.data == 'Editar') {
+        this.toast.presentToast(`Zona editada`);      
+      }
     });
     
   }

@@ -3,53 +3,50 @@ import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { SeedObject, SeedOneObject } from '../interfaces/seedInterface';
 import { Seed } from '../models/seed.model';
+import { HttpService } from './http.service';
 
-
-const apiUrl = environment.apiUrl;
 @Injectable({
   providedIn: 'root'
 })
 export class SeedService {
 
-  constructor(private http:HttpClient) { }
-
-  private ejecutarQuery<T>(query:string){
-    query = apiUrl+query;
-    return this.http.get<T>(query);
-  }
-
-  private postejecutarQuery<T>(query:string,object:any){
-    query = apiUrl+query;
-    return this.http.post<T>(query,object);
-  }
+  constructor(private http:HttpService) { }
 
   createSeed(seed:Seed){
-    return this.postejecutarQuery<SeedOneObject>(`seeds`,seed);
+    return this.http.postejecutarQuery<SeedOneObject>(`seeds`,seed);
   }
 
   getSeeds(url?:string){
     if (url) {
-      return this.http.get<SeedObject>(url);
+      return this.http.ejecutarNextQuery<SeedObject>(url);
     }
     else{
-      return this.ejecutarQuery<SeedObject>(`seeds?page=1`);
+      return this.http.ejecutarQuery<SeedObject>(`seeds?page=1`);
     }
   }
 
+  updateSeed(idSeed:string,seed:Seed){
+    return this.http.updateejecutarQuery<SeedOneObject>(`seeds/${idSeed}`,seed);
+  }
+
+  deleteSeed(idSeed:string){
+    return this.http.deleteejecutarQuery<SeedOneObject>(`seeds/${idSeed}`);
+  }
+
   getSeedsAll(){
-    return this.ejecutarQuery<SeedObject>(`seeds`);
+    return this.http.ejecutarQuery<SeedObject>(`seeds`);
   }
 
   getCrops(id:string,url?:string){
     if (url) {
-      return this.http.get<CropObject>(url);
+      return this.http.ejecutarNextQuery<CropObject>(url);
     }else{
-      return this.ejecutarQuery<CropObject>(`seeds/${id}/crops?page=1`);
+      return this.http.ejecutarQuery<CropObject>(`seeds/${id}/crops?page=1`);
     }
     
   }
 
   searchSeed(buscar:string){
-    return this.ejecutarQuery<SeedObject>(`seeds?name=${buscar}`);
+    return this.http.ejecutarQuery<SeedObject>(`seeds?name=${buscar}`);
   }
 }

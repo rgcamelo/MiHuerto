@@ -4,8 +4,9 @@ import { environment } from '../../environments/environment';
 import { GardenObject, GardenOneObject } from '../interfaces/gardenInterface';
 import { Garden } from '../models/garden.model';
 import { Ground } from '../models/ground.model';
+import { HttpService } from './http.service';
 
-const apiUrl = environment.apiUrl;
+
 
 @Injectable({
   providedIn: 'root'
@@ -14,71 +15,51 @@ const apiUrl = environment.apiUrl;
 export class GardenService {
   pageGrounds=0
 
-  constructor(private http:HttpClient) { }
+  constructor(private http:HttpService) { }
  
-  private ejecutarQuery<T>(query:string){
-    query = apiUrl+query;
-    return this.http.get<T>(query);
-  }
-
-  private postejecutarQuery<T>(query:string,object:any){
-    query = apiUrl+query;
-    return this.http.post<T>(query,object);
-  }
-
-  private updateejecutarQuery<T>(query:string,object:any){
-    query = apiUrl+query;
-    return this.http.put<T>(query,object);
-  }
-
-  private deleteejecutarQuery<T>(query:string){
-    query = apiUrl+query;
-    return this.http.delete<T>(query);
-  }
-
   createGarden(garden:Garden){
-    return this.postejecutarQuery<GardenObject>(`gardens`,garden);
+    return this.http.postejecutarQuery<GardenObject>(`gardens`,garden);
   }
 
   getGardens(url?:string){
     if (url) {
-      return this.http.get<GardenObject>(url);
+      return this.http.ejecutarNextQuery<GardenObject>(url);
     }else{
-      return this.ejecutarQuery<GardenObject>(`gardens`);
+      return this.http.ejecutarQuery<GardenObject>(`gardens`);
     }
     
   }
 
   getGarden(id:string){
-    return this.ejecutarQuery<GardenOneObject>(`gardens/${id}`);
+    return this.http.ejecutarQuery<GardenOneObject>(`gardens/${id}`);
   }
 
   updateGarden(id:string,garden:Garden){
-    return this.updateejecutarQuery<GardenOneObject>(`gardens/${id}`,garden);
+    return this.http.updateejecutarQuery<GardenOneObject>(`gardens/${id}`,garden);
   }
 
   deleteGarden(id:string){
-    return this.deleteejecutarQuery<GardenOneObject>(`gardens/${id}`)
+    return this.http.deleteejecutarQuery<GardenOneObject>(`gardens/${id}`)
   }
 
   getGrounds(id:string,url?:string){
     if (url) {
-      return this.http.get<GroundObject>(url);
+      return this.http.ejecutarNextQuery<GroundObject>(url);
     }else{
-      return this.ejecutarQuery<GroundObject>(`gardens/${id}/grounds?page=1`);
+      return this.http.ejecutarQuery<GroundObject>(`gardens/${id}/grounds?page=1`);
     }
   }
 
   createGround(id:string,ground:Ground){
-    return this.postejecutarQuery<GroundOneObject>(`gardens/${id}/grounds`,ground);
+    return this.http.postejecutarQuery<GroundOneObject>(`gardens/${id}/grounds`,ground);
   }
 
   updateGround(idGarden:string,idGround:string,ground:Ground){
-    return this.updateejecutarQuery<GroundOneObject>(`gardens/${idGarden}/grounds/${idGround}`,ground);
+    return this.http.updateejecutarQuery<GroundOneObject>(`gardens/${idGarden}/grounds/${idGround}`,ground);
   }
 
   deleteGround(idGarden:string,idGround:string){
-    return this.deleteejecutarQuery<GroundOneObject>(`gardens/${idGarden}/grounds/${idGround}`);
+    return this.http.deleteejecutarQuery<GroundOneObject>(`gardens/${idGarden}/grounds/${idGround}`);
   }
 
   

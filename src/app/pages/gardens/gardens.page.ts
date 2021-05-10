@@ -59,7 +59,7 @@ export class GardensPage implements OnInit {
 
     await modal.onDidDismiss().then( res => {
       this.doRefresh();
-      if (res.data != 'Cancelar') {
+      if (res.data == 'Registrar') {
         this.toast.presentToast(`Nuevo Huerto añadido`);
       }
     });
@@ -76,7 +76,7 @@ export class GardensPage implements OnInit {
 
     await modal.onDidDismiss().then( res => {
       this.doRefresh();
-      if (res.data != 'Cancelar') {
+      if (res.data == 'Editar') {
         this.toast.presentToast(`Huerto editado`);
       }
     });

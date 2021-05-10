@@ -63,6 +63,14 @@ const routes: Routes = [
     path: 'editar-care',
     loadChildren: () => import('./pages/editar-care/editar-care.module').then( m => m.EditarCarePageModule)
   },
+  {
+    path: 'editar-seed',
+    loadChildren: () => import('./pages/editar-seed/editar-seed.module').then( m => m.EditarSeedPageModule)
+  },
+  {
+    path: 'transplant',
+    loadChildren: () => import('./pages/transplant/transplant.module').then( m => m.TransplantPageModule)
+  },
 ];
 @NgModule({
   imports: [

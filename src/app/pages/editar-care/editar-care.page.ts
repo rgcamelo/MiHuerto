@@ -36,7 +36,7 @@ export class EditarCarePage implements OnInit {
             this.plantService.updateCare(this.plant.id.toString(),this.care.id.toString(),this.care).subscribe(res =>{
               console.log(res);
               this.loading.dismiss();
-              this.modalCtrl.dismiss('Registrar');
+              this.modalCtrl.dismiss('Editar');
             })
           }
     }

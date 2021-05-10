@@ -9,18 +9,32 @@
         <ion-refresher-content></ion-refresher-content>
     </ion-refresher>
 
-    <div *ngIf="seeds" class="p-3">
-        <ion-list>
+
+    <ion-list *ngIf="seeds" class="p-3">
+        <ion-item-sliding class="animate__animated animate__fadeIn animate__faster" *ngFor="let seed of seeds">
+
             <ion-item routerLink="crops/{{seed.id}}" *ngFor="let seed of seeds">
                 <ion-avatar slot="start">
                     <img [src]="seed.image">
                 </ion-avatar>
                 <ion-label>{{seed.name}}</ion-label>
             </ion-item>
-        </ion-list>
+
+            <ion-item-options side="start">
+                <ion-item-option (click)="deleteSeed(seed)" color="light">
+                    <ion-icon src="./assets/icon/eliminar.svg" slot="icon-only" name="trash-outline"></ion-icon>
+                </ion-item-option>
+                <ion-item-option (click)="editarSeed(seed)" color="light">
+                    <ion-icon src="./assets/icon/editar.svg" slot="icon-only"></ion-icon>
+                </ion-item-option>
+            </ion-item-options>
+
+        </ion-item-sliding>
 
 
-    </div>
+    </ion-list>
+
+
 
 
 

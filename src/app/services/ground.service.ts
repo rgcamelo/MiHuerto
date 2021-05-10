@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { BedObject, BedOneObject } from '../interfaces/bedInterface';
 import { Bed } from '../models/bed.model';
+import { HttpService } from './http.service';
 
 const apiUrl = environment.apiUrl;
 
@@ -12,51 +13,31 @@ const apiUrl = environment.apiUrl;
 export class GroundService {
   pageBeds=0;
 
-  constructor(private http:HttpClient) { }
-
-  private ejecutarQuery<T>(query:string){
-    query = apiUrl+query;
-    return this.http.get<T>(query);
-  }
-
-  private postejecutarQuery<T>(query:string,object:any){
-    query = apiUrl+query;
-    return this.http.post<T>(query,object);
-  }
-
-  private updateejecutarQuery<T>(query:string,object:any){
-    query = apiUrl+query;
-    return this.http.put<T>(query,object);
-  }
-
-  private deleteejecutarQuery<T>(query:string){
-    query = apiUrl+query;
-    return this.http.delete<T>(query);
-  }
+  constructor(private http:HttpService) { }
 
   getGround(id:string){
-    return this.ejecutarQuery<GroundOneObject>(`grounds/${id}`);
+    return this.http.ejecutarQuery<GroundOneObject>(`grounds/${id}`);
   }
 
 
   getBeds(id:string,url?:string){
     if(url){
-      return this.http.get<BedObject>(url);
+      return this.http.ejecutarNextQuery<BedObject>(url);
     }else{
-      return this.ejecutarQuery<BedObject>(`grounds/${id}/beds?page=1`);
+      return this.http.ejecutarQuery<BedObject>(`grounds/${id}/beds?page=1`);
     }
     
   }
 
   createBed(id:string,bed:Bed){
-    return this.postejecutarQuery<BedObject>(`grounds/${id}/beds`,bed);
+    return this.http.postejecutarQuery<BedObject>(`grounds/${id}/beds`,bed);
   }
 
   deleteBed(idGround:string,idBed:string){
-    return this.deleteejecutarQuery<BedOneObject>(`grounds/${idGround}/beds/${idBed}`);
+    return this.http.deleteejecutarQuery<BedOneObject>(`grounds/${idGround}/beds/${idBed}`);
   }
 
   updateBed(idGround:string,idBed:string,bed:Bed){
-    return this.updateejecutarQuery<BedOneObject>(`grounds/${idGround}/beds/${idBed}`,bed);
+    return this.http.updateejecutarQuery<BedOneObject>(`grounds/${idGround}/beds/${idBed}`,bed);
   }
 }

@@ -2,9 +2,11 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { IonInfiniteScroll, IonList, IonRefresher } from '@ionic/angular';
 import { ModalController } from '@ionic/angular';
 import { Seed } from 'src/app/interfaces/seedInterface';
+import { AlertService } from 'src/app/services/alert.service';
 import { ToastService } from 'src/app/services/toast.service';
 import { SeedService } from '../../services/seed.service';
 import { RegistrarSeedPage } from '../registrar-seed/registrar-seed.page';
+import { EditarSeedPage } from '../editar-seed/editar-seed.page';
 
 @Component({
   selector: 'app-seed',
@@ -20,7 +22,8 @@ export class SeedPage implements OnInit {
   
   constructor(private seedService:SeedService,
     private modalCtrl: ModalController,
-    private toast:ToastService) { }
+    private toast:ToastService,
+    private alert:AlertService) { }
 
   ngOnInit() {
     this.cargarSeeds();
@@ -28,7 +31,6 @@ export class SeedPage implements OnInit {
 
   async doRefresh(event?){
     this.seeds = [];
-    console.log("Reinicio",this.infiniteScroll.disabled);
      this.infiniteScroll.disabled = false;
     await this.cargarSeeds();
     if (event) {
@@ -66,10 +68,11 @@ export class SeedPage implements OnInit {
     await modal.present();
 
     await modal.onDidDismiss().then( res => {
-      this.seeds = [];
-      this.cargarSeeds();
-      if (res.data != 'Cancelar') {
-        this.toast.presentToast(`Listo`);
+      
+      if (res.data == 'Registrar') {
+        this.toast.presentToast(`Nueva semilla registrada`);
+        this.seeds = [];
+        this.cargarSeeds();
       }
       
     });
@@ -85,6 +88,34 @@ export class SeedPage implements OnInit {
          this.infiniteScroll.disabled = true;
       }
     }
+  }
+
+  async deleteSeed(seed:Seed){
+    const res = await this.alert.presentAlertConfirm('Atención',`Esta accion eliminara esta semilla, ¿Desea continuar?`);
+            if(res == 'ok'){
+              this.seedService.deleteSeed(seed.id.toString()).subscribe( res =>{
+                this.toast.presentToast('Semilla borrada');
+                this.doRefresh();
+              });
+            }
+  }
+
+  async editarSeed(seed:Seed){
+    const modal = await this.modalCtrl.create({
+      component: EditarSeedPage,
+      componentProps:{
+        'seed': seed,
+      }
+    });
+    await modal.present();
+
+    await modal.onDidDismiss().then( res => {
+      this.doRefresh();
+      if (res.data == 'Editar') {
+        this.toast.presentToast(`Semilla editada`);      
+      }
+    });
+    
   }
 
 }

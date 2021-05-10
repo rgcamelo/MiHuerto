@@ -96,7 +96,7 @@ export class BedsPage implements OnInit {
     await modal.present();
 
     await modal.onDidDismiss().then( res => {
-      if (res.data != 'Cancelar') {
+      if (res.data == 'Registrar') {
         this.toast.presentToast(`Nueva cama registrada`);
       }
       this.doRefresh();

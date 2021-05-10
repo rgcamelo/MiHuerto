@@ -1,0 +1,70 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-title>transplant</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content class="background">
+
+    <ion-card class="maxim animate__animated animate__fadeIn animate__faster">
+        <ion-card-content>
+            <ion-list>
+                <ion-list-header>
+                    Elige un Huerto:
+                </ion-list-header>
+                <ion-item (click)="selectGarden(garden)" *ngFor="let garden of gardens">
+                    <ion-avatar slot="start">
+                        <img src="../../../assets/icon/cerca.svg">
+                    </ion-avatar>
+                    <ion-label>
+                        <h2>{{garden.name}}</h2>
+                    </ion-label>
+                </ion-item>
+            </ion-list>
+        </ion-card-content>
+    </ion-card>
+
+    <br>
+
+    <ion-card class="maxim animate__animated animate__fadeIn animate__faster" *ngIf="grounds.length > 0">
+        <ion-card-content>
+            <ion-list>
+                <ion-list-header>
+                    Elige una Zona:
+                </ion-list-header>
+                <ion-item (click)="selectGround(ground)" *ngFor="let ground of grounds">
+                    <ion-avatar slot="start">
+                        <img *ngIf="ground.type == 'module'" src="/assets/icon/modulo.svg">
+                        <img *ngIf="ground.type == 'seedbed'" src="/assets/icon/semillero.svg">
+                    </ion-avatar>
+                    <ion-label>
+                        <h2>{{ground.name}}</h2>
+                    </ion-label>
+                </ion-item>
+            </ion-list>
+        </ion-card-content>
+    </ion-card>
+
+    <br>
+
+    <ion-card (scroll)="onScroll($event)" class="maxim animate__animated animate__fadeIn animate__faster" *ngIf="beds.length > 0">
+        <ion-card-content>
+            <ion-list>
+                <ion-list-header>
+                    Elige una Cama:
+                </ion-list-header>
+                <ion-item *ngFor="let bed of beds">
+                    <ion-avatar class="ionavatarsquare" slot="start">
+                        <ion-img *ngIf="bed.type == 'furrow'" src="/assets/icon/surco.svg"></ion-img>
+                        <ion-img *ngIf="bed.type == 'terrace'" src="/assets/icon/bancal.svg"></ion-img>
+                        <ion-img *ngIf="bed.type == 'bed'" src="/assets/icon/bandejas.svg"></ion-img>
+                    </ion-avatar>
+                    <ion-label>
+                        <h2>{{bed.name}}</h2>
+                    </ion-label>
+                </ion-item>
+            </ion-list>
+        </ion-card-content>
+    </ion-card>
+
+</ion-content>

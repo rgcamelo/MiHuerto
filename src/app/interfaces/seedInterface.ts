@@ -29,6 +29,7 @@ export interface Seed {
   id: number;
   name: string;
   status: string;
+  image:string;
   created_at: string;
   updated_at: string;
   deleted_at?: any;

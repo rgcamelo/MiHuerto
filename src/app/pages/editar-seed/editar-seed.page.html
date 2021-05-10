@@ -1,0 +1,70 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-title>Editar Semilla</ion-title>
+        <ion-buttons slot="start">
+            <ion-back-button defaultHref="" (click)="cancelar()"></ion-back-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <ion-card>
+        <form #formulario="ngForm" (ngSubmit)="guardar()">
+
+            <ion-item>
+                <ion-label position="floating">Nombre</ion-label>
+                <ion-input type="text" required name="name" [(ngModel)]="editSeed.name"></ion-input>
+            </ion-item>
+
+            <ion-row>
+                <ion-col size="6">
+                    <ion-button (click)="camara()" expand="full" fill="clear" shape="round">
+                        <ion-icon slot="start" name="camera"></ion-icon>
+                        Camará
+                    </ion-button>
+                </ion-col>
+                <ion-col size="6">
+                    <ion-button (click)="libreria()" expand="full" fill="clear" shape="round">
+                        <ion-icon slot="start" name="images"></ion-icon>
+                        Galería
+                    </ion-button>
+                </ion-col>
+            </ion-row>
+
+            <ion-row>
+                <div class="objetfit">
+                    <img class="animate__animated animate__fadeIn animate__faster" *ngIf="editSeed.image" [src]="editSeed.image" />
+                </div>
+            </ion-row>
+
+            <ion-row>
+                <ion-col *ngIf="editSeed.image" size="12">
+                    <ion-button (click)="quitarImagen()" expand="block" shape="round" color="danger">
+                        <ion-icon name="close-outline"></ion-icon>
+                    </ion-button>
+                </ion-col>
+            </ion-row>
+
+            <!-- <hr>
+
+        <ion-item>
+            <ion-input type="file" placeholder="Seleccionar imagen" required name="image" [(ngModel)]="garden.image"></ion-input>
+        </ion-item>
+
+        <hr> -->
+            <ion-row>
+                <ion-col size="6">
+                    <ion-button [disabled]="formulario.invalid || noHayImagen || igual" expand="full" shape="round" type="submit" color="success">
+                        Editar
+                    </ion-button>
+                </ion-col>
+                <ion-col size="6">
+                    <ion-button (click)="cancelar()" expand="full" shape="round" color="danger">
+                        Cancelar
+                    </ion-button>
+                </ion-col>
+            </ion-row>
+
+        </form>
+    </ion-card>
+</ion-content>

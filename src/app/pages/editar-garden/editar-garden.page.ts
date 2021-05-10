@@ -5,6 +5,7 @@ import { ModalController } from '@ionic/angular';
 import { finalize } from 'rxjs/operators';
 import { Garden } from 'src/app/interfaces/gardenInterface';
 import { Garden as Jardin } from 'src/app/models/garden.model';
+import { AlertService } from 'src/app/services/alert.service';
 import { GardenService } from 'src/app/services/garden.service';
 import { LoadingService } from 'src/app/services/loading.service';
 import * as uuid from 'uuid';
@@ -26,6 +27,7 @@ export class EditarGardenPage implements OnInit {
     private storage:AngularFireStorage,
     private loading:LoadingService,
     private gardenService:GardenService,
+    private alert:AlertService,
   ) { }
 
   ngOnInit() {
@@ -111,15 +113,19 @@ export class EditarGardenPage implements OnInit {
     });
   }
 
-  guardarJardin(){
-    console.log("Llego");
-    if(this.garden != null){
-      this.gardenService.updateGarden(this.garden.id.toString(),this.editGarden).subscribe(res =>{
-        this.quitarImagen();
-        this.loading.dismiss();
-        this.modalCtrl.dismiss('Editar');
-      })
-    }
+  async guardarJardin(){
+    const res = await this.alert.presentAlertConfirm('Atención',`¿Esta seguro de editar este huerto?`);
+          if (res == 'ok'){
+            if(this.garden != null){
+              this.gardenService.updateGarden(this.garden.id.toString(),this.editGarden).subscribe(res =>{
+                this.quitarImagen();
+                this.loading.dismiss();
+                this.modalCtrl.dismiss('Editar');
+              })
+            }
+          }
+    
+    
   }
 
   quitarImagen(){

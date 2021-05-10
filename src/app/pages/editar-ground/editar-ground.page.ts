@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { LoadingController, ModalController } from '@ionic/angular';
 import { Bed } from 'src/app/models/bed.model';
+import { AlertService } from 'src/app/services/alert.service';
 import { GardenService } from 'src/app/services/garden.service';
 import { GroundService } from 'src/app/services/ground.service';
 import { LoadingService } from 'src/app/services/loading.service';
@@ -21,15 +22,20 @@ export class EditarGroundPage implements OnInit {
   constructor(private modalCtrl:ModalController,
     private gardenService:GardenService,
     private groundService:GroundService,
-    public loading: LoadingService,) { }
+    public loading: LoadingService,
+    private alert:AlertService) { }
 
   ngOnInit() {
     this.oldGround = {...this.ground};
   }
 
-   onSubmit(formulario : NgForm){
+   async onSubmit(formulario : NgForm){
     this.loading.presentLoading();
-    this.limpiarZona();
+    const res = await this.alert.presentAlertConfirm('Atención',`¿Esta seguro de editar esta zona?`);
+          if (res == 'ok'){
+            this.limpiarZona();
+          }
+    
   }
 
   cancelar(){
@@ -48,8 +54,8 @@ export class EditarGroundPage implements OnInit {
     this.ground.status = 'vacio';
     this.gardenService.updateGround(this.idGarden,this.ground.id.toString(),this.ground).subscribe( res =>{
       this.loading.dismiss();
-      this.generarNuevosBeds();
-      this.modalCtrl.dismiss('Registrar');
+      //this.generarNuevosBeds();
+      this.modalCtrl.dismiss('Editar');
     }); 
   }
 
