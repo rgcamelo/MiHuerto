@@ -1,8 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Bed } from 'src/app/interfaces/bedInterface';
 import { Garden } from 'src/app/interfaces/gardenInterface';
+import { Plant } from 'src/app/interfaces/plantInterface';
+import { AlertService } from 'src/app/services/alert.service';
+import { BedService } from 'src/app/services/bed.service';
 import { GardenService } from 'src/app/services/garden.service';
 import { GroundService } from 'src/app/services/ground.service';
+import { ToastService } from 'src/app/services/toast.service';
 
 @Component({
   selector: 'app-transplant',
@@ -10,6 +14,8 @@ import { GroundService } from 'src/app/services/ground.service';
   styleUrls: ['./transplant.page.scss'],
 })
 export class TransplantPage implements OnInit {
+  @Input() plant:Plant;
+  newPlant:Plant;
   gardens:Garden[] = [];
   grounds:Ground[] = [];
   beds:Bed[] = [];
@@ -24,9 +30,13 @@ export class TransplantPage implements OnInit {
 
 
   constructor(private gardenService:GardenService,
-    private groundService:GroundService) { }
+    private groundService:GroundService,
+    private bedService:BedService,
+    private alert:AlertService,
+    private toast:ToastService) { }
 
   ngOnInit() {
+    this.newPlant = {...this.plant}
     this.consultarGardens();
   }
 
@@ -75,6 +85,17 @@ export class TransplantPage implements OnInit {
       }
       
     }
+  }
+
+  async transplantar(bed:Bed){
+    const res = await this.alert.presentAlertConfirm('Atención',`¿Esta seguro de transplantar`);
+          if (res == 'ok'){
+            this.newPlant.bed = bed.id;
+            this.newPlant.status = 'transplantada';
+            this.bedService.updatePlant(this.plant.bed.toString(),this.plant.seed.toString(),this.plant.id.toString(),this.newPlant).subscribe( res =>{
+              this.toast.presentToast(`Transplante completo`); 
+             })
+          }
   }
 
 }

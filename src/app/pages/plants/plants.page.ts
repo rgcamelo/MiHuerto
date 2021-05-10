@@ -101,7 +101,7 @@ export class PlantsPage implements OnInit {
     const res = await this.alert.presentAlertConfirm('Atención',`¿Esta seguro de eliminar este elemento?`);
           if (res == 'ok'){
             plant.status = 'desplantada';
-            this.bedService.updatePlant(idBed,idSeed,plant).subscribe(res => {
+            this.bedService.updatePlant(idBed,idSeed,plant.id.toString(),plant).subscribe(res => {
             console.log(res);
             this.ionList.closeSlidingItems();
             this.cargarPlants();

@@ -2,3 +2,12 @@
     max-height: 400px;
     overflow: scroll;
 }
+
+ion-item.hov {
+    background-color: white;
+    transition: background-color .5s;
+}
+
+ion-item.hov:active {
+    background-color: grey;
+}
