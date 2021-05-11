@@ -90,9 +90,11 @@ export class TransplantPage implements OnInit {
   async transplantar(bed:Bed){
     const res = await this.alert.presentAlertConfirm('Atención',`¿Esta seguro de transplantar`);
           if (res == 'ok'){
-            this.newPlant.bed = bed.id;
+            this.newPlant.bed_id = bed.id;
             this.newPlant.status = 'transplantada';
-            this.bedService.updatePlant(this.plant.bed.toString(),this.plant.seed.toString(),this.plant.id.toString(),this.newPlant).subscribe( res =>{
+            this.newPlant.quantity = 6;
+            console.log(this.newPlant);
+            this.bedService.updatePlant(this.plant.bed_id.toString(),this.plant.seed_id.toString(),this.plant.id.toString(),this.newPlant).subscribe( res =>{
               this.toast.presentToast(`Transplante completo`); 
              })
           }

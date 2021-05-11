@@ -31,6 +31,10 @@ export class CareIconPipe implements PipeTransform {
       return './assets/icon/lista-de-verificacion.svg'
     }
 
+    if(value == 'transplanted'){
+      return './assets/icon/transplante.svg'
+    }
+
     if(value == 'planted'){
       if(type == 'bed'){
         return '/assets/icon/bandejas.svg'

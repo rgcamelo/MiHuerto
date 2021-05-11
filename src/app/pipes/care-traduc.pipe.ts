@@ -31,6 +31,10 @@ export class CareTraducPipe implements PipeTransform {
       return 'Anotación'
     }
 
+    if(value == 'transplanted'){
+      return 'Transplante'
+    }
+
     if(value == 'planted'){
       if(type == 'bed'){
         return 'Puesta en Germinación'

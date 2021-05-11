@@ -30,10 +30,10 @@ export interface Plant {
   name: string;
   status: string;
   quantity: number;
-  seed: number;
+  seed_id: number;
   seed_name: string;
   image:string;
-  bed: number;
+  bed_id: number;
   bed_type:string;
   bed_name: string;
   ground_name: string;
