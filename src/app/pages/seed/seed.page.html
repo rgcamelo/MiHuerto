@@ -4,7 +4,7 @@
     </ion-toolbar>
 </ion-header>
 
-<ion-content class="maxh background">
+<ion-content class=" background">
     <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
         <ion-refresher-content></ion-refresher-content>
     </ion-refresher>
@@ -13,7 +13,7 @@
     <ion-list *ngIf="seeds" class="p-3">
         <ion-item-sliding class="animate__animated animate__fadeIn animate__faster" *ngFor="let seed of seeds">
 
-            <ion-item routerLink="crops/{{seed.id}}" *ngFor="let seed of seeds">
+            <ion-item routerLink="crops/{{seed.id}}">
                 <ion-avatar slot="start">
                     <img [src]="seed.image">
                 </ion-avatar>

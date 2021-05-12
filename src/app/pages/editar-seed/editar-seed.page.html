@@ -9,7 +9,7 @@
 
 <ion-content class="background">
     <ion-card>
-        <form #formulario="ngForm" (ngSubmit)="guardar()">
+        <form #formulario="ngForm" (ngSubmit)="editar()">
 
             <ion-item>
                 <ion-label position="floating">Nombre</ion-label>
@@ -33,12 +33,12 @@
 
             <ion-row>
                 <div class="objetfit">
-                    <img class="animate__animated animate__fadeIn animate__faster" *ngIf="editSeed.image" [src]="editSeed.image" />
+                    <img class="animate__animated animate__fadeIn animate__faster" *ngIf="tempImage" [src]="tempImage" />
                 </div>
             </ion-row>
 
             <ion-row>
-                <ion-col *ngIf="editSeed.image" size="12">
+                <ion-col *ngIf="tempImage" size="12">
                     <ion-button (click)="quitarImagen()" expand="block" shape="round" color="danger">
                         <ion-icon name="close-outline"></ion-icon>
                     </ion-button>

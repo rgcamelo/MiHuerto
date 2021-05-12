@@ -19,7 +19,7 @@ export class EditarGardenPage implements OnInit {
   @Input() garden:Garden;
   tempImage:string;
   noHayImagen = false;
-  editGarden:Jardin = new Jardin();
+  editGarden:Garden;
 
   constructor(
     private modalCtrl: ModalController,
@@ -33,7 +33,7 @@ export class EditarGardenPage implements OnInit {
   ngOnInit() {
     console.log(this.garden);
     this.tempImage = this.garden.image;
-    this.editGarden.name = this.garden.name;
+    this.editGarden = {...this.garden};
   }
 
   camara(){
@@ -78,7 +78,6 @@ export class EditarGardenPage implements OnInit {
     if (res == 'ok'){
       this.loading.presentLoading()
       if (this.garden.name != this.editGarden.name) {
-        this.editGarden.name = this.garden.name;
         this.guardarJardin();
       }
       if (this.tempImage != this.garden.image) {
@@ -118,7 +117,7 @@ export class EditarGardenPage implements OnInit {
   }
 
   async guardarJardin(){
-    if(this.garden != null){
+    if(this.editGarden != null){
       this.gardenService.updateGarden(this.garden.id.toString(),this.editGarden).subscribe(res =>{
       this.quitarImagen();
       this.loading.dismiss();
@@ -132,7 +131,6 @@ export class EditarGardenPage implements OnInit {
 
   quitarImagen(){
     this.tempImage = this.garden.image; 
-    this.noHayImagen = true;
   }
 
   cancelar(){

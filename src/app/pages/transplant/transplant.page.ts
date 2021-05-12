@@ -41,38 +41,54 @@ export class TransplantPage implements OnInit {
   ngOnInit() {
     this.newPlant = {...this.plant}
     this.consultarGardens();
+    console.log(this.nextGround);
   }
 
   consultarGardens(url?:string){
     this.gardenService.getGardens(url).subscribe( res =>{
-      this.gardens.push(...res.data);
-      this.nextGarden = res.meta.pagination.links.next;
+      if (res.data.length > 0){
+        this.gardens.push(...res.data);
+        this.nextGarden = res.meta.pagination.links.next;
+      }else{
+        this.toast.presentToast('No hay Huertos disponibles');
+      }
+      
     });
   }
 
   consultarGrounds(idGarden:string,url?:string){
     this.gardenService.getGrounds(idGarden,url).subscribe(res =>{
-      this.grounds.push(...res.data);
+      if (res.data.length > 0){
+        this.grounds.push(...res.data);
       this.nextGround = res.meta.pagination.links.next;
+      }else{
+        this.toast.presentToast('No hay Zonas disponibles en este Huerto');
+      }
+      
     });
   }
 
   consultarBeds(idGround:string,url?:string){
     this.groundService.getBeds(idGround,url).subscribe(res =>{
-      this.beds.push(...res.data);
-      this.nextBed = res.meta.pagination.links.next;
+      if (res.data.length > 0) {
+        this.beds.push(...res.data);
+        this.nextBed = res.meta.pagination.links.next;
+      }else{
+        this.toast.presentToast('No hay Camas disponibles en esta Zona');
+      }
+      
     })
   }
 
   selectGarden(garden:Garden){
-    this.beds = [];
-    this.grounds = [];
+    this.reIniGround();
+    this.reIniBed();
     this.selGarden = garden;
     this.consultarGrounds(garden.id.toString());
   }
 
   selectGround(ground:Ground){
-    this.beds = [];
+    this.reIniBed();
     this.selGround = ground;
     this.consultarBeds(ground.id.toString());
   }
@@ -86,7 +102,7 @@ export class TransplantPage implements OnInit {
     let val = event.srcElement.scrollHeight;
     if(esp === val){
       console.log("entro");
-      if (this.nextGarden != null) {
+      if (this.nextGarden != undefined) {
         this.consultarGardens(this.nextGarden);
       }
       
@@ -98,7 +114,7 @@ export class TransplantPage implements OnInit {
     let val = event.srcElement.scrollHeight;
     if(esp === val){
       console.log("entro");
-      if (this.nextGround != null) {
+      if (this.nextGround != undefined) {
         this.consultarGrounds(this.selGarden.id.toString(),this.nextGround);
       }
       
@@ -110,7 +126,7 @@ export class TransplantPage implements OnInit {
     let val = event.srcElement.scrollHeight;
     if(esp === val){
       console.log("entro");
-      if (this.nextBed != null) {
+      if (this.nextBed != undefined) {
         this.consultarBeds(this.selGround.id.toString(),this.nextBed);
       }
       
@@ -153,6 +169,18 @@ export class TransplantPage implements OnInit {
 
   get invalidQuantity() {
     return this.newPlant.quantity > this.plant.quantity || this.newPlant.quantity <= 0 || !Number.isInteger(this.newPlant.quantity);
+  }
+
+  reIniGround(){
+    this.grounds = [];
+    this.selGround = undefined;
+    this.nextGround = undefined;
+  }
+
+  reIniBed(){
+    this.beds = [];
+    this.selBed = undefined;
+    this.nextBed = undefined
   }
 
 }

@@ -17,6 +17,7 @@ import * as uuid from 'uuid';
 export class EditarSeedPage implements OnInit {
 
   @Input() seed:Seed;
+  tempImage:string;
   editSeed:Seed;
   noHayImagen = false;
 
@@ -29,6 +30,7 @@ export class EditarSeedPage implements OnInit {
 
   ngOnInit() {
     this.editSeed = {...this.seed};
+    this.tempImage = this.seed.image;
   }
 
   cancelar(){
@@ -69,21 +71,39 @@ export class EditarSeedPage implements OnInit {
 
   procesarImagen(options:CameraOptions){
     this.camera.getPicture(options).then((imageData) => {
-      this.editSeed.image = `data:image/jpeg;base64,${imageData}`;
+      this.tempImage = `data:image/jpeg;base64,${imageData}`;
       this.noHayImagen = false;
     }, error => {
       console.log('ERROR -> ' + JSON.stringify(error));
     });
   }
 
-  async guardar(){
-    const res = await this.alert.presentAlertConfirm('Atención',`¿Esta seguro de editar este huerto?`);
-    if (res == 'ok') {
+  async editar(){
+    const res = await this.alert.presentAlertConfirm('Atención',`¿Está seguro de editar esta semilla?`);
+    if (res == 'ok'){
       this.loading.presentLoading()
+      if (this.seed.name != this.editSeed.name) {
+        this.guardarSemilla();
+      }
+      if (this.tempImage != this.seed.image) {
+        await this.borraimagenActual();
+        this.guardar();
+      }
+    }
+    
+  }
+
+  async borraimagenActual(){
+    const ref = this.storage.refFromURL(this.seed.image);
+    const borrar = await ref.delete().toPromise();
+  }
+
+  async guardar(){
+    this.loading.presentLoading()
     const uui = uuid.v4();
     const nombre = `${uui}.jpg`;
     const ref = this.storage.ref(`images/${nombre}`);
-    const task =  ref.putString(this.editSeed.image,'data_url');
+    const task =  ref.putString(this.tempImage,'data_url');
 
     task.snapshotChanges()
       .pipe(
@@ -92,36 +112,33 @@ export class EditarSeedPage implements OnInit {
         this.obtenerUrl(ref);
         })
       ).subscribe();
-    }
+    
   }
 
   obtenerUrl(ref:AngularFireStorageReference){
     ref.getDownloadURL().subscribe( res => {
-      this.seed.image = res;
+      this.editSeed.image = res;
       this.guardarSemilla();
     });
   }
 
   guardarSemilla(){
-    console.log("Llego");
-    this.seed.name = this.capitalizeFirstLetter(this.seed.name);
+    this.editSeed.name = this.capitalizeFirstLetter(this.editSeed.name);
     if(this.seed != null){
       this.seedService.updateSeed(this.editSeed.id.toString(),this.editSeed).subscribe(res =>{
         this.quitarImagen();
         this.loading.dismiss();
         this.modalCtrl.dismiss('Editar');
-        console.log(res);
       })
     }
   }
 
   quitarImagen(){
-    this.editSeed.image =''; 
-    this.noHayImagen = true;
+    this.tempImage = this.seed.image; 
   }
 
   get igual(){
-    let t = this.editSeed.name == this.seed.name && this.editSeed.image == this.seed.image;
+    let t = this.editSeed.name == this.seed.name && this.tempImage == this.seed.image;
   return t
 }
 

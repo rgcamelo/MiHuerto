@@ -34,7 +34,7 @@
             <ion-label></ion-label>
         </ion-item>
     -->
-    <ion-list class="invisiblefondo" lines="true">
+    <ion-list class="p-3 invisiblefondo" lines="true">
         <app-bed-item class="animate__animated animate__fadeIn animate__faster" (ordenActualizar)="actualizar($event)" [bed]="bed" *ngFor="let bed of beds | filtro:type:'type'"></app-bed-item>
     </ion-list>
 

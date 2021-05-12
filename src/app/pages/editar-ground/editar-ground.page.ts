@@ -30,9 +30,10 @@ export class EditarGroundPage implements OnInit {
   }
 
    async onSubmit(formulario : NgForm){
-    this.loading.presentLoading();
+    
     const res = await this.alert.presentAlertConfirm('Atención',`¿Esta seguro de editar esta zona?`);
           if (res == 'ok'){
+            this.loading.presentLoading();
             this.limpiarZona();
           }
     
