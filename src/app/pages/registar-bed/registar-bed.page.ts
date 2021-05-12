@@ -35,6 +35,7 @@ export class RegistarBedPage implements OnInit {
     }
 
     if(this.tipo == 'bancal'){
+      console.log(this.ancho , this.largo);
       this.generarTerrace();
     }
 
@@ -101,7 +102,7 @@ export class RegistarBedPage implements OnInit {
           bed.name=`Bandeja de Germinación ${i+1}`;
           bed.number = i;
           bed.x = this.ancho;
-          bed.y = this.largo;
+          bed.y = 1;
           await this.groundService.createBed(this.ground.id.toString(),bed).toPromise();
         }
           this.loading.dismiss();
@@ -116,7 +117,11 @@ export class RegistarBedPage implements OnInit {
   }
 
   get Valid(){
-    return this.numero > 1 &&  this.ancho >0 && this.largo > 0; 
+    return this.numero > 0 && Number.isInteger(this.numero)  &&  this.ancho >0 && this.largo > 0; 
+  }
+
+  get BedValid(){
+    return this.numero > 0 && Number.isInteger(this.numero)  &&  this.ancho >0 && Number.isInteger(this.ancho); 
   }
 
 }

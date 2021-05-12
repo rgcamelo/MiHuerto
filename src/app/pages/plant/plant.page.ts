@@ -1,8 +1,7 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { PlantService } from 'src/app/services/plant.service';
 import { ActivatedRoute } from '@angular/router';
-import { Planta } from 'src/app/models/planta.model';
-import { IonInfiniteScroll, LoadingController, ModalController } from '@ionic/angular';
+import { ModalController } from '@ionic/angular';
 import { RegistrarCarePage } from '../registrar-care/registrar-care.page';
 import { RegistrarCropPage } from '../registrar-crop/registrar-crop.page';
 import { Plant } from 'src/app/interfaces/plantInterface';
@@ -18,7 +17,6 @@ import { EditarCarePage } from '../editar-care/editar-care.page';
   styleUrls: ['./plant.page.scss'],
 })
 export class PlantPage implements OnInit {
-  @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
 
   reference:string = '';
   plant:Plant;
@@ -53,9 +51,9 @@ export class PlantPage implements OnInit {
   }
 
   cargarPlant(){
-    this.loading.presentLoading();
+    //this.loading.presentLoading();
     this.plantService.getPlant(this.reference).subscribe(res =>{
-      this.loading.dismiss();
+      //this.loading.dismiss();
       console.log(res.data);
       this.plant = res.data
     });
@@ -99,20 +97,7 @@ export class PlantPage implements OnInit {
     this.typeCare = event.detail.value;
   }
 
-  loadData(event){
-    if (this.next) {
-      this.cargarCares(this.next);
-    }else{
-      this.infiniteScroll.disabled = true;
-    }
-    if (event) {
-      event.target.complete();
-    }
-    
-  }
-
   doRefresh(event?){
-    this.infiniteScroll.disabled = false;
     this.cares= [];
     this.cargarCares();
     if (event) {
@@ -146,5 +131,17 @@ export class PlantPage implements OnInit {
         this.toast.presentToast(`Bitácora editada`);
       }
     });
+  }
+
+  onCareScroll(event) {
+    let esp = event.srcElement.scrollTop+ 400;
+    let val = event.srcElement.scrollHeight;
+    if(esp === val){
+      console.log("entro");
+      if (this.next != null) {
+        this.cargarCares(this.next);
+      }
+      
+    }
   }
 }

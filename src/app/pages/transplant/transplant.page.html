@@ -1,12 +1,15 @@
 <ion-header>
     <ion-toolbar>
-        <ion-title>transplant</ion-title>
+        <ion-title>Trasplantar</ion-title>
+        <ion-buttons slot="start">
+            <ion-back-button defaultHref="" (click)="cancelar()"></ion-back-button>
+        </ion-buttons>
     </ion-toolbar>
 </ion-header>
 
-<ion-content class="background">
+<ion-content class="background p-3">
 
-    <ion-card class="maxim animate__animated animate__fadeIn animate__faster">
+    <ion-card (scroll)="onGardenScroll($event)" class="maxim animate__animated animate__fadeIn animate__faster">
         <ion-card-content>
             <ion-list>
                 <ion-list-header>
@@ -26,7 +29,7 @@
 
     <br>
 
-    <ion-card class="maxim animate__animated animate__fadeIn animate__faster" *ngIf="grounds.length > 0">
+    <ion-card (scroll)="onGroundScroll($event)" class="maxim animate__animated animate__fadeIn animate__faster" *ngIf="grounds.length > 0">
         <ion-card-content>
             <ion-list>
                 <ion-list-header>
@@ -47,13 +50,13 @@
 
     <br>
 
-    <ion-card (scroll)="onScroll($event)" class="maxim animate__animated animate__fadeIn animate__faster" *ngIf="beds.length > 0">
+    <ion-card (scroll)="onBedScroll($event)" class="maxim animate__animated animate__fadeIn animate__faster" *ngIf="beds.length > 0">
         <ion-card-content>
             <ion-list>
                 <ion-list-header>
                     Elige una Cama:
                 </ion-list-header>
-                <ion-item class="hov" (click)="transplantar(bed)" *ngFor="let bed of beds">
+                <ion-item (click)="selectBed(bed)" class="hov" *ngFor="let bed of beds">
                     <ion-avatar class="ionavatarsquare" slot="start">
                         <ion-img *ngIf="bed.type == 'furrow'" src="/assets/icon/surco.svg"></ion-img>
                         <ion-img *ngIf="bed.type == 'terrace'" src="/assets/icon/bancal.svg"></ion-img>
@@ -66,5 +69,30 @@
             </ion-list>
         </ion-card-content>
     </ion-card>
+
+    <br>
+
+    <ion-card *ngIf="selBed">
+        <ion-item>
+            <ion-label ng position="floating">Cantidad a Transplantar:</ion-label>
+            <ion-input type="number" required name="quantity" [(ngModel)]="newPlant.quantity"></ion-input>
+        </ion-item>
+    </ion-card>
+
+    <ion-row>
+        <ion-col size="12">
+            <ion-button (click)="cancelar()" expand="block" shape="round" color="danger">
+                <ion-icon name="close-outline"></ion-icon>
+            </ion-button>
+        </ion-col>
+    </ion-row>
+
+    <ion-row>
+        <ion-col *ngIf="selBed" size="12">
+            <ion-button [disabled]="invalidQuantity" (click)="transplantar()" expand="block" shape="round" color="success">
+                <ion-icon name="checkmark-outline"></ion-icon>
+            </ion-button>
+        </ion-col>
+    </ion-row>
 
 </ion-content>

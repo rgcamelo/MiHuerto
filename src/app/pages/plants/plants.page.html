@@ -43,11 +43,16 @@
                     <h3>{{plant.name}}</h3>
                     <p>Cantidad:{{plant.quantity}}</p>
                 </ion-label>
-                <ion-label slot="end" class="ion-text-end text-small">{{plant.status | titlecase}}</ion-label>
+                <ng-container *ngIf="bed">
+                    <ion-label *ngIf="bed.type != 'bed'" slot="end" class="ion-text-end text-small">{{plant.status | titlecase}}</ion-label>
+                    <ion-label *ngIf="bed.type == 'bed'" slot="end" class="ion-text-end text-small">Germinando</ion-label>
+                </ng-container>
+
+
             </ion-item>
 
             <ion-item-options side="start">
-                <ion-item-option (click)="desplantar(plant.bed,plant.seed,plant)" color="light">
+                <ion-item-option (click)="desplantar(plant.bed_id,plant.seed_id,plant)" color="light">
                     <ion-icon src="./assets/icon/escoba_color.svg" slot="icon-only" name="trash-outline"></ion-icon>
                 </ion-item-option>
                 <ion-item-option (click)="transplantar(plant)" color="light">

@@ -142,7 +142,7 @@ export class GardensPage implements OnInit {
   async presentAlertConfirm(id:string) {
     const alert = await this.alertController.create({
       cssClass: 'd-flex justify-content-center',
-      header: '¿Esta seguro de que desea a borrar este huerto?',
+      header: '¿Está seguro de que desea a borrar este huerto?',
       buttons: [
         {
           text: 'Si',

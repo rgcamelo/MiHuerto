@@ -91,7 +91,7 @@ export class SeedPage implements OnInit {
   }
 
   async deleteSeed(seed:Seed){
-    const res = await this.alert.presentAlertConfirm('Atención',`Esta accion eliminara esta semilla, ¿Desea continuar?`);
+    const res = await this.alert.presentAlertConfirm('Atención',`Esta acción eliminara esta semilla, ¿Desea continuar?`);
             if(res == 'ok'){
               this.seedService.deleteSeed(seed.id.toString()).subscribe( res =>{
                 this.toast.presentToast('Semilla borrada');

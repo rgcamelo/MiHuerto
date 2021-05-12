@@ -96,4 +96,8 @@ export class RegistrarPlantPage implements OnInit {
     return this.name.length > 0 && this.seleccionado && this.plant.quantity > 0
   }
 
+  get quantityValid(){
+    return this.plant.quantity > 0 && Number.isInteger(this.plant.quantity); 
+  }
+
 }

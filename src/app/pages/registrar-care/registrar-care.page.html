@@ -1,13 +1,13 @@
 <ion-header>
     <ion-toolbar>
-        <ion-title>Añadir a Bitacora</ion-title>
+        <ion-title>Añadir a Bitácora</ion-title>
         <ion-buttons slot="start">
             <ion-back-button defaultHref="" (click)="cancelar()"></ion-back-button>
         </ion-buttons>
     </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content class="background">
     <ion-card>
         <form #formulario="ngForm" (ngSubmit)="onSubmit(formulario)">
 
@@ -19,8 +19,8 @@
 
             <ion-item>
                 <ion-label position="floating">Tipo</ion-label>
-                <ion-select [(ngModel)]="care.type" name="type" placeholder="Seleccione el tipo de cuidado">
-                    <ion-select-option value="eye">Revision</ion-select-option>
+                <ion-select [(ngModel)]="care.type" name="type" placeholder="Seleccione el tipo ">
+                    <ion-select-option value="eye">Revisión</ion-select-option>
                     <ion-select-option value="water">Riego</ion-select-option>
                     <ion-select-option value="manure">Abono</ion-select-option>
                     <ion-select-option value="plague">Control de Plagas</ion-select-option>
@@ -33,22 +33,25 @@
 
             <ion-item>
                 <ion-label position="stacked">Descripcion</ion-label>
-                <ion-textarea name="description" maxlength="500" autoGrow="true" [(ngModel)]="care.description" required placeholder="Introduzca descripcion">
+                <ion-textarea name="description" maxlength="500" autoGrow="true" [(ngModel)]="care.description" required placeholder="Introduzca descripción">
 
                 </ion-textarea>
             </ion-item>
 
             <br>
 
-            <div class="text-center">
-                <ion-button [disabled]="formulario.invalid" type="submit">
-                    Registrar
-                </ion-button>
-                <ion-button (click)="cancelar()" color="danger">
-                    Cancelar
-                </ion-button>
-            </div>
-
+            <ion-row>
+                <ion-col size="6">
+                    <ion-button [disabled]="formulario.invalid" expand="block" shape="round" type="submit" color="success" size="large">
+                        <ion-icon name="checkmark-outline"></ion-icon>
+                    </ion-button>
+                </ion-col>
+                <ion-col size="6">
+                    <ion-button (click)="cancelar()" color="danger" expand="block" shape="round" size="large">
+                        <ion-icon name="close-outline"></ion-icon>
+                    </ion-button>
+                </ion-col>
+            </ion-row>
 
 
         </form>

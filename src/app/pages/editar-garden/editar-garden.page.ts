@@ -74,15 +74,19 @@ export class EditarGardenPage implements OnInit {
   }
 
   async editar(){
-    this.loading.presentLoading()
-    if (this.garden.name != this.editGarden.name) {
-      this.editGarden.name = this.garden.name;
-      this.guardarJardin();
+    const res = await this.alert.presentAlertConfirm('Atención',`¿Esta seguro de editar este huerto?`);
+    if (res == 'ok'){
+      this.loading.presentLoading()
+      if (this.garden.name != this.editGarden.name) {
+        this.editGarden.name = this.garden.name;
+        this.guardarJardin();
+      }
+      if (this.tempImage != this.garden.image) {
+        await this.borraimagenActual();
+        this.guardar();
+      }
     }
-    if (this.tempImage != this.garden.image) {
-      await this.borraimagenActual();
-      this.guardar();
-    }
+    
   }
 
   async borraimagenActual(){
@@ -114,16 +118,14 @@ export class EditarGardenPage implements OnInit {
   }
 
   async guardarJardin(){
-    const res = await this.alert.presentAlertConfirm('Atención',`¿Esta seguro de editar este huerto?`);
-          if (res == 'ok'){
-            if(this.garden != null){
-              this.gardenService.updateGarden(this.garden.id.toString(),this.editGarden).subscribe(res =>{
-                this.quitarImagen();
-                this.loading.dismiss();
-                this.modalCtrl.dismiss('Editar');
-              })
-            }
-          }
+    if(this.garden != null){
+      this.gardenService.updateGarden(this.garden.id.toString(),this.editGarden).subscribe(res =>{
+      this.quitarImagen();
+      this.loading.dismiss();
+      this.modalCtrl.dismiss('Editar');
+      })
+    }
+
     
     
   }

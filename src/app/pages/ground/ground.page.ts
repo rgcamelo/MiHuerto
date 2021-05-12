@@ -132,7 +132,7 @@ export class GroundPage implements OnInit {
         text: 'Eliminar Camas',
         icon: 'assets/icon/pala.svg',
         handler: async () => {
-          const res = await this.alert.presentAlertConfirm('Atención',`Esta accion eliminara las camas, ¿Desea continuar?`);
+          const res = await this.alert.presentAlertConfirm('Atención',`Esta acción eliminara las camas, ¿Desea continuar?`);
           if(res == 'ok'){
             this.limpiarZona(ground);
           }
@@ -141,7 +141,7 @@ export class GroundPage implements OnInit {
         text: 'Despejar Camas',
         icon: 'assets/icon/limpiar.svg',
         handler: async () => {
-          const res = await this.alert.presentAlertConfirm('Atención',`Esta accion dejara las camas vacias, ¿Desea continuar?`);
+          const res = await this.alert.presentAlertConfirm('Atención',`Esta acción dejara las camas vacías, ¿Desea continuar?`);
           if(res == 'ok'){
             this.LimpiarPlantas(ground);
           }
@@ -150,7 +150,7 @@ export class GroundPage implements OnInit {
         text: 'Regar Zona',
         icon: 'assets/icon/aspersor.svg',
         handler: async () => {
-          const res = await this.alert.presentAlertConfirm('Atención',`¿Esta seguro de realizar un riego en ${ground.name}?`);
+          const res = await this.alert.presentAlertConfirm('Atención',`¿Está seguro de realizar un riego en ${ground.name}?`);
           if (res == 'ok'){
             this.regarZona(ground);
           }
@@ -169,7 +169,7 @@ export class GroundPage implements OnInit {
         icon: 'assets/icon/eliminar.svg',
         cssClass:'rojo',
         handler: async () => {
-          const res = await this.alert.presentAlertConfirm('Atención',`¿Esta seguro de eliminar la zona ${ground.name}?`);
+          const res = await this.alert.presentAlertConfirm('Atención',`¿Está seguro de eliminar la zona ${ground.name}?`);
           if (res == 'ok'){
             this.eliminarZona(ground);
           }

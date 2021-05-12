@@ -76,20 +76,23 @@ export class EditarSeedPage implements OnInit {
     });
   }
 
-  guardar(){
-    this.loading.presentLoading()
+  async guardar(){
+    const res = await this.alert.presentAlertConfirm('Atención',`¿Esta seguro de editar este huerto?`);
+    if (res == 'ok') {
+      this.loading.presentLoading()
     const uui = uuid.v4();
     const nombre = `${uui}.jpg`;
     const ref = this.storage.ref(`images/${nombre}`);
     const task =  ref.putString(this.editSeed.image,'data_url');
 
     task.snapshotChanges()
-  .pipe(
-    finalize(() => {
-      console.log("Finalizo...");
-      this.obtenerUrl(ref);
-    })
-  ).subscribe();
+      .pipe(
+        finalize(() => {
+        console.log("Finalizo...");
+        this.obtenerUrl(ref);
+        })
+      ).subscribe();
+    }
   }
 
   obtenerUrl(ref:AngularFireStorageReference){

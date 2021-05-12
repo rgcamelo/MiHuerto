@@ -110,6 +110,12 @@ export class PlantsPage implements OnInit {
     
   }
 
+  
+
+  update(){
+
+  }
+
   async transplantar(plant:Plant){
     const modal = await this.modalCtrl.create({
       component: TransplantPage,
@@ -122,7 +128,7 @@ export class PlantsPage implements OnInit {
     await modal.onDidDismiss().then( res =>{
        this.doRefresh();
        if (res.data == 'Transplantar') {
-        this.toast.presentToast(`Transplante exitoso`);
+        this.toast.presentToast(`Trasplante completo`);
       }
     });
 

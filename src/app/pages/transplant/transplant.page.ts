@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { ModalController } from '@ionic/angular';
 import { Bed } from 'src/app/interfaces/bedInterface';
 import { Garden } from 'src/app/interfaces/gardenInterface';
 import { Plant } from 'src/app/interfaces/plantInterface';
@@ -7,6 +8,7 @@ import { BedService } from 'src/app/services/bed.service';
 import { GardenService } from 'src/app/services/garden.service';
 import { GroundService } from 'src/app/services/ground.service';
 import { ToastService } from 'src/app/services/toast.service';
+import { isNumber } from 'util';
 
 @Component({
   selector: 'app-transplant',
@@ -33,23 +35,24 @@ export class TransplantPage implements OnInit {
     private groundService:GroundService,
     private bedService:BedService,
     private alert:AlertService,
-    private toast:ToastService) { }
+    private toast:ToastService,
+    private modalCtrl:ModalController,) { }
 
   ngOnInit() {
     this.newPlant = {...this.plant}
     this.consultarGardens();
   }
 
-  consultarGardens(){
-    this.gardenService.getGardens().subscribe( res =>{
-      this.gardens = res.data;
+  consultarGardens(url?:string){
+    this.gardenService.getGardens(url).subscribe( res =>{
+      this.gardens.push(...res.data);
       this.nextGarden = res.meta.pagination.links.next;
     });
   }
 
   consultarGrounds(idGarden:string,url?:string){
     this.gardenService.getGrounds(idGarden,url).subscribe(res =>{
-      this.grounds = res.data;
+      this.grounds.push(...res.data);
       this.nextGround = res.meta.pagination.links.next;
     });
   }
@@ -63,19 +66,46 @@ export class TransplantPage implements OnInit {
 
   selectGarden(garden:Garden){
     this.beds = [];
+    this.grounds = [];
     this.selGarden = garden;
     this.consultarGrounds(garden.id.toString());
   }
 
   selectGround(ground:Ground){
+    this.beds = [];
     this.selGround = ground;
     this.consultarBeds(ground.id.toString());
   }
 
-  onScroll(event){
-    console.log(event.srcElement.scrollTop);
-    console.log(event.srcElement.scrollHeight);
-    console.log(event);
+  selectBed(bed:Bed){
+    this.selBed = bed;
+  }
+
+  onGardenScroll(event) {
+    let esp = event.srcElement.scrollTop+ 400;
+    let val = event.srcElement.scrollHeight;
+    if(esp === val){
+      console.log("entro");
+      if (this.nextGarden != null) {
+        this.consultarGardens(this.nextGarden);
+      }
+      
+    }
+  }
+
+  onGroundScroll(event){
+    let esp = event.srcElement.scrollTop+ 400;
+    let val = event.srcElement.scrollHeight;
+    if(esp === val){
+      console.log("entro");
+      if (this.nextGround != null) {
+        this.consultarGrounds(this.selGarden.id.toString(),this.nextGround);
+      }
+      
+    }
+  }
+
+  onBedScroll(event){
     let esp = event.srcElement.scrollTop+ 400;
     let val = event.srcElement.scrollHeight;
     if(esp === val){
@@ -87,17 +117,42 @@ export class TransplantPage implements OnInit {
     }
   }
 
-  async transplantar(bed:Bed){
+  async transplantar(){
     const res = await this.alert.presentAlertConfirm('Atención',`¿Esta seguro de transplantar`);
           if (res == 'ok'){
-            this.newPlant.bed_id = bed.id;
-            this.newPlant.status = 'transplantada';
-            this.newPlant.quantity = 6;
-            console.log(this.newPlant);
-            this.bedService.updatePlant(this.plant.bed_id.toString(),this.plant.seed_id.toString(),this.plant.id.toString(),this.newPlant).subscribe( res =>{
-              this.toast.presentToast(`Transplante completo`); 
-             })
+            this.update();
+            this.transplante();
           }
+  }
+
+  update(){
+    this.plant.quantity = this.plant.quantity - this.newPlant.quantity
+
+    if (this.plant.quantity == 0) {
+      this.plant.status = 'desplantada';
+      this.bedService.updatePlant(this.plant.bed_id.toString(),this.plant.seed_id.toString(),this.plant.id.toString(),this.plant).subscribe( res =>{
+      })
+    }else{
+      this.bedService.updatePlant(this.plant.bed_id.toString(),this.plant.seed_id.toString(),this.plant.id.toString(),this.plant).subscribe( res =>{
+      })
+    }
+  }
+
+  transplante() {
+    this.newPlant.bed_id = this.selBed.id;
+    this.newPlant.status = 'trasplantada';
+    console.log(this.newPlant);
+    this.bedService.updatePlant(this.plant.bed_id.toString(),this.plant.seed_id.toString(),this.plant.id.toString(),this.newPlant).subscribe( res =>{
+      this.modalCtrl.dismiss('Transplantar');
+    })
+  }
+
+  cancelar(){
+    this.modalCtrl.dismiss('Cancelar');
+  }
+
+  get invalidQuantity() {
+    return this.newPlant.quantity > this.plant.quantity || this.newPlant.quantity <= 0 || !Number.isInteger(this.newPlant.quantity);
   }
 
 }

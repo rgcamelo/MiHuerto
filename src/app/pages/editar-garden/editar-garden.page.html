@@ -8,7 +8,7 @@
         </ion-buttons>
     </ion-toolbar>
 </ion-header>
-<ion-content>
+<ion-content class="background">
     <ion-card class="p-2">
         <form #formulario="ngForm" (ngSubmit)="editar()">
 
@@ -48,16 +48,19 @@
             </ion-item>
 
             <br>
-            <div class="text-center">
-                <ion-button class="btn-block" [disabled]="formulario.invalid || igual" type="submit">
-                    Editar
-                </ion-button>
-                <ion-button (click)="cancelar()" color="danger">
-                    Cancelar
-                </ion-button>
-            </div>
 
-
+            <ion-row>
+                <ion-col size="6">
+                    <ion-button [disabled]="formulario.invalid || igual " expand="block" shape="round" type="submit" color="success" size="large">
+                        <ion-icon name="checkmark-outline"></ion-icon>
+                    </ion-button>
+                </ion-col>
+                <ion-col size="6">
+                    <ion-button (click)="cancelar()" color="danger" expand="block" shape="round" size="large">
+                        <ion-icon name="close-outline"></ion-icon>
+                    </ion-button>
+                </ion-col>
+            </ion-row>
 
         </form>
     </ion-card>
