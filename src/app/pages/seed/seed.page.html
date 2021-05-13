@@ -10,7 +10,7 @@
     </ion-refresher>
 
 
-    <ion-list *ngIf="seeds" class="p-3">
+    <ion-list *ngIf="seeds" class="p-3 invisiblefondo">
         <ion-item-sliding class="animate__animated animate__fadeIn animate__faster" *ngFor="let seed of seeds">
 
             <ion-item routerLink="crops/{{seed.id}}">
