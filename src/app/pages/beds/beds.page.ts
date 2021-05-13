@@ -61,7 +61,7 @@ export class BedsPage implements OnInit {
       //this.loading.dismiss();
       if (resp.data.length > 0) {
         this.beds.push(...resp.data);
-      this.next = resp.meta.pagination.links.next;
+        this.next = resp.meta.pagination.links.next;
       }
       
     });

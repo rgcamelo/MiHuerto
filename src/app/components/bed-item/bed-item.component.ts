@@ -32,7 +32,10 @@ export class BedItemComponent implements OnInit {
 
   cargarPlants(){
     this.bedService.getPlants(this.bed.id.toString()).subscribe(resp =>{
-      this.plants.push(...resp.data);
+      if(resp.data.length > 0){
+        this.plants.push(...resp.data);
+      }
+      
     });
   }
 

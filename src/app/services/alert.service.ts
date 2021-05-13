@@ -20,7 +20,7 @@ export class AlertService {
       message:mensaje,
       buttons: [
         {
-          text: 'Si',
+          text: 'Continuar',
           role: 'ok', 
           cssClass: 'text-success',
         },
