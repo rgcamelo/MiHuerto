@@ -99,7 +99,6 @@ export class EditarSeedPage implements OnInit {
   }
 
   async guardar(){
-    this.loading.presentLoading()
     const uui = uuid.v4();
     const nombre = `${uui}.jpg`;
     const ref = this.storage.ref(`images/${nombre}`);
