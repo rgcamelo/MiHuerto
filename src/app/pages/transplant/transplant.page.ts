@@ -134,7 +134,7 @@ export class TransplantPage implements OnInit {
   }
 
   async transplantar(){
-    const res = await this.alert.presentAlertConfirm('Atención',`¿Esta seguro de transplantar`);
+    const res = await this.alert.presentAlertConfirm('Atención',`¿Está seguro de trasplantar?`);
           if (res == 'ok'){
             this.update();
             this.transplante();

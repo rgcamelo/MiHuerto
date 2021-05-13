@@ -32,7 +32,7 @@ export class CareTraducPipe implements PipeTransform {
     }
 
     if(value == 'transplanted'){
-      return 'Transplante'
+      return 'Trasplante'
     }
 
     if(value == 'planted'){

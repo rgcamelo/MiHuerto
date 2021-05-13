@@ -44,7 +44,7 @@ export class PlantService {
   }
 
   deleteCrop(idPlant:string,idCrop:string){
-    return this.http.deleteejecutarQuery<CareOneObject>(`plants/${idPlant}/crops/${idCrop}`);
+    return this.http.deleteejecutarQuery<CareOneObject>(`plants/${idPlant}/crop/${idCrop}`);
   }
 
   getCrops(id:string,url?:string){
