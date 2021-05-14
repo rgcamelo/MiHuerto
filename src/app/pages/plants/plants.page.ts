@@ -38,10 +38,10 @@ export class PlantsPage implements OnInit {
   }
 
   cargarPlants(url?:string){
-    //this.loading.presentLoading();
+    // this.loading.presentLoading();
     this.reference = this.route.snapshot.paramMap.get('id').toString();
     this.bedService.getPlants(this.reference,url).subscribe(resp =>{
-      //this.loading.dismiss();
+      // this.loading.dismiss();
       if (resp.data.length > 0) {
         this.plants = [...resp.data];
         console.log(this.plants);
@@ -102,9 +102,9 @@ export class PlantsPage implements OnInit {
           if (res == 'ok'){
             plant.status = 'desplantada';
             this.bedService.updatePlant(idBed,idSeed,plant.id.toString(),plant).subscribe(res => {
-            console.log(res);
             this.ionList.closeSlidingItems();
-            this.cargarPlants();
+            this.doRefresh();
+            this.toast.presentToast(`Desplante completo`);
             })
           }
     

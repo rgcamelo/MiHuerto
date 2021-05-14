@@ -20,7 +20,7 @@
             <ion-item>
                 <ion-label position="floating">Tipo</ion-label>
                 <ion-select [(ngModel)]="care.type" name="type" placeholder="Seleccione el tipo ">
-                    <ion-select-option value="eye">Revisión</ion-select-option>
+                    <ion-select-option value="eye">Anotación</ion-select-option>
                     <ion-select-option value="water">Riego</ion-select-option>
                     <ion-select-option value="manure">Abono</ion-select-option>
                     <ion-select-option value="plague">Control de Plagas</ion-select-option>
@@ -33,7 +33,7 @@
 
             <ion-item>
                 <ion-label position="stacked">Descripción</ion-label>
-                <ion-textarea name="description" maxlength="500" autoGrow="true" [(ngModel)]="care.description" required placeholder="Introduzca descripción">
+                <ion-textarea class="area" name="description" maxlength="500" autoGrow="true" [(ngModel)]="care.description" required placeholder="Introduzca descripción">
 
                 </ion-textarea>
             </ion-item>

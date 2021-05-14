@@ -51,9 +51,9 @@ export class PlantPage implements OnInit {
   }
 
   cargarPlant(){
-    //this.loading.presentLoading();
+    // this.loading.presentLoading();
     this.plantService.getPlant(this.reference).subscribe(res =>{
-      //this.loading.dismiss();
+      // this.loading.dismiss();
       console.log(res.data);
       this.plant = res.data
     });
