@@ -13,6 +13,16 @@
 
     <ion-card class="p-2">
         <form #formulario="ngForm" (ngSubmit)="onSubmit(formulario)">
+
+            <br>
+
+            <div class="text-center">
+                <img *ngIf="tipo == 'surco'" class="imagen" src="../../../assets/icon/surco.svg">
+                <img *ngIf="tipo == 'bancal'" class="imagen" src="../../../assets/icon/bancal.svg">
+                <img *ngIf="tipo == 'bandeja'" class="imagen" src="../../../assets/icon/bandejas.svg">
+            </div>
+
+
             <ion-item>
                 <ion-label position="floating">Numero</ion-label>
                 <ion-input min="1" type="number" required name="numero" [(ngModel)]="numero"></ion-input>

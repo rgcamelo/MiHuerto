@@ -104,7 +104,7 @@ export class PlantsPage implements OnInit {
             this.bedService.updatePlant(idBed,idSeed,plant.id.toString(),plant).subscribe(res => {
             this.ionList.closeSlidingItems();
             this.doRefresh();
-            this.toast.presentToast(`Desplante completo`);
+            this.toast.presentToast(`Listo`);
             })
           }
     

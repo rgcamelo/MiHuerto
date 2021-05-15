@@ -82,20 +82,21 @@ export class EditarSeedPage implements OnInit {
     const res = await this.alert.presentAlertConfirm('Atención',`¿Está seguro de editar esta semilla?`);
     if (res == 'ok'){
       this.loading.presentLoading()
-      if (this.seed.name != this.editSeed.name) {
+      if (this.seed.name != this.editSeed.name && this.tempImage == this.seed.image) {
         this.guardarSemilla();
       }
       if (this.tempImage != this.seed.image) {
-        await this.borraimagenActual();
-        this.guardar();
+        await this.borraimagenActual().finally( () =>{
+          this.guardar();
+        });
       }
     }
     
   }
 
-  async borraimagenActual(){
+  borraimagenActual(){
     const ref = this.storage.refFromURL(this.seed.image);
-    const borrar = await ref.delete().toPromise();
+    return ref.delete().toPromise();
   }
 
   async guardar(){

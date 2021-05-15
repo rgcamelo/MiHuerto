@@ -77,20 +77,22 @@ export class EditarGardenPage implements OnInit {
     const res = await this.alert.presentAlertConfirm('Atención',`¿Esta seguro de editar este huerto?`);
     if (res == 'ok'){
       this.loading.presentLoading()
-      if (this.garden.name != this.editGarden.name) {
+      if (this.garden.name != this.editGarden.name && this.tempImage == this.garden.image) {
         this.guardarJardin();
       }
       if (this.tempImage != this.garden.image) {
-        await this.borraimagenActual();
-        this.guardar();
+        await this.borraimagenActual().finally( () =>{
+          this.guardar();
+        });
+        
       }
     }
     
   }
 
-  async borraimagenActual(){
+  borraimagenActual(){
     const ref = this.storage.refFromURL(this.garden.image);
-    const borrar = await ref.delete().toPromise();
+    return ref.delete().toPromise();
   }
 
   guardar(){

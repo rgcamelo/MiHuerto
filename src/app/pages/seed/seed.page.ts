@@ -7,6 +7,7 @@ import { ToastService } from 'src/app/services/toast.service';
 import { SeedService } from '../../services/seed.service';
 import { RegistrarSeedPage } from '../registrar-seed/registrar-seed.page';
 import { EditarSeedPage } from '../editar-seed/editar-seed.page';
+import { LoadingService } from 'src/app/services/loading.service';
 
 @Component({
   selector: 'app-seed',
@@ -23,7 +24,8 @@ export class SeedPage implements OnInit {
   constructor(private seedService:SeedService,
     private modalCtrl: ModalController,
     private toast:ToastService,
-    private alert:AlertService) { }
+    private alert:AlertService,
+    private loading:LoadingService) { }
 
   ngOnInit() {
     this.cargarSeeds();
@@ -42,12 +44,13 @@ export class SeedPage implements OnInit {
 
   async cargarSeeds(url?:string){
     try {
+      this.loading.presentLoading();
       const res = await this.seedService.getSeeds(url).toPromise()
       if (res.data.length > 0) {
             if (this.infiniteScroll.disabled == true) {
               this.infiniteScroll.disabled = false;
             }
-
+            this.loading.dismiss();
             this.seeds.push(...res.data);
             this.next = res.meta.pagination.links.next;
           }

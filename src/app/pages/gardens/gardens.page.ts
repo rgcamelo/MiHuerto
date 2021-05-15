@@ -44,7 +44,9 @@ export class GardensPage implements OnInit {
   }
 
   borrarGarden(id:string){
+    this.loading.presentLoading();
     this.gardenService.deleteGarden(id).subscribe( res =>{
+      this.loading.dismiss();
       this.toast.presentToast(`Huerto ${res.data.name} Eliminado`);
       this.doRefresh();
     });
