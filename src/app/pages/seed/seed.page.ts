@@ -50,10 +50,11 @@ export class SeedPage implements OnInit {
             if (this.infiniteScroll.disabled == true) {
               this.infiniteScroll.disabled = false;
             }
-            this.loading.dismiss();
+            
             this.seeds.push(...res.data);
             this.next = res.meta.pagination.links.next;
           }
+          this.loading.dismiss();
     } catch (error) {
       
     }
