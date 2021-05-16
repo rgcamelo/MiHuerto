@@ -27,7 +27,7 @@
 
             <ion-item>
                 <ion-label position="floating">Tipo</ion-label>
-                <ion-select [(ngModel)]="ground.type" name="type" placeholder="Seleccione el tipo de ground">
+                <ion-select ok-text="Ok" cancel-text="Cancelar" [(ngModel)]="ground.type" name="type" placeholder="Seleccione el tipo de ground">
                     <ion-select-option value="module">Módulo</ion-select-option>
                     <ion-select-option value="seedbed">Semillero</ion-select-option>
                 </ion-select>

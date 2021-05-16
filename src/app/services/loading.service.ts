@@ -13,6 +13,7 @@ export class LoadingService {
   async presentLoading() {
     const loading = await this.loadingController.create({
       message: 'Cargando...',
+      showBackdrop: false,
     });
     await loading.present();
   }

@@ -19,7 +19,7 @@
 
             <ion-item>
                 <ion-label position="floating">Tipo</ion-label>
-                <ion-select [(ngModel)]="care.type" name="type" placeholder="Seleccione el tipo ">
+                <ion-select ok-text="Ok" cancel-text="Cancelar" [(ngModel)]="care.type" name="type" placeholder="Seleccione el tipo ">
                     <ion-select-option value="eye">Anotación</ion-select-option>
                     <ion-select-option value="water">Riego</ion-select-option>
                     <ion-select-option value="manure">Abono</ion-select-option>
