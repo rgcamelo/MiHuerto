@@ -20,14 +20,18 @@
                 <ion-label>{{seed.name}}</ion-label>
             </ion-item>
 
-            <ion-item-options side="start">
-                <ion-item-option (click)="deleteSeed(seed)" color="light">
-                    <ion-icon src="./assets/icon/eliminar.svg" slot="icon-only" name="trash-outline"></ion-icon>
-                </ion-item-option>
-                <ion-item-option (click)="editarSeed(seed)" color="light">
-                    <ion-icon src="./assets/icon/editar.svg" slot="icon-only"></ion-icon>
-                </ion-item-option>
-            </ion-item-options>
+            <ng-container *ngIf="admin">
+                <ion-item-options side="start">
+                    <ion-item-option (click)="deleteSeed(seed)" color="light">
+                        <ion-icon src="./assets/icon/eliminar.svg" slot="icon-only" name="trash-outline"></ion-icon>
+                    </ion-item-option>
+                    <ion-item-option (click)="editarSeed(seed)" color="light">
+                        <ion-icon src="./assets/icon/editar.svg" slot="icon-only"></ion-icon>
+                    </ion-item-option>
+                </ion-item-options>
+            </ng-container>
+
+
 
         </ion-item-sliding>
 

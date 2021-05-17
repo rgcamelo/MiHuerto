@@ -7,6 +7,7 @@ import { LoadingService } from 'src/app/services/loading.service';
 import { GroundService } from '../../services/ground.service';
 import { RegistarBedPage } from '../registar-bed/registar-bed.page';
 import { ToastService } from '../../services/toast.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-beds',
@@ -16,7 +17,7 @@ import { ToastService } from '../../services/toast.service';
 export class BedsPage implements OnInit {
   @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
   @ViewChild(IonList) ionList: IonList;
-
+  admin = environment.admin;
   reference:string = '';
   next:string;
   type:string = '';

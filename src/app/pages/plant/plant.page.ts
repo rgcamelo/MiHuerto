@@ -10,6 +10,7 @@ import { ToastService } from '../../services/toast.service';
 import { Care } from 'src/app/interfaces/careinterface';
 import { AlertService } from 'src/app/services/alert.service';
 import { EditarCarePage } from '../editar-care/editar-care.page';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-plant',
@@ -24,6 +25,7 @@ export class PlantPage implements OnInit {
   cares: Care[] = [];
   typeCare:string= '';
   next:string;
+  admin = environment.admin;
 
   constructor(private plantService:PlantService,
     private modalCtrl: ModalController,

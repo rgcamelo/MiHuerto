@@ -4,6 +4,7 @@ import { Bed } from 'src/app/interfaces/bedInterface';
 import { Plant } from 'src/app/interfaces/plantInterface';
 import { AlertService } from 'src/app/services/alert.service';
 import { BedService } from 'src/app/services/bed.service';
+import { environment } from 'src/environments/environment';
 import { GroundService } from '../../services/ground.service';
 
 @Component({
@@ -15,6 +16,7 @@ export class BedItemComponent implements OnInit {
 
   @Input() bed:Bed;
   @Output() ordenActualizar:EventEmitter<boolean> = new EventEmitter<boolean>();
+  admin = environment.admin;
   
 
   plants: Plant[] =[];

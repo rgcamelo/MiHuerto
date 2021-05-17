@@ -10,6 +10,7 @@ import { Garden } from '../../models/garden.model';
 import { LoadingService } from 'src/app/services/loading.service';
 import { ToastService } from 'src/app/services/toast.service';
 import { AlertService } from 'src/app/services/alert.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-ground',
@@ -18,6 +19,7 @@ import { AlertService } from 'src/app/services/alert.service';
 })
 export class GroundPage implements OnInit {
   @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
+  admin = environment.admin;
   reference:string = '';
   type:string='';
   next:string;

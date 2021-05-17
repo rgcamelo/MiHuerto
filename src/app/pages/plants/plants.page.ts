@@ -10,6 +10,7 @@ import { LoadingService } from 'src/app/services/loading.service';
 import { ToastService } from 'src/app/services/toast.service';
 import { AlertService } from 'src/app/services/alert.service';
 import { TransplantPage } from '../transplant/transplant.page';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-plants',
@@ -19,6 +20,7 @@ import { TransplantPage } from '../transplant/transplant.page';
 export class PlantsPage implements OnInit {
   @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
   @ViewChild(IonList) ionList: IonList;
+  admin = environment.admin;
   reference:string = '';
   name:string ='';
   next:string;

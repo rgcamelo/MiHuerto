@@ -4,6 +4,7 @@ import { IonInfiniteScroll } from '@ionic/angular';
 import { AlertService } from 'src/app/services/alert.service';
 import { PlantService } from 'src/app/services/plant.service';
 import { ToastService } from 'src/app/services/toast.service';
+import { environment } from 'src/environments/environment';
 import { SeedService } from '../../services/seed.service';
 
 @Component({
@@ -13,7 +14,7 @@ import { SeedService } from '../../services/seed.service';
 })
 export class CropPage implements OnInit {
   @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
-
+  admin = environment.admin;
   crops: Crop[] = [];
   reference:string;
   next:string;

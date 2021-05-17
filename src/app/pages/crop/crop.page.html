@@ -30,11 +30,15 @@
 
             </ion-item>
 
-            <ion-item-options side="start">
-                <ion-item-option (click)="deleteCrop(crop)" color="light">
-                    <ion-icon src="./assets/icon/eliminar.svg" slot="icon-only" name="trash-outline"></ion-icon>
-                </ion-item-option>
-            </ion-item-options>
+            <ng-container *ngIf="admin">
+                <ion-item-options side="start">
+                    <ion-item-option (click)="deleteCrop(crop)" color="light">
+                        <ion-icon src="./assets/icon/eliminar.svg" slot="icon-only" name="trash-outline"></ion-icon>
+                    </ion-item-option>
+                </ion-item-options>
+            </ng-container>
+
+
 
         </ion-item-sliding>
 

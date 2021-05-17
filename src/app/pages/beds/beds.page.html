@@ -38,26 +38,30 @@
         <app-bed-item class="animate__animated animate__fadeIn animate__faster" (ordenActualizar)="actualizar($event)" [bed]="bed" *ngFor="let bed of beds | filtro:type:'type'"></app-bed-item>
     </ion-list>
 
-    <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-        <ion-fab-button>
-            <ion-icon name="add"></ion-icon>
-        </ion-fab-button>
-        <ion-fab-list side="top">
-            <ng-container *ngIf="ground.type == 'module'">
-                <ion-fab-button (click)="registrarBed('surco')">
-                    <ion-icon src="/assets/icon/surco.svg"></ion-icon>
-                </ion-fab-button>
-                <ion-fab-button (click)="registrarBed('bancal')">
-                    <ion-icon src="/assets/icon/bancal.svg"></ion-icon>
-                </ion-fab-button>
-            </ng-container>
-            <ng-container *ngIf="ground.type == 'seedbed'">
-                <ion-fab-button (click)="registrarBed('bandeja')">
-                    <ion-icon src="/assets/icon/bandejas.svg"></ion-icon>
-                </ion-fab-button>
-            </ng-container>
-        </ion-fab-list>
-    </ion-fab>
+    <ng-container *ngIf="admin">
+        <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+            <ion-fab-button>
+                <ion-icon name="add"></ion-icon>
+            </ion-fab-button>
+            <ion-fab-list side="top">
+                <ng-container *ngIf="ground.type == 'module'">
+                    <ion-fab-button (click)="registrarBed('surco')">
+                        <ion-icon src="/assets/icon/surco.svg"></ion-icon>
+                    </ion-fab-button>
+                    <ion-fab-button (click)="registrarBed('bancal')">
+                        <ion-icon src="/assets/icon/bancal.svg"></ion-icon>
+                    </ion-fab-button>
+                </ng-container>
+                <ng-container *ngIf="ground.type == 'seedbed'">
+                    <ion-fab-button (click)="registrarBed('bandeja')">
+                        <ion-icon src="/assets/icon/bandejas.svg"></ion-icon>
+                    </ion-fab-button>
+                </ng-container>
+            </ion-fab-list>
+        </ion-fab>
+    </ng-container>
+
+
 
     <ion-infinite-scroll threshold="150px" (ionInfinite)="loadData($event)">
         <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Cargando data...">

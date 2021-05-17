@@ -8,6 +8,7 @@ import { SeedService } from '../../services/seed.service';
 import { RegistrarSeedPage } from '../registrar-seed/registrar-seed.page';
 import { EditarSeedPage } from '../editar-seed/editar-seed.page';
 import { LoadingService } from 'src/app/services/loading.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-seed',
@@ -18,6 +19,7 @@ export class SeedPage implements OnInit {
   @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
   @ViewChild(IonRefresher) refresher: IonRefresher;
   @ViewChild(IonList) ionList: IonList;
+  admin = environment.admin;
   next:string;
   seeds:Seed[] = [];
   

@@ -6,6 +6,9 @@ import { LoadingService } from 'src/app/services/loading.service';
 import { ToastService } from 'src/app/services/toast.service';
 import { RegistrarGardenPage } from '../registrar-garden/registrar-garden.page';
 import { EditarGardenPage } from '../editar-garden/editar-garden.page';
+import { environment } from 'src/environments/environment';
+
+
 
 @Component({
   selector: 'app-gardens',
@@ -14,7 +17,7 @@ import { EditarGardenPage } from '../editar-garden/editar-garden.page';
 })
 export class GardensPage implements OnInit {
   @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
-
+  admin = environment.admin;
   gardens : Garden[] = []
   next:string;
 
