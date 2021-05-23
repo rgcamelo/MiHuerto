@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
+import { CropObject } from '../interfaces/cropinterface';
 import { SeedObject, SeedOneObject } from '../interfaces/seedInterface';
 import { Seed } from '../models/seed.model';
 import { HttpService } from './http.service';

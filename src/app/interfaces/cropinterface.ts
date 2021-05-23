@@ -1,9 +1,9 @@
-interface CropObject {
+export interface CropObject {
   data: Crop[];
   meta: Meta;
 }
 
-interface CropOneObject {
+export interface CropOneObject {
   data: Crop;
   meta: Meta;
 }
@@ -25,10 +25,11 @@ interface Links {
   next: string;
 }
 
-interface Crop {
+export interface Crop {
   id: number;
   quantity: number;
-  plant: number;
+  plant_id: number;
+  care:number;
   created_at: string;
   updated_at: string;
   deleted_at?: any;

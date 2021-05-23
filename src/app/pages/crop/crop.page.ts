@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { IonInfiniteScroll } from '@ionic/angular';
+import { Crop } from 'src/app/interfaces/cropinterface';
 import { AlertService } from 'src/app/services/alert.service';
 import { PlantService } from 'src/app/services/plant.service';
 import { ToastService } from 'src/app/services/toast.service';
@@ -68,9 +69,13 @@ export class CropPage implements OnInit {
   async deleteCrop(crop:Crop){
     const res = await this.alert.presentAlertConfirm('Atención',`Esta acción eliminara este registro de cosecha, ¿Desea continuar?`);
     if(res == 'ok'){
-      this.plantService.deleteCrop(crop.plant.toString(),crop.id.toString()).subscribe( res =>{
-      this.toast.presentToast('Cosecha borrada del registro');
-      this.doRefresh();
+      this.plantService.deleteCrop(crop.plant_id.toString(),crop.id.toString()).subscribe( res =>{
+        this.plantService.deleteCare(crop.plant_id.toString(), crop.care.toString()).subscribe( res =>{
+          this.toast.presentToast('Cosecha borrada del registro');
+          this.doRefresh();
+        });
+
+
       });
     }
   }

@@ -24,7 +24,11 @@
             <ion-card-header>
                 <ion-item class="nopad">
                     <ion-card-title routerLink="./grounds/{{garden.id}}">
-                        <ion-label>{{garden.name}}</ion-label>
+
+                        <p class="textcomple">
+                            {{garden.name}}
+                        </p>
+
                     </ion-card-title>
                     <ng-container *ngIf="admin">
                         <ion-button (click)="presentActionSheet(garden)" slot="end" fill="clear">

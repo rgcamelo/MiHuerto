@@ -34,7 +34,12 @@ export class EditarGroundPage implements OnInit {
     const res = await this.alert.presentAlertConfirm('Atención',`¿Esta seguro de editar esta zona?`);
           if (res == 'ok'){
             this.loading.presentLoading();
-            this.limpiarZona();
+            if (this.oldGround.type != this.ground.type) {
+              this.limpiarZona();
+            }else{
+              this.editarZona();
+            }
+            
           }
     
   }
@@ -53,6 +58,10 @@ export class EditarGroundPage implements OnInit {
       this.ground.number_terrace = 0;
     }
     this.ground.status = 'vacio';
+    this.editarZona();
+  }
+
+  editarZona(){
     this.gardenService.updateGround(this.idGarden,this.ground.id.toString(),this.ground).subscribe( res =>{
       this.loading.dismiss();
       //this.generarNuevosBeds();

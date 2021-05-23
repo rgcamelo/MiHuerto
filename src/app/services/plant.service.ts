@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { CareObject, CareOneObject } from '../interfaces/careinterface';
+import { CropObject, CropOneObject } from '../interfaces/cropinterface';
 import { PlantOneObject } from '../interfaces/plantInterface';
 import { Care } from '../models/care.model';
 import { Crop } from '../models/crop.model';
@@ -20,7 +21,7 @@ export class PlantService {
 
 
   createCare(id:string,care:Care){
-    return this.http.postejecutarQuery<CareObject>(`plants/${id}/cares`,care);
+    return this.http.postejecutarQuery<CareOneObject>(`plants/${id}/cares`,care);
   }
 
   getCares(id:string,url?:string){
@@ -44,7 +45,7 @@ export class PlantService {
   }
 
   deleteCrop(idPlant:string,idCrop:string){
-    return this.http.deleteejecutarQuery<CareOneObject>(`plants/${idPlant}/crop/${idCrop}`);
+    return this.http.deleteejecutarQuery<CropOneObject>(`plants/${idPlant}/crop/${idCrop}`);
   }
 
   getCrops(id:string,url?:string){

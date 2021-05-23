@@ -10,7 +10,10 @@
                     <ion-img *ngIf="bed.type == 'terrace'" src="/assets/icon/bancal.svg"></ion-img>
                     <ion-img *ngIf="bed.type == 'bed'" src="/assets/icon/bandejas.svg"></ion-img>
                 </ion-avatar>
-                <ion-label>{{bed.name}}</ion-label>
+                <p class=" pt-3 textcomple">
+                    {{bed.name}}
+                </p>
+
             </ion-item>
             <ion-item *ngIf="bed.type == 'furrow' || bed.type == 'terrace'">
                 <ion-label>Ancho: {{bed.x}}m</ion-label>
