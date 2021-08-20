@@ -23,7 +23,13 @@
 
             <ion-list *ngIf="this.seeds.length > 0 && !this.seleccionado" class="maxh">
                 <ion-item *ngFor="let s of seeds" (click)="medClicked($event, s)">
-                    {{ s.name }}
+                    <ion-avatar>
+                        <img [src]="s.image">
+                    </ion-avatar>
+                    <ion-label>
+                        {{ s.name }}
+                    </ion-label>
+
                 </ion-item>
             </ion-list>
 
